@@ -332,7 +332,7 @@
           </div>
 
         <div class="filter-actions">
-          <button type="button" class="btn-secondary" onclick="resetFilter()">Reset</button>
+          <button type="button" class="btn-secondary" onclick="clearFilter()">Clear Filter</button>
           <button type="submit" class="btn-primary">Apply Filter</button>
         </div>
       </form>
@@ -445,10 +445,20 @@
       }
     ];
 
-    // Reset filter function
-    function resetFilter() {
+    // Clear filter function
+    function clearFilter() {
+      // Reset form
       document.getElementById('filter-form').reset();
       document.getElementById('plans-results').style.display = 'none';
+      
+      // Clear sessionStorage
+      sessionStorage.removeItem('filter_gender');
+      sessionStorage.removeItem('filter_dob');
+      sessionStorage.removeItem('filter_annual-limit');
+      sessionStorage.removeItem('filter_plan-type');
+      
+      // Clear URL parameters and reload
+      window.location.href = 'medical-plan-filter.html';
     }
 
     // Calculate age from date of birth

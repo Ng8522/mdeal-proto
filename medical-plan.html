@@ -90,6 +90,46 @@
       color: white;
     }
 
+    .compare-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .compare-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .compare-btn i {
+      pointer-events: none;
+    }
+
+    .compare-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #FF3B30;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 2px solid var(--primary-color);
+    }
+
     /* Main Content */
     .home-main {
       flex: 1;
@@ -656,6 +696,10 @@
           <h2>Medical Plans</h2>
         </div>
         <div class="header-actions">
+          <button class="compare-btn" onclick="openComparePlans()" title="Compare Plans">
+            <i data-lucide="git-compare"></i>
+            <span class="compare-badge" id="compare-badge" style="display: none;">0</span>
+          </button>
           <button class="back-btn" onclick="window.location.href='medical-plan-filter.html'">
             <i data-lucide="arrow-left"></i>
           </button>
@@ -1019,7 +1063,42 @@
     }
 
     function addToCompare(planIndex) {
-      alert('Plan added to compare list');
+      const plan = window.filteredPlans[planIndex];
+      let compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+      
+      // Check if plan already in compare list
+      const exists = compareList.findIndex(p => p.name === plan.name);
+      if (exists >= 0) {
+        compareList.splice(exists, 1);
+        alert('Plan removed from compare list');
+      } else {
+        compareList.push({ name: plan.name, index: planIndex });
+        alert('Plan added to compare list');
+      }
+      
+      sessionStorage.setItem('comparePlans', JSON.stringify(compareList));
+      updateCompareBadge();
+    }
+
+    // Update compare badge count
+    function updateCompareBadge() {
+      const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+      const badge = document.getElementById('compare-badge');
+      if (badge) {
+        if (compareList.length > 0) {
+          badge.textContent = compareList.length;
+          badge.style.display = 'flex';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }
+
+    // Compare plans function
+    function openComparePlans() {
+      // Get selected plans from sessionStorage or show comparison modal
+      const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+        window.location.href = 'compare-plans.html';
     }
 
     function purchasePlan(planIndex) {
@@ -1059,9 +1138,21 @@
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
       const filters = getFilters();
       const filteredPlans = filterPlans(filters);
       renderPlans(filteredPlans);
+      updateCompareBadge();
+      
+      // Add event listener for compare button
+      const compareBtn = document.querySelector('.compare-btn');
+      if (compareBtn) {
+        compareBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openComparePlans();
+        });
+      }
     });
   </script>
 </body>
