@@ -161,44 +161,6 @@
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .info-label.toggleable {
-      padding: 0.5rem;
-      margin: -0.5rem -0.5rem 0.5rem -0.5rem;
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-
-    .info-label.toggleable:hover {
-      background: var(--bg-secondary);
-    }
-
-    .toggle-icon {
-      width: 20px;
-      height: 20px;
-      color: var(--text-secondary);
-      transition: transform 0.3s;
-    }
-
-    .info-label.toggleable.active .toggle-icon {
-      transform: rotate(180deg);
-    }
-
-    .info-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-    }
-
-    .info-content.expanded {
-      max-height: 1000px;
-      transition: max-height 0.3s ease-in;
     }
 
     .contact-info {
@@ -208,12 +170,53 @@
     }
 
     .contact-info p {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
     }
 
-    .contact-info a {
-      color: var(--primary-color);
+    .contact-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .contact-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
       text-decoration: none;
+      justify-content: center;
+    }
+
+    .contact-action-btn.phone {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .contact-action-btn.phone:hover {
+      background: #C2410C;
+    }
+
+    .contact-action-btn.email {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .contact-action-btn.email:hover {
+      background: var(--border-color);
+    }
+
+    .contact-action-btn i {
+      width: 18px;
+      height: 18px;
     }
 
     .providers-list {
@@ -249,28 +252,32 @@
       font-weight: 500;
     }
 
-    .address-info {
-      font-size: 0.875rem;
-      color: var(--text-primary);
-      line-height: 1.6;
-    }
-
-    .contact-btn {
-      width: 100%;
-      background: var(--primary-color);
-      color: white;
-      border: none;
+    .address-map-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
       border-radius: 8px;
-      padding: 0.875rem;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
       font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 1rem;
+      transition: all 0.2s;
+      text-decoration: none;
+      justify-content: center;
+      width: 100%;
+      margin-top: 0.5rem;
     }
 
-    .contact-btn:hover {
-      background: #C2410C;
+    .address-map-btn:hover {
+      background: var(--border-color);
+    }
+
+    .address-map-btn i {
+      width: 18px;
+      height: 18px;
     }
 
     /* Bottom Navigation */
@@ -498,51 +505,44 @@
               <div class="info-label">Contact</div>
               <div class="contact-info">
                 <p>${agent.contact.name}</p>
-                <p><a href="tel:${agent.contact.phone}">${agent.contact.phone}</a></p>
-                <p><a href="mailto:${agent.contact.email}">${agent.contact.email}</a></p>
+                <div class="contact-buttons">
+                  <a href="tel:${agent.contact.phone}" class="contact-action-btn phone">
+                    <i data-lucide="phone"></i>
+                    <span>${agent.contact.phone}</span>
+                  </a>
+                  <a href="mailto:${agent.contact.email}" class="contact-action-btn email">
+                    <i data-lucide="mail"></i>
+                    <span>${agent.contact.email}</span>
+                  </a>
+                </div>
               </div>
             </div>
 
             ${agent.providers.length > 0 ? `
             <div class="info-section">
-              <div class="info-label toggleable" onclick="toggleSection(this)">
-                <span>Insurance Providers</span>
-                <i data-lucide="chevron-down" class="toggle-icon"></i>
-              </div>
-              <div class="info-content">
-                <div class="providers-list">
-                  ${agent.providers.map(provider => `
-                    <div class="provider-item">
-                      <div class="provider-logo">${provider.logo}</div>
-                      <span class="provider-name">${provider.name}</span>
-                    </div>
-                  `).join('')}
-                </div>
+              <div class="info-label">Insurance Providers</div>
+              <div class="providers-list">
+                ${agent.providers.map(provider => `
+                  <div class="provider-item">
+                    <div class="provider-logo">${provider.logo}</div>
+                    <span class="provider-name">${provider.name}</span>
+                  </div>
+                `).join('')}
               </div>
             </div>
             ` : ''}
 
             <div class="info-section">
-              <div class="info-label toggleable" onclick="toggleSection(this)">
-                <span>Address</span>
-                <i data-lucide="chevron-down" class="toggle-icon"></i>
-              </div>
-              <div class="info-content">
-                <div class="address-info">${agent.address}</div>
-              </div>
+              <div class="info-label">Location</div>
+              <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(agent.address)}" target="_blank" class="address-map-btn">
+                <i data-lucide="map-pin"></i>
+                <span>Location</span>
+              </a>
             </div>
-
-            <button class="contact-btn" onclick="contactAgent('${agent.name}', '${agent.contact.phone}', '${agent.contact.email}')">Contact Now</button>
           </div>
         </div>
       `).join('');
-    }
-
-    // Toggle section function
-    function toggleSection(label) {
-      const content = label.nextElementSibling;
-      label.classList.toggle('active');
-      content.classList.toggle('expanded');
+      
       lucide.createIcons();
     }
 
