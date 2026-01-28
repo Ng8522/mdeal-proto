@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Mdeal InsureMart</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #EA580C;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      position: relative;
+    }
+
+    .app-wrapper {
+      max-width: 428px;
+      width: 100%;
+      margin: 0 auto;
+      background: transparent;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .login-container {
+      width: 100%;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: white;
+      padding: 0 0.5rem;
+    }
+
+    .login-header .brand-name {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-header h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 375px) {
+      .login-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .login-form {
+        padding: 1.25rem;
+      }
+    }
+
+    .login-header p {
+      opacity: 0.9;
+      font-size: 0.875rem;
+    }
+
+    .login-form {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .form-input {
+      padding: 0.875rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .login-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .login-btn:hover {
+      background: #C2410C;
+    }
+
+    .login-divider {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .login-divider::before {
+      left: 0;
+    }
+
+    .login-divider::after {
+      right: 0;
+    }
+
+    .signup-btn {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .signup-btn:hover {
+      background: #E5E5EA;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: white;
+      opacity: 0.9;
+    }
+
+    .signup-link a {
+      color: white;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .back-link {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    .back-link:hover {
+      opacity: 1;
+    }
+
+    .back-link i {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-wrapper">
+    <a href="index.html" class="back-link">
+      <i data-lucide="arrow-left"></i>
+      <span>Back</span>
+    </a>
+
+    <div class="login-container">
+    <div class="login-header">
+      <div class="brand-name">Mdeal InsureMart</div>
+      <h2>Welcome Back</h2>
+      <p>Sign in to access your account</p>
+    </div>
+    <form class="login-form" id="login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email</label>
+        <input 
+          type="email" 
+          id="login-email" 
+          class="form-input" 
+          placeholder="Enter your email"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-password">Password</label>
+        <input 
+          type="password" 
+          id="login-password" 
+          class="form-input" 
+          placeholder="Enter your password"
+        />
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
+      <div class="login-divider">or</div>
+      <button type="button" class="signup-btn" onclick="handleSignup()">Create New Account</button>
+    </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Handle login form submission
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleLogin();
+    });
+
+    // Handle login - store in sessionStorage and redirect
+    function handleLogin() {
+      // Store login state
+      sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('isGuest', 'false');
+      
+      // Get return URL from query params or default to index
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnUrl = urlParams.get('return') || 'index.html';
+      
+      // Redirect back
+      window.location.href = returnUrl;
+    }
+
+    // Handle signup (for prototype, same as login)
+    function handleSignup() {
+      handleLogin();
+    }
+
+    // Check if already logged in
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const returnUrl = urlParams.get('return') || 'index.html';
+      window.location.href = returnUrl;
+    }
+  </script>
+</body>
+</html>
+

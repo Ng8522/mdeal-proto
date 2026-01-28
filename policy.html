@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Policies - Mdeal InsureMart</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #EA580C;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .home-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      color: white;
+      padding: 1rem 1.25rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-greeting {
+      flex: 1;
+    }
+
+    .user-greeting h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .brand-name {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.85;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .notification-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #FF3B30;
+      color: white;
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .login-header-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .home-main {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .see-all-btn {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .policies-section {
+      margin-bottom: 2rem;
+    }
+
+    .policies-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .policy-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .policy-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .policy-type {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .policy-number {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .policy-coverage {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .policy-expiry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .expiry-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .expiry-date {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .policy-action-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.75rem 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="home-header">
+      <div class="header-top">
+        <div class="user-greeting">
+          <div class="brand-name">Mdeal InsureMart</div>
+          <h2>My Policies</h2>
+        </div>
+        <div class="header-actions">
+          <button class="notification-btn hidden" id="notification-btn">
+            <i data-lucide="bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <button class="login-header-btn hidden" id="login-header-btn" onclick="window.location.href='login.html?return=policy.html'">Sign In</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+      <div id="policies-content">
+        <!-- Content will be rendered here -->
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Explore</span>
+      </a>
+      <a href="policy.html" class="nav-item active">
+        <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">My Policies</span>
+      </a>
+      <a href="help.html" class="nav-item">
+        <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Help</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i data-lucide="user" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Profile</span>
+      </a>
+      <a href="more.html" class="nav-item">
+        <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">More</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Check login state
+    const isGuest = sessionStorage.getItem('isLoggedIn') !== 'true';
+    
+    if (isGuest) {
+      window.location.href = 'login.html?return=policy.html';
+    }
+
+    // Data
+    const activePolicies = [
+      { type: 'Health Insurance', policyNo: 'POL-2024-002', expiry: '20 Apr 2025', coverage: 'RM 500,000' },
+      { type: 'Health Insurance', policyNo: 'POL-2023-015', expiry: '10 Jun 2025', coverage: 'RM 1,000,000' },
+    ];
+
+    // Render policies
+    function renderPolicies() {
+      const policiesContent = document.getElementById('policies-content');
+      
+      policiesContent.innerHTML = `
+        <section class="policies-section">
+          <div class="section-header">
+            <h3 class="section-title">My Health Policies</h3>
+            <button class="see-all-btn">View All</button>
+          </div>
+          <div class="policies-list">
+            ${activePolicies.map(policy => `
+              <div class="policy-card">
+                <div class="policy-info">
+                  <div class="policy-type">${policy.type}</div>
+                  <div class="policy-number">${policy.policyNo}</div>
+                  <div class="policy-coverage">Coverage: ${policy.coverage}</div>
+                </div>
+                <div class="policy-expiry">
+                  <span class="expiry-label">Expires</span>
+                  <span class="expiry-date">${policy.expiry}</span>
+                </div>
+                <button class="policy-action-btn">View</button>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPolicies();
+      
+      // Update header based on login state
+      if (!isGuest) {
+        document.getElementById('notification-btn').classList.remove('hidden');
+      } else {
+        document.getElementById('login-header-btn').classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
+
