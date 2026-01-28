@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Insurance App</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #EA580C;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header */
+    .home-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      color: white;
+      padding: 1.5rem 1.25rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-greeting h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .guest-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .notification-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #FF3B30;
+      color: white;
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .login-header-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .login-header-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Main Content */
+    .home-main {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .action-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .action-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .action-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* Insurance Type Toggle */
+    .insurance-type-section {
+      margin-bottom: 2rem;
+    }
+
+    .type-toggle {
+      display: flex;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .type-btn {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .type-btn.active {
+      background: white;
+      color: var(--primary-color);
+      box-shadow: var(--shadow);
+    }
+
+    /* Plans Section */
+    .plans-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .see-all-btn {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+
+    .plans-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-header {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .plan-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .plan-info {
+      flex: 1;
+    }
+
+    .plan-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-description {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .plan-coverage {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .plan-features li {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+    }
+
+    .plan-card.coming-soon {
+      opacity: 0.7;
+      position: relative;
+    }
+
+    .coming-soon-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--text-secondary);
+      color: white;
+      padding: 0.375rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    .plan-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .plan-btn:hover {
+      background: #C2410C;
+    }
+
+    .plan-btn:disabled,
+    .plan-btn.coming-soon-btn {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      cursor: not-allowed;
+    }
+
+    .plan-btn.coming-soon-btn:hover {
+      background: var(--bg-secondary);
+    }
+
+    /* Policies Section */
+    .policies-section {
+      margin-bottom: 2rem;
+    }
+
+    .policies-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .policy-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .policy-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .policy-type {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .policy-number {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .policy-coverage {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .policy-expiry {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .expiry-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .expiry-date {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .policy-action-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* Guest Prompt */
+    .guest-prompt-section {
+      margin-top: 2rem;
+    }
+
+    .guest-prompt-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .guest-prompt-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .guest-prompt-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .guest-prompt-buttons {
+      display: flex;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .guest-login-prompt-btn,
+    .guest-signup-prompt-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+
+    .guest-login-prompt-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .guest-signup-prompt-btn {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    /* Help Section */
+    .help-section {
+      margin-bottom: 2rem;
+    }
+
+    .help-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .help-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .help-card p {
+      color: var(--text-secondary);
+    }
+
+    .help-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .help-option-btn {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .help-option-btn:hover {
+      transform: translateX(4px);
+    }
+
+    .help-option-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .help-option-content h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .help-option-content p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Profile Section */
+    .profile-section {
+      margin-bottom: 2rem;
+    }
+
+    .profile-guest-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile-guest-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .profile-guest-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-guest-buttons {
+      display: flex;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .profile-login-btn,
+    .profile-signup-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+
+    .profile-login-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .profile-signup-btn {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .profile-header-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 auto 1rem;
+    }
+
+    .profile-header-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-header-card p {
+      color: var(--text-secondary);
+    }
+
+    .profile-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .profile-menu-item {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .profile-menu-item:hover {
+      background: var(--bg-secondary);
+    }
+
+    .profile-menu-label {
+      flex: 1;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .profile-menu-arrow {
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    .logout-menu-item {
+      border-color: #FFE5E5;
+    }
+
+    .logout-menu-item:hover {
+      background: #FFF5F5;
+    }
+
+    /* More Section */
+    .more-section {
+      margin-bottom: 2rem;
+    }
+
+    .more-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .more-menu-item {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .more-menu-item:hover {
+      background: var(--bg-secondary);
+    }
+
+    .more-menu-label {
+      flex: 1;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .more-menu-arrow {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.75rem 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="home-header">
+      <div class="header-top">
+        <div class="user-greeting">
+          <h2 id="header-title">Welcome, Guest!</h2>
+          <span class="guest-badge" id="guest-badge">Guest Mode</span>
+        </div>
+        <button class="notification-btn hidden" id="notification-btn">
+          <i data-lucide="bell"></i>
+          <span class="notification-badge">3</span>
+        </button>
+        <button class="login-header-btn" id="login-header-btn">Sign In</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+      <!-- Explore Tab -->
+      <div id="explore-tab">
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+          <h3 class="section-title">Quick Actions</h3>
+          <div class="actions-grid">
+            <button class="action-card" style="--action-color: #EA580C">
+              <div class="action-icon" style="background-color: #EA580C15">
+                <i data-lucide="shield"></i>
+              </div>
+              <span class="action-label">Buy Insurance</span>
+            </button>
+            <button class="action-card" style="--action-color: #FF9500">
+              <div class="action-icon" style="background-color: #FF950015">
+                <i data-lucide="clipboard-list"></i>
+              </div>
+              <span class="action-label">File Claim</span>
+            </button>
+            <button class="action-card" style="--action-color: #34C759">
+              <div class="action-icon" style="background-color: #34C75915">
+                <i data-lucide="file-text"></i>
+              </div>
+              <span class="action-label">My Policies</span>
+            </button>
+            <button class="action-card" style="--action-color: #5856D6">
+              <div class="action-icon" style="background-color: #5856D615">
+                <i data-lucide="credit-card"></i>
+              </div>
+              <span class="action-label">Pay Premium</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Insurance Type Toggle -->
+        <section class="insurance-type-section">
+          <div class="type-toggle">
+            <button class="type-btn active" data-type="insurance">
+              <i data-lucide="shield" style="width: 18px; height: 18px; margin-right: 0.5rem;"></i>
+              Insurance
+            </button>
+            <button class="type-btn" data-type="takaful">
+              <i data-lucide="moon" style="width: 18px; height: 18px; margin-right: 0.5rem;"></i>
+              Takaful
+            </button>
+          </div>
+        </section>
+
+        <!-- Health Insurance Plans -->
+        <section class="plans-section">
+          <div class="section-header">
+            <h3 class="section-title" id="plans-title">Health Insurance Plans</h3>
+            <button class="see-all-btn">See All</button>
+          </div>
+          <div class="plans-list" id="plans-list">
+            <!-- Plans will be rendered here -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Policy Tab -->
+      <div id="policy-tab" class="hidden">
+        <div id="policies-content">
+          <!-- Content will be rendered here -->
+        </div>
+      </div>
+
+      <!-- Help Tab -->
+      <div id="help-tab" class="hidden">
+        <section class="help-section">
+          <div class="help-card">
+            <i data-lucide="help-circle" style="width: 48px; height: 48px; margin-bottom: 1rem; color: var(--primary-color);"></i>
+            <h3>Need Help?</h3>
+            <p>We're here to assist you with any questions about your health insurance.</p>
+          </div>
+          <div class="help-options">
+            <button class="help-option-btn">
+              <i data-lucide="bot" style="width: 32px; height: 32px; color: var(--primary-color);"></i>
+              <div class="help-option-content">
+                <h4>AI Insurance Agent</h4>
+                <p>AI chatbot for medical plans consultation</p>
+              </div>
+            </button>
+            <button class="help-option-btn">
+              <i data-lucide="mail" style="width: 32px; height: 32px; color: var(--primary-color);"></i>
+              <div class="help-option-content">
+                <h4>Email Us</h4>
+                <p>support@mdeal.com.my</p>
+              </div>
+            </button>
+            <button class="help-option-btn">
+              <i data-lucide="book-open" style="width: 32px; height: 32px; color: var(--primary-color);"></i>
+              <div class="help-option-content">
+                <h4>FAQs</h4>
+                <p>Frequently asked questions</p>
+              </div>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Profile Tab -->
+      <div id="profile-tab" class="hidden">
+        <div id="profile-content">
+          <!-- Content will be rendered here -->
+        </div>
+      </div>
+
+      <!-- More Tab -->
+      <div id="more-tab" class="hidden">
+        <section class="more-section">
+          <div class="more-menu">
+            <button class="more-menu-item">
+              <i data-lucide="settings" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">Settings</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="bell" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">Notifications</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="globe" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">Language</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="info" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">About Us</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="file-text" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">Terms & Conditions</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="lock" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">Privacy Policy</span>
+              <span class="more-menu-arrow">›</span>
+            </button>
+            <button class="more-menu-item">
+              <i data-lucide="smartphone" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="more-menu-label">App Version</span>
+              <span class="more-menu-arrow">v1.0.0</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="explore">
+        <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Explore</span>
+      </button>
+      <button class="nav-item" data-tab="policy">
+        <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">My Policy</span>
+      </button>
+      <button class="nav-item" data-tab="help">
+        <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Help</span>
+      </button>
+      <button class="nav-item" data-tab="profile">
+        <i data-lucide="user" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Profile</span>
+      </button>
+      <button class="nav-item" data-tab="more">
+        <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">More</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    // App State
+    let activeTab = 'explore';
+    let insuranceType = 'insurance';
+    let isGuest = true;
+
+    // Data
+    const healthPlans = [
+      { 
+        category: 'Individual', 
+        icon: 'user', 
+        description: 'Personal health coverage for individuals', 
+        coverage: 'Up to RM 1 Million',
+        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup'],
+        comingSoon: false
+      },
+      { 
+        category: 'Family', 
+        icon: 'users', 
+        description: 'Comprehensive coverage for your entire family', 
+        coverage: 'Up to RM 2.5 Million',
+        features: ['Family Coverage', 'OPD Coverage', 'Cashless Treatment', 'Maternity Benefits'],
+        comingSoon: true
+      },
+      { 
+        category: 'Group', 
+        icon: 'users', 
+        description: 'Corporate and group health insurance plans', 
+        coverage: 'Up to RM 5 Million',
+        features: ['Group Discounts', 'Cashless Treatment', 'OPD Coverage', 'Wellness Programs'],
+        comingSoon: true
+      },
+      { 
+        category: 'Supplemental', 
+        icon: 'plus', 
+        description: 'Additional coverage to complement existing plans', 
+        coverage: 'Up to RM 1.5 Million',
+        features: ['Top-up Coverage', 'No Claim Bonus', 'Cashless Treatment', 'Flexible Premium'],
+        comingSoon: true
+      },
+    ];
+
+    const activePolicies = [
+      { type: 'Health Insurance', policyNo: 'POL-2024-002', expiry: '20 Apr 2025', coverage: 'RM 500,000' },
+      { type: 'Health Insurance', policyNo: 'POL-2023-015', expiry: '10 Jun 2025', coverage: 'RM 1,000,000' },
+    ];
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Tab Management
+    function switchTab(tab) {
+      activeTab = tab;
+      
+      // Hide all tabs
+      document.querySelectorAll('[id$="-tab"]').forEach(el => el.classList.add('hidden'));
+      
+      // Show active tab
+      const activeTabEl = document.getElementById(`${tab}-tab`);
+      if (activeTabEl) {
+        activeTabEl.classList.remove('hidden');
+      }
+      
+      // Update nav items
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+      
+      // Update header
+      updateHeader();
+      
+      // Render tab content
+      renderTabContent();
+    }
+
+    // Update Header
+    function updateHeader() {
+      const headerTitle = document.getElementById('header-title');
+      const guestBadge = document.getElementById('guest-badge');
+      const notificationBtn = document.getElementById('notification-btn');
+      const loginHeaderBtn = document.getElementById('login-header-btn');
+      
+      const titles = {
+        explore: '',
+        policy: 'My Policies',
+        help: 'Help & Support',
+        profile: 'Profile',
+        more: 'More'
+      };
+      
+      headerTitle.textContent = titles[activeTab] || titles.explore;
+      
+      if (activeTab === 'explore' && isGuest) {
+        guestBadge.style.display = 'inline-block';
+      } else {
+        guestBadge.style.display = 'none';
+      }
+      
+      if (!isGuest && activeTab === 'explore') {
+        notificationBtn.classList.remove('hidden');
+        loginHeaderBtn.classList.add('hidden');
+      } else if (isGuest && activeTab === 'explore') {
+        notificationBtn.classList.add('hidden');
+        loginHeaderBtn.classList.remove('hidden');
+      } else {
+        notificationBtn.classList.add('hidden');
+        loginHeaderBtn.classList.add('hidden');
+      }
+    }
+
+    // Render Plans
+    function renderPlans() {
+      const plansList = document.getElementById('plans-list');
+      const plansTitle = document.getElementById('plans-title');
+      
+      plansTitle.textContent = insuranceType === 'insurance' 
+        ? 'Health Insurance Plans' 
+        : 'Health Takaful Plans';
+      
+      plansList.innerHTML = healthPlans.map(plan => `
+        <div class="plan-card ${plan.comingSoon ? 'coming-soon' : ''}">
+          ${plan.comingSoon ? '<span class="coming-soon-badge">Coming Soon</span>' : ''}
+          <div class="plan-header">
+            <div class="plan-icon">
+              <i data-lucide="${plan.icon}" style="width: 40px; height: 40px; color: var(--primary-color);"></i>
+            </div>
+            <div class="plan-info">
+              <h4 class="plan-name">${plan.category}</h4>
+              <p class="plan-description">${plan.description}</p>
+            </div>
+          </div>
+          <div class="plan-coverage">${plan.coverage}</div>
+          <ul class="plan-features">
+            ${plan.features.map(feature => `
+              <li>
+                <i data-lucide="check" style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem; vertical-align: middle;"></i>
+                ${feature}
+              </li>
+            `).join('')}
+          </ul>
+          <button class="plan-btn ${plan.comingSoon ? 'coming-soon-btn' : ''}" ${plan.comingSoon ? 'disabled' : ''}>
+            ${plan.comingSoon ? 'Coming Soon' : 'View Details'}
+          </button>
+        </div>
+      `).join('');
+      
+      lucide.createIcons();
+    }
+
+    // Render Policy Tab
+    function renderPolicyTab() {
+      const policiesContent = document.getElementById('policies-content');
+      
+      if (!isGuest) {
+        policiesContent.innerHTML = `
+          <section class="policies-section">
+            <div class="section-header">
+              <h3 class="section-title">My Health Policies</h3>
+              <button class="see-all-btn">View All</button>
+            </div>
+            <div class="policies-list">
+              ${activePolicies.map(policy => `
+                <div class="policy-card">
+                  <div class="policy-info">
+                    <div class="policy-type">${policy.type}</div>
+                    <div class="policy-number">${policy.policyNo}</div>
+                    <div class="policy-coverage">Coverage: ${policy.coverage}</div>
+                  </div>
+                  <div class="policy-expiry">
+                    <span class="expiry-label">Expires</span>
+                    <span class="expiry-date">${policy.expiry}</span>
+                  </div>
+                  <button class="policy-action-btn">View</button>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        `;
+      } else {
+        policiesContent.innerHTML = `
+          <section class="guest-prompt-section">
+            <div class="guest-prompt-card">
+              <i data-lucide="lock" style="width: 48px; height: 48px; margin-bottom: 1rem; color: var(--primary-color);"></i>
+              <h3>Sign In to View Your Policies</h3>
+              <p>Create an account or sign in to view your health insurance policies, submit claims, and manage your account.</p>
+              <div class="guest-prompt-buttons">
+                <button class="guest-login-prompt-btn" onclick="handleLogin()">Sign In</button>
+                <button class="guest-signup-prompt-btn" onclick="handleLogin()">Create Account</button>
+              </div>
+            </div>
+          </section>
+        `;
+        lucide.createIcons();
+      }
+    }
+
+    // Render Profile Tab
+    function renderProfileTab() {
+      const profileContent = document.getElementById('profile-content');
+      
+      if (isGuest) {
+        profileContent.innerHTML = `
+          <div class="profile-guest-card">
+            <i data-lucide="user" style="width: 64px; height: 64px; margin-bottom: 1rem; color: var(--text-secondary);"></i>
+            <h3>Guest User</h3>
+            <p>Sign in to access your profile and manage your account</p>
+            <div class="profile-guest-buttons">
+              <button class="profile-login-btn" onclick="handleLogin()">Sign In</button>
+              <button class="profile-signup-btn" onclick="handleLogin()">Create Account</button>
+            </div>
+          </div>
+        `;
+      } else {
+        profileContent.innerHTML = `
+          <div class="profile-header-card">
+            <div class="profile-avatar">JD</div>
+            <h3>John Doe</h3>
+            <p>john.doe@example.com</p>
+          </div>
+          <div class="profile-menu">
+            <button class="profile-menu-item">
+              <i data-lucide="file-text" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="profile-menu-label">My Policies</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+            <button class="profile-menu-item">
+              <i data-lucide="clipboard-list" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="profile-menu-label">My Claims</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+            <button class="profile-menu-item">
+              <i data-lucide="credit-card" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="profile-menu-label">Payment History</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+            <button class="profile-menu-item">
+              <i data-lucide="edit" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="profile-menu-label">Edit Profile</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+            <button class="profile-menu-item">
+              <i data-lucide="lock" style="width: 24px; height: 24px; color: var(--text-primary);"></i>
+              <span class="profile-menu-label">Change Password</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+            <button class="profile-menu-item logout-menu-item" onclick="handleLogout()">
+              <i data-lucide="log-out" style="width: 24px; height: 24px; color: #FF3B30;"></i>
+              <span class="profile-menu-label">Logout</span>
+              <span class="profile-menu-arrow">›</span>
+            </button>
+          </div>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    // Render Tab Content
+    function renderTabContent() {
+      switch (activeTab) {
+        case 'explore':
+          renderPlans();
+          break;
+        case 'policy':
+          renderPolicyTab();
+          break;
+        case 'profile':
+          renderProfileTab();
+          break;
+      }
+    }
+
+    // Login Handler
+    function handleLogin() {
+      isGuest = false;
+      updateHeader();
+      renderTabContent();
+    }
+
+    // Logout Handler
+    function handleLogout() {
+      isGuest = true;
+      switchTab('explore');
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Bottom nav
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          switchTab(item.dataset.tab);
+        });
+      });
+
+      // Insurance type toggle
+      document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          insuranceType = btn.dataset.type;
+          renderPlans();
+        });
+      });
+
+      // Login button
+      document.getElementById('login-header-btn').addEventListener('click', handleLogin);
+
+      // Initial render
+      renderPlans();
+      updateHeader();
+    });
+
+    // Make functions globally available for inline onclick handlers
+    window.handleLogin = handleLogin;
+    window.handleLogout = handleLogout;
+  </script>
+</body>
+</html>
+
