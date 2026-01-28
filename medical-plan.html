@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Plans -   InsureMart</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #EA580C;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header */
+    .home-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      padding: 1rem 1.25rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-greeting {
+      flex: 1;
+    }
+
+    .brand-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .user-greeting h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Main Content */
+    .home-main {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .results-count {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Plans List */
+    .plans-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .plan-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .plan-icon {
+      flex-shrink: 0;
+    }
+
+    .plan-info {
+      flex: 1;
+    }
+
+    .plan-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-description {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .plan-coverage {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .plan-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .plan-features li {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+    }
+
+    .plan-btn {
+      width: 100%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .plan-btn:hover {
+      background: #C2410C;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 0.75rem 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      text-decoration: none;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item.help-special {
+      background: #FF3B30;
+      color: white;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      max-width: 56px;
+      padding: 0;
+      margin-top: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      flex: 0 0 auto;
+    }
+
+    .nav-item.help-special .nav-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .nav-item.help-special i {
+      display: none;
+    }
+
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Plan Detail Modal */
+    .plan-detail-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      height: 100vh;
+      background: white;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .plan-detail-modal.active {
+      display: block;
+    }
+
+    .plan-detail-header {
+      background: white;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .plan-detail-header h3 {
+      color: var(--text-primary);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .close-modal-btn {
+      background: var(--bg-secondary);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    .plan-detail-content {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .plan-company-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .company-logo {
+      width: 40px;
+      height: 40px;
+      background: #34C759;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .company-name {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .action-buttons-top {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn-top {
+      flex: 1;
+      min-width: calc(33.333% - 0.35rem);
+      padding: 0.625rem 0.75rem;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      background: white;
+      color: var(--primary-color);
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      transition: all 0.2s;
+    }
+
+    .action-btn-top:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .action-btn-top.primary {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .action-btn-top.primary:hover {
+      background: #C2410C;
+    }
+
+    .plan-select-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .plan-select-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .plan-select-dropdown {
+      width: 100%;
+      padding: 0.875rem;
+      border: 2px solid var(--primary-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: white;
+      color: var(--text-primary);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23EA580C' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.875rem center;
+      background-size: 12px;
+      padding-right: 2.5rem;
+    }
+
+    .pricing-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-info {
+      flex: 1;
+    }
+
+    .pricing-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pricing-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .pricing-amount {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pricing-period {
+      font-size: 0.875rem;
+      color: var(--primary-color);
+    }
+
+    .daily-price {
+      background: rgba(234, 88, 12, 0.15);
+      padding: 0.5rem 0.75rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .daily-price-text {
+      font-size: 0.875rem;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .features-section {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .features-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-pill {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .show-more-link {
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .annual-limit-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+    }
+
+    .annual-limit-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .annual-limit-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Product Disclosure Sheet Dropdown */
+    .pdf-dropdown {
+      display: none;
+      margin-top: 1rem;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .pdf-dropdown.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pdf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pdf-item {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .pdf-item:hover {
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow);
+    }
+
+    .pdf-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .pdf-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(234, 88, 12, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .pdf-details {
+      flex: 1;
+    }
+
+    .pdf-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .pdf-size {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .pdf-arrow {
+      width: 24px;
+      height: 24px;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="home-header">
+      <div class="header-top">
+        <div class="user-greeting">
+          <div class="brand-name">  InsureMart</div>
+          <h2>Medical Plans</h2>
+        </div>
+        <div class="header-actions">
+          <button class="back-btn" onclick="window.location.href='medical-plan-filter.html'">
+            <i data-lucide="arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+      <h3 class="section-title">Available Plans</h3>
+      <div class="results-count" id="results-count"></div>
+      
+      <div id="plans-list" class="plans-list">
+        <!-- Plans will be rendered here -->
+      </div>
+    </main>
+
+    <!-- Plan Detail Modal -->
+    <div class="plan-detail-modal" id="plan-detail-modal">
+      <div class="plan-detail-header">
+        <h3>Plan Details</h3>
+        <button class="close-modal-btn" onclick="closePlanDetails()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="plan-detail-content" id="plan-detail-content">
+        <!-- Plan details will be rendered here -->
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Explore</span>
+      </a>
+      <a href="policy.html" class="nav-item">
+        <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">My Policies</span>
+      </a>
+      <a href="help.html" class="nav-item help-special">
+        <span class="nav-label">Help</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i data-lucide="user" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Profile</span>
+      </a>
+      <a href="more.html" class="nav-item">
+        <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">More</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Sample medical insurance plans data (same as filter page)
+    const medicalPlans = [
+      {
+        name: 'Individual Health Plan',
+        coverage: 'RM 500,000',
+        price: 189,
+        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup', 'Ambulance Fee', 'Anaesthetist Fees'],
+        type: 'normal',
+        minAge: 18,
+        maxAge: 65,
+        gender: 'both'
+      },
+      {
+        name: 'Chubb Crystal Sihat',
+        coverage: 'RM 1,000,000',
+        list:  ['Chubb Crystal Sihat 100', 'Chubb Crystal Sihat 200', 'Chubb Crystal Sihat 300'],
+        price: 350,
+        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both'
+      },
+      {
+        name: 'Premium Health Plan',
+        coverage: 'RM 2,000,000',
+        price: 550,
+        features: ['Premium Coverage', 'Worldwide Coverage', 'Cashless Treatment', 'Wellness Programs', 'Ambulance Fee', 'Anaesthetist Fees'],
+        type: 'normal',
+        minAge: 18,
+        maxAge: 70,
+        gender: 'both'
+      },
+      {
+        name: 'Takaful Health Plan',
+        coverage: 'RM 1,500,000',
+        price: 420,
+        features: ['Takaful Coverage', 'OPD Coverage', 'Cashless Treatment', 'Halal Benefits', 'Daily Cash Allowance at Gov Hospital', 'Day Surgery'],
+        type: 'takaful',
+        minAge: 18,
+        maxAge: 65,
+        gender: 'both'
+      }
+    ];
+
+    // Get filter parameters from URL or sessionStorage
+    function getFilters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filters = {
+        gender: urlParams.get('gender') || sessionStorage.getItem('filter_gender') || '',
+        dob: urlParams.get('dob') || sessionStorage.getItem('filter_dob') || '',
+        'annual-limit': urlParams.get('annual-limit') || sessionStorage.getItem('filter_annual-limit') || '',
+        'plan-type': urlParams.get('plan-type') || sessionStorage.getItem('filter_plan-type') || ''
+      };
+      return filters;
+    }
+
+    // Calculate age from date of birth
+    function calculateAge(dob) {
+      if (!dob) return null;
+      const today = new Date();
+      const birthDate = new Date(dob);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    // Filter plans based on criteria
+    function filterPlans(filters) {
+      const filtered = medicalPlans.filter(plan => {
+        // Filter by gender (if specified)
+        if (filters.gender && plan.gender !== 'both' && plan.gender !== filters.gender) {
+          return false;
+        }
+
+        // Filter by age (from date of birth)
+        if (filters.dob) {
+          const age = calculateAge(filters.dob);
+          if (age !== null && (age < plan.minAge || age > plan.maxAge)) {
+            return false;
+          }
+        }
+
+        // Filter by annual limit range
+        if (filters['annual-limit']) {
+          const coverage = parseInt(plan.coverage.replace(/[RM,\s]/g, ''));
+          const range = filters['annual-limit'];
+          
+          if (range === '0-500k' && coverage > 500000) return false;
+          if (range === '500k-1m' && (coverage < 500000 || coverage > 1000000)) return false;
+          if (range === '1m-2m' && (coverage < 1000000 || coverage > 2000000)) return false;
+          if (range === '2m-5m' && (coverage < 2000000 || coverage > 5000000)) return false;
+          if (range === '5m+' && coverage < 5000000) return false;
+        }
+
+        // Filter by plan type (takaful or normal)
+        if (filters['plan-type'] && plan.type !== filters['plan-type']) {
+          return false;
+        }
+
+        return true;
+      });
+
+      return filtered;
+    }
+
+    // Render filtered plans
+    function renderPlans(plans) {
+      const plansList = document.getElementById('plans-list');
+      const resultsCount = document.getElementById('results-count');
+
+      if (plans.length === 0) {
+        plansList.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="search-x" style="color: var(--text-secondary);"></i>
+            <p>No plans found matching your criteria.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">Please adjust your filters and try again.</p>
+          </div>
+        `;
+        resultsCount.textContent = '0 plans found';
+      } else {
+        resultsCount.textContent = `${plans.length} plan${plans.length > 1 ? 's' : ''} found`;
+        
+        plansList.innerHTML = plans.map((plan, index) => `
+          <div class="plan-card">
+            <div class="plan-header">
+              <div class="plan-icon">
+                <i data-lucide="shield" style="width: 40px; height: 40px; color: var(--primary-color);"></i>
+              </div>
+              <div class="plan-info">
+                <h4 class="plan-name">${plan.name}</h4>
+              </div>
+            </div>
+            <div class="plan-price">RM ${plan.price.toFixed(2)}</div>
+            <div class="plan-price-label">per annum</div>
+            <div class="plan-coverage">Annual Limit: ${plan.coverage}</div>
+            
+            <button class="plan-btn" onclick="viewPlanDetails(${index})">View Details</button>
+          </div>
+        `).join('');
+        
+        lucide.createIcons();
+        window.filteredPlans = plans; // Store for detail view
+      }
+    }
+
+    // Show plan details modal
+    function viewPlanDetails(planIndex) {
+      const plan = window.filteredPlans[planIndex];
+      if (!plan) return;
+
+      // Calculate daily price
+      const annualPrice = plan.price || 189;
+      const dailyPrice = (annualPrice / 365).toFixed(2);
+
+      const detailContent = document.getElementById('plan-detail-content');
+      detailContent.innerHTML = `
+        <div class="plan-company-info">
+          <div class="company-logo">Chubb</div>
+          <div class="company-name">${plan.name}</div>
+        </div>
+
+        <div class="action-buttons-top">
+          <button class="action-btn-top" onclick="viewProductSheet()">
+            <i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+            <span>Product Disclosure Sheet</span>
+          </button>
+          <button class="action-btn-top" onclick="addToCompare(${planIndex})">
+            <i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+            <span>Add To Compare</span>
+          </button>
+          <button class="action-btn-top primary" onclick="purchasePlan(${planIndex})">
+            <i data-lucide="shopping-cart" style="width: 16px; height: 16px;"></i>
+            <span>Purchase</span>
+          </button>
+        </div>
+
+        <div class="plan-select-section">
+          <label class="plan-select-label">Select Your Policy Plan:</label>
+          <select class="plan-select-dropdown" id="plan-variant">
+            ${plan.list ? plan.list.map(item => `
+              <option value="${item}" ${item === plan.list[0] ? 'selected' : ''}>${item}</option>
+            `).join('') : `
+              <option value="${plan.name}" selected>${plan.name}</option>
+            `}
+          </select>
+        </div>
+
+        <div class="pricing-section">
+          <div class="pricing-info">
+            <div class="pricing-row">
+              <span class="pricing-label">From</span>
+              <div class="pricing-amount">
+                <i data-lucide="info" style="width: 18px; height: 18px; color: var(--text-secondary);"></i>
+                RM ${annualPrice.toFixed(2)}
+              </div>
+              <span class="pricing-period">per annum</span>
+            </div>
+            <div class="daily-price">
+              <div class="daily-price-text">RM ${dailyPrice} per day</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="features-section">
+          <div class="features-pills" id="features-pills-${planIndex}">
+            ${plan.features.slice(0, 4).map(feature => `
+              <button class="feature-pill">${feature}</button>
+            `).join('')}
+            <div id="more-features-${planIndex}" style="display: none;">
+              ${plan.features.slice(4).map(feature => `
+                <button class="feature-pill">${feature}</button>
+              `).join('')}
+            </div>
+          </div>
+          ${plan.features.length > 4 ? `
+            <a href="#" class="show-more-link" id="show-more-${planIndex}" onclick="showMoreFeatures(${planIndex}); return false;">Show More</a>
+            <a href="#" class="show-more-link" id="show-less-${planIndex}" onclick="showLessFeatures(${planIndex}); return false;" style="display: none;">Show Less</a>
+          ` : ''}
+        </div>
+
+        <div class="annual-limit-section">
+          <div class="annual-limit-label">
+            Annual Limit:
+          </div>
+          <div class="annual-limit-value">
+            <i data-lucide="info" style="width: 18px; height: 18px; color: var(--text-secondary);"></i>
+            ${plan.coverage.replace('RM ', 'RM ').replace(/,/g, ',')}
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+      document.getElementById('plan-detail-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close plan details modal
+    function closePlanDetails() {
+      document.getElementById('plan-detail-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Action handlers
+    function viewProductSheet() {
+      const planDetailContent = document.getElementById('plan-detail-content');
+      if (!planDetailContent) return;
+      
+      // Check if dropdown already exists
+      let dropdown = planDetailContent.querySelector('.pdf-dropdown');
+      
+      if (dropdown) {
+        // Toggle existing dropdown
+        dropdown.classList.toggle('active');
+      } else {
+        // Create new dropdown
+        const actionButtons = planDetailContent.querySelector('.action-buttons-top');
+        if (!actionButtons) return;
+        
+        // PDF files list
+        const pdfFiles = [
+          { name: 'Product Disclosure Sheet',  url: '#' },
+          { name: 'Brochure', url: '#' },
+          { name: 'Certificate Wording', url: '#' },
+        ];
+
+        const dropdownHTML = `
+          <div class="pdf-dropdown active" id="pdf-dropdown">
+            <div class="pdf-list" style="padding: 1rem;">
+              ${pdfFiles.map((pdf, index) => `
+                <a href="${pdf.url}" class="pdf-item" target="_blank" onclick="event.preventDefault(); openPDF('${pdf.url}', '${pdf.name}')">
+                  <div class="pdf-info">
+                    <div class="pdf-icon">
+                      <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+                    </div>
+                    <div class="pdf-details">
+                      <div class="pdf-name">${pdf.name}</div>
+                      <div class="pdf-size">${pdf.size}</div>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="pdf-arrow"></i>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        
+        actionButtons.insertAdjacentHTML('afterend', dropdownHTML);
+        lucide.createIcons();
+      }
+    }
+
+    function openPDF(url, filename) {
+      // Open PDF in new tab or download
+      if (url === '#') {
+        // For prototype, show alert
+        alert(`Opening ${filename}...`);
+      } else {
+        window.open(url, '_blank');
+      }
+    }
+
+    function addToCompare(planIndex) {
+      alert('Plan added to compare list');
+    }
+
+    function purchasePlan(planIndex) {
+      const isGuest = sessionStorage.getItem('isLoggedIn') !== 'true';
+      if (isGuest) {
+        window.location.href = 'login.html?return=medical-plan.html';
+      } else {
+        alert('Redirecting to purchase page...');
+      }
+    }
+
+    function showMoreFeatures(planIndex) {
+      const moreFeatures = document.getElementById(`more-features-${planIndex}`);
+      const showMoreLink = document.getElementById(`show-more-${planIndex}`);
+      const showLessLink = document.getElementById(`show-less-${planIndex}`);
+      
+      if (moreFeatures && showMoreLink && showLessLink) {
+        moreFeatures.style.display = 'flex';
+        moreFeatures.style.flexWrap = 'wrap';
+        moreFeatures.style.gap = '0.5rem';
+        showMoreLink.style.display = 'none';
+        showLessLink.style.display = 'inline-block';
+      }
+    }
+
+    function showLessFeatures(planIndex) {
+      const moreFeatures = document.getElementById(`more-features-${planIndex}`);
+      const showMoreLink = document.getElementById(`show-more-${planIndex}`);
+      const showLessLink = document.getElementById(`show-less-${planIndex}`);
+      
+      if (moreFeatures && showMoreLink && showLessLink) {
+        moreFeatures.style.display = 'none';
+        showMoreLink.style.display = 'inline-block';
+        showLessLink.style.display = 'none';
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      const filters = getFilters();
+      const filteredPlans = filterPlans(filters);
+      renderPlans(filteredPlans);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Plan -   InsureMart</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #EA580C;
+      --text-primary: #1D1D1F;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F5F5F7;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: var(--bg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header */
+    .home-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      padding: 1rem 1.25rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-greeting {
+      flex: 1;
+    }
+
+    .brand-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .user-greeting h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Main Content */
+    .home-main {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    /* Filter Form */
+    .filter-form {
+      background: white;
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    .form-group:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .form-input,
+    .form-select {
+      padding: 0.875rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background: #F5F5F7;
+      color: var(--text-primary);
+      transition: border-color 0.2s;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2386868B' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 10px;
+      padding-right: 2.25rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background-color: white;
+    }
+
+    .form-input[type="date"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+      background-size: 16px;
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-primary {
+      flex: 1;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #C2410C;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.875rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: #E5E5EA;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 0.75rem 0;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      text-decoration: none;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item.help-special {
+      background: #FF3B30;
+      color: white;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      max-width: 56px;
+      padding: 0;
+      margin-top: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      flex: 0 0 auto;
+    }
+
+    .nav-item.help-special .nav-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .nav-item.help-special i {
+      display: none;
+    }
+
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="home-header">
+      <div class="header-top">
+        <div class="user-greeting">
+          <div class="brand-name">  InsureMart</div>
+          <h2>Find Your Suitable Medical Plan</h2>
+        </div>
+        <div class="header-actions">
+          <button class="back-btn" onclick="window.location.href='index.html'">
+            <i data-lucide="arrow-left"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+      <h3 class="section-title">Filter Plans</h3>
+      
+      <form class="filter-form" id="filter-form">
+          <div class="form-group">
+            <label class="form-label" for="gender">Gender</label>
+            <select class="form-select" id="gender" name="gender">
+              <option value="" disabled selected>Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="dob">Date of Birth</label>
+            <input type="date" class="form-input" id="dob" name="dob" placeholder="mm/dd/yyyy" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="annual-limit">Annual Limit Range (RM)</label>
+            <select class="form-select" id="annual-limit" name="annual-limit">
+              <option value="" disabled selected>Select Range</option>
+              <option value="0-500k">RM 0 - RM 500,000</option>
+              <option value="500k-1m">RM 500,000 - RM 1,000,000</option>
+              <option value="1m-2m">RM 1,000,000 - RM 2,000,000</option>
+              <option value="2m-5m">RM 2,000,000 - RM 5,000,000</option>
+              <option value="5m+">RM 5,000,000+</option>
+            </select>
+          </div>
+
+        <div class="filter-actions">
+          <button type="button" class="btn-secondary" onclick="resetFilter()">Reset</button>
+          <button type="submit" class="btn-primary">Apply Filter</button>
+        </div>
+      </form>
+
+      <!-- Filtered Plans Results -->
+      <div id="plans-results" style="display: none;">
+        <h3 class="section-title">Available Plans</h3>
+        <div id="plans-list" class="plans-list">
+          <!-- Plans will be rendered here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Plan Detail Modal -->
+    <div class="plan-detail-modal" id="plan-detail-modal">
+      <div class="plan-detail-header">
+        <h3>Plan Details</h3>
+        <button class="close-modal-btn" onclick="closePlanDetails()">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="plan-detail-content" id="plan-detail-content">
+        <!-- Plan details will be rendered here -->
+      </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="nav-item">
+        <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Explore</span>
+      </a>
+      <a href="policy.html" class="nav-item">
+        <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">My Policies</span>
+      </a>
+      <a href="help.html" class="nav-item help-special">
+        <span class="nav-label">Help</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i data-lucide="user" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">Profile</span>
+      </a>
+      <a href="more.html" class="nav-item">
+        <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
+        <span class="nav-label">More</span>
+      </a>
+    </nav>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Sample medical insurance plans data
+    const medicalPlans = [
+      {
+        name: 'Individual Health Plan',
+        description: 'Comprehensive health coverage for individuals',
+        coverage: 'RM 500,000',
+        price: 189,
+        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup', 'Ambulance Fee', 'Anaesthetist Fees'],
+        type: 'normal',
+        minAge: 18,
+        maxAge: 65,
+        gender: 'both'
+      },
+      {
+        name: 'Family Health Plan',
+        description: 'Complete coverage for your entire family',
+        coverage: 'RM 1,000,000',
+        price: 350,
+        features: ['Family Coverage', 'OPD Coverage', 'Cashless Treatment', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both'
+      },
+      {
+        name: 'Premium Health Plan',
+        description: 'Premium coverage with extensive benefits',
+        coverage: 'RM 2,000,000',
+        price: 550,
+        features: ['Premium Coverage', 'Worldwide Coverage', 'Cashless Treatment', 'Wellness Programs', 'Ambulance Fee', 'Anaesthetist Fees'],
+        type: 'normal',
+        minAge: 18,
+        maxAge: 70,
+        gender: 'both'
+      },
+      {
+        name: 'Takaful Health Plan',
+        description: 'Shariah-compliant health coverage',
+        coverage: 'RM 1,500,000',
+        price: 420,
+        features: ['Takaful Coverage', 'OPD Coverage', 'Cashless Treatment', 'Halal Benefits', 'Daily Cash Allowance at Gov Hospital', 'Day Surgery'],
+        type: 'takaful',
+        minAge: 18,
+        maxAge: 65,
+        gender: 'both'
+      },
+      {
+        name: 'Senior Health Plan',
+        description: 'Specialized coverage for seniors',
+        coverage: 'RM 800,000',
+        price: 280,
+        features: ['Senior Coverage', 'Chronic Disease Management', 'Cashless Treatment', 'Home Care', 'Ambulance Fee', 'Anaesthetist Fees'],
+        type: 'normal',
+        minAge: 60,
+        maxAge: 85,
+        gender: 'both'
+      }
+    ];
+
+    // Reset filter function
+    function resetFilter() {
+      document.getElementById('filter-form').reset();
+      document.getElementById('plans-results').style.display = 'none';
+    }
+
+    // Calculate age from date of birth
+    function calculateAge(dob) {
+      const today = new Date();
+      const birthDate = new Date(dob);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+
+    // Filter plans based on criteria
+    function filterPlans(filters) {
+      const filtered = medicalPlans.filter(plan => {
+        // Filter by gender (if specified)
+        if (filters.gender && plan.gender !== 'both' && plan.gender !== filters.gender) {
+          return false;
+        }
+
+        // Filter by age (from date of birth)
+        if (filters.dob) {
+          const age = calculateAge(filters.dob);
+          if (age < plan.minAge || age > plan.maxAge) {
+            return false;
+          }
+        }
+
+        // Filter by annual limit range
+        if (filters['annual-limit']) {
+          const coverage = parseInt(plan.coverage.replace(/[RM,\s]/g, ''));
+          const range = filters['annual-limit'];
+          
+          if (range === '0-500k' && coverage > 500000) return false;
+          if (range === '500k-1m' && (coverage < 500000 || coverage > 1000000)) return false;
+          if (range === '1m-2m' && (coverage < 1000000 || coverage > 2000000)) return false;
+          if (range === '2m-5m' && (coverage < 2000000 || coverage > 5000000)) return false;
+          if (range === '5m+' && coverage < 5000000) return false;
+        }
+
+        return true;
+      });
+
+      return filtered;
+    }
+
+    // Render filtered plans
+    function renderPlans(plans) {
+      const plansList = document.getElementById('plans-list');
+      const plansResults = document.getElementById('plans-results');
+
+      if (plans.length === 0) {
+        plansList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">No plans found matching your criteria. Please adjust your filters.</p>';
+      } else {
+        plansList.innerHTML = plans.map((plan, index) => `
+          <div class="plan-card">
+            <div class="plan-header">
+              <div class="plan-icon">
+                <i data-lucide="shield" style="width: 40px; height: 40px; color: var(--primary-color);"></i>
+              </div>
+              <div class="plan-info">
+                <h4 class="plan-name">${plan.name}</h4>
+                <p class="plan-description">${plan.description}</p>
+              </div>
+            </div>
+            <div class="plan-coverage">Coverage: ${plan.coverage}</div>
+            <ul class="plan-features">
+              ${plan.features.map(feature => `
+                <li>
+                  <i data-lucide="check" style="width: 16px; height: 16px; margin-right: 0.5rem; color: var(--primary-color);"></i>
+                  ${feature}
+                </li>
+              `).join('')}
+            </ul>
+            <button class="plan-btn" onclick="showPlanDetails(${index})">View Details</button>
+          </div>
+        `).join('');
+        
+        lucide.createIcons();
+      }
+
+      plansResults.style.display = 'block';
+      window.filteredPlans = plans; // Store for detail view
+    }
+
+    // Show plan details modal
+    function showPlanDetails(planIndex) {
+      const plan = window.filteredPlans[planIndex];
+      if (!plan) return;
+
+      // Calculate daily price (assuming annual price exists)
+      const annualPrice = plan.price || 189; // Default or from plan data
+      const dailyPrice = (annualPrice / 365).toFixed(2);
+
+      const detailContent = document.getElementById('plan-detail-content');
+      detailContent.innerHTML = `
+        <div class="plan-select-section">
+          <label class="plan-select-label">Select Your Policy Plan:</label>
+          <select class="plan-select-dropdown" id="plan-variant">
+            <option value="${plan.name}" selected>${plan.name}</option>
+          </select>
+        </div>
+
+        <div class="pricing-section">
+          <div class="pricing-info">
+            <div class="pricing-label">From</div>
+            <div class="pricing-amount">RM ${annualPrice.toFixed(2)}</div>
+            <div class="pricing-period">per annum</div>
+            <div class="daily-price">
+              <div class="daily-price-text">RM ${dailyPrice} per day</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="action-btn" onclick="viewProductSheet()">
+            <i data-lucide="file-text" style="width: 18px; height: 18px;"></i>
+            <span>Product Disclosure Sheet</span>
+          </button>
+          <button class="action-btn" onclick="addToCompare(${planIndex})">
+            <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+            <span>Add To Compare</span>
+          </button>
+          <button class="action-btn primary" onclick="purchasePlan(${planIndex})" style="flex: 1 1 100%; margin-top: 0.5rem;">
+            <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
+            <span>Purchase</span>
+          </button>
+        </div>
+
+        <div class="features-section">
+          <div class="features-title">Covered Benefits:</div>
+          <div class="features-pills">
+            ${plan.features.map(feature => `
+              <button class="feature-pill">${feature}</button>
+            `).join('')}
+          </div>
+          <a href="#" class="show-more-link" onclick="showMoreFeatures(); return false;">Show More</a>
+        </div>
+
+        <div class="annual-limit-section">
+          <div class="annual-limit-label">
+            <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+            Annual Limit:
+          </div>
+          <div class="annual-limit-value">
+            <i data-lucide="clock" style="width: 18px; height: 18px;"></i>
+            ${plan.coverage}
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+      document.getElementById('plan-detail-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close plan details modal
+    function closePlanDetails() {
+      document.getElementById('plan-detail-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Action handlers
+    function viewProductSheet() {
+      alert('Product Disclosure Sheet will be displayed here');
+    }
+
+    function addToCompare(planIndex) {
+      alert('Plan added to compare list');
+    }
+
+    function purchasePlan(planIndex) {
+      const isGuest = sessionStorage.getItem('isLoggedIn') !== 'true';
+      if (isGuest) {
+        window.location.href = 'login.html?return=medical-plan.html';
+      } else {
+        alert('Redirecting to purchase page...');
+      }
+    }
+
+    function showMoreFeatures() {
+      alert('Showing more features...');
+    }
+
+    // Handle form submission
+    document.getElementById('filter-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Validate Date of Birth
+      const dobInput = document.getElementById('dob');
+      if (!dobInput.value) {
+        alert('Please select your Date of Birth');
+        dobInput.focus();
+        return;
+      }
+      
+      // Get form data
+      const formData = new FormData(e.target);
+      const filters = Object.fromEntries(formData);
+      
+      // Filter plans
+      const filteredPlans = filterPlans(filters);
+      
+      // Store filters in sessionStorage
+      sessionStorage.setItem('filter_gender', filters.gender || '');
+      sessionStorage.setItem('filter_dob', filters.dob || '');
+      sessionStorage.setItem('filter_annual-limit', filters['annual-limit'] || '');
+      sessionStorage.setItem('filter_plan-type', filters['plan-type'] || '');
+      
+      // Redirect to medical-plan.html with filters
+      const params = new URLSearchParams();
+      if (filters.gender) params.append('gender', filters.gender);
+      if (filters.dob) params.append('dob', filters.dob);
+      if (filters['annual-limit']) params.append('annual-limit', filters['annual-limit']);
+      if (filters['plan-type']) params.append('plan-type', filters['plan-type']);
+      
+      window.location.href = `medical-plan.html?${params.toString()}`;
+    });
+  </script>
+</body>
+</html>
+
