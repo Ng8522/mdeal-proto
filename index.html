@@ -725,6 +725,7 @@
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
+      align-items: flex-start;
       padding: 0.75rem 0;
       z-index: 100;
     }
@@ -741,10 +742,42 @@
       color: var(--text-secondary);
       transition: color 0.2s;
       text-decoration: none;
+      flex: 1;
+      min-width: 0;
     }
 
     .nav-item.active {
       color: var(--primary-color);
+    }
+
+    .nav-item.help-special {
+      background: #FF3B30;
+      color: white;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      max-width: 56px;
+      padding: 0;
+      margin-top: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      flex: 0 0 auto;
+    }
+
+    .nav-item.help-special .nav-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .nav-item.help-special i {
+      display: none;
     }
 
     .nav-label {
@@ -789,7 +822,7 @@
               </div>
               <span class="action-label">Buy</span>
             </button>
-            <button class="action-card" style="--action-color: #FF9500">
+            <button class="action-card" style="--action-color: #FF9500" onclick="handleClaimClick()">
               <div class="action-icon" style="background-color: #FF950015">
                 <i data-lucide="clipboard-list"></i>
               </div>
@@ -810,24 +843,11 @@
           </div>
         </section>
 
-        <!-- Insurance Type Toggle -->
-        <section class="insurance-type-section">
-          <div class="type-toggle">
-            <button class="type-btn active" data-type="insurance">
-              <i data-lucide="shield" style="width: 18px; height: 18px; margin-right: 0.5rem;"></i>
-              Insurance
-            </button>
-            <button class="type-btn" data-type="takaful">
-              <i data-lucide="moon" style="width: 18px; height: 18px; margin-right: 0.5rem;"></i>
-              Takaful
-            </button>
-          </div>
-        </section>
 
         <!-- Health Insurance Plans -->
         <section class="plans-section">
           <div class="section-header">
-            <h3 class="section-title" id="plans-title">Health Insurance Plans</h3>
+            <h3 class="section-title" id="plans-title">Health Insurance  Takaful Plans</h3>
           </div>
           <div class="plans-list" id="plans-list">
             <!-- Plans will be rendered here -->
@@ -846,8 +866,7 @@
         <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
         <span class="nav-label">My Policies</span>
       </a>
-      <a href="help.html" class="nav-item">
-        <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+      <a href="help.html" class="nav-item help-special">
         <span class="nav-label">Help</span>
       </a>
       <a href="profile.html" class="nav-item">
@@ -932,11 +951,6 @@
     // Render Plans
     function renderPlans() {
       const plansList = document.getElementById('plans-list');
-      const plansTitle = document.getElementById('plans-title');
-      
-      plansTitle.textContent = insuranceType === 'insurance' 
-        ? 'Health Insurance Plans' 
-        : 'Health Takaful Plans';
       
       plansList.innerHTML = healthPlans.map(plan => `
         <div class="plan-card ${plan.comingSoon ? 'coming-soon' : ''}">
@@ -970,6 +984,18 @@
       lucide.createIcons();
     }
 
+
+    // Handle Claim Click
+    function handleClaimClick() {
+      // Check guest state dynamically
+      const isGuestUser = sessionStorage.getItem('isLoggedIn') !== 'true';
+      if (isGuestUser) {
+        window.location.href = 'login.html?return=index.html';
+      } else {
+        // TODO: Navigate to claims page when implemented
+        alert('Claims feature coming soon!');
+      }
+    }
 
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {

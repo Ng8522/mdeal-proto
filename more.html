@@ -131,6 +131,7 @@
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
+      align-items: flex-start;
       padding: 0.75rem 0;
       z-index: 100;
     }
@@ -147,10 +148,42 @@
       color: var(--text-secondary);
       transition: color 0.2s;
       text-decoration: none;
+      flex: 1;
+      min-width: 0;
     }
 
     .nav-item.active {
       color: var(--primary-color);
+    }
+
+    .nav-item.help-special {
+      background: #FF3B30;
+      color: white;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      max-width: 56px;
+      padding: 0;
+      margin-top: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      flex: 0 0 auto;
+    }
+
+    .nav-item.help-special .nav-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .nav-item.help-special i {
+      display: none;
     }
 
     .nav-label {
@@ -224,8 +257,7 @@
         <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
         <span class="nav-label">My Policies</span>
       </a>
-      <a href="help.html" class="nav-item">
-        <i data-lucide="help-circle" style="width: 24px; height: 24px;"></i>
+      <a href="help.html" class="nav-item help-special">
         <span class="nav-label">Help</span>
       </a>
       <a href="profile.html" class="nav-item">
