@@ -171,56 +171,99 @@
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .policy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .policy-name {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      flex: 1;
+    }
+
+    .policy-status-badge {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.25rem 0.625rem;
+      border-radius: 12px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .policy-financial {
+      display: flex;
       gap: 1rem;
     }
 
-    .policy-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .policy-type {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .policy-number {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .policy-coverage {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .policy-expiry {
+    .financial-item {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
     }
 
-    .expiry-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
+    .financial-label {
+      font-size: 0.6875rem;
+      color: var(--primary-color);
+      font-weight: 500;
     }
 
-    .expiry-date {
-      font-size: 0.875rem;
-      font-weight: 600;
+    .financial-value {
+      font-size: 0.9375rem;
+      font-weight: 700;
       color: var(--text-primary);
     }
 
-    .policy-action-btn {
-      background: var(--primary-color);
-      color: white;
+    .policy-actions {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.875rem;
+    }
+
+    .policy-action-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.375rem;
+      background: none;
       border: none;
-      border-radius: 8px;
-      padding: 0.75rem;
-      font-weight: 500;
       cursor: pointer;
+      padding: 0.375rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .policy-action-item:hover {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+
+    .policy-action-item i {
+      width: 18px;
+      height: 18px;
+      color: var(--text-primary);
+    }
+
+    .policy-action-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .policy-actions-divider {
+      width: 1px;
+      background: var(--border-color);
+      margin: 0 0.5rem;
     }
 
     .bottom-nav {
@@ -300,6 +343,96 @@
     .hidden {
       display: none !important;
     }
+
+    /* Benefits Modal */
+    .benefits-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .benefits-modal.active {
+      display: flex;
+    }
+
+    .benefits-modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .benefits-modal-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .benefits-modal-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .benefits-modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .benefits-modal-body {
+      padding: 1.25rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+    }
+
+    .benefit-item i {
+      width: 18px;
+      height: 18px;
+      color: var(--primary-color);
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+    }
+
+    .benefit-text {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -346,6 +479,21 @@
     </nav>
   </div>
 
+  <!-- Benefits Modal -->
+  <div class="benefits-modal" id="benefits-modal">
+    <div class="benefits-modal-content">
+      <div class="benefits-modal-header">
+        <h3 class="benefits-modal-title">Plan Benefits</h3>
+        <button class="benefits-modal-close" onclick="closeBenefitsModal()">
+          <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+        </button>
+      </div>
+      <div class="benefits-modal-body" id="benefits-modal-body">
+        <!-- Benefits will be rendered here -->
+      </div>
+    </div>
+  </div>
+
   <script>
     lucide.createIcons();
 
@@ -358,8 +506,14 @@
 
     // Data
     const activePolicies = [
-      { type: 'Health Insurance', policyNo: 'POL-2024-002', expiry: '20 Apr 2025', coverage: 'RM 500,000' },
-      { type: 'Health Insurance', policyNo: 'POL-2023-015', expiry: '10 Jun 2025', coverage: 'RM 1,000,000' },
+      { 
+        name: 'Allianz Medicure Plan 1', 
+        policyNo: 'POL-2024-002', 
+        expiry: '20 Apr 2025', 
+        annualPremium: 'N/A',
+        annualLimit: '50,000.00',
+        status: 'PENDING'
+      }
     ];
 
     // Render policies
@@ -369,28 +523,151 @@
       policiesContent.innerHTML = `
         <section class="policies-section">
           <div class="section-header">
-            <h3 class="section-title">My Health Policies</h3>
-            <button class="see-all-btn">View All</button>
+            <h3 class="section-title">My Policies</h3>
           </div>
           <div class="policies-list">
             ${activePolicies.map(policy => `
               <div class="policy-card">
-                <div class="policy-info">
-                  <div class="policy-type">${policy.type}</div>
-                  <div class="policy-number">${policy.policyNo}</div>
-                  <div class="policy-coverage">Coverage: ${policy.coverage}</div>
+                <div class="policy-header">
+                  <div class="policy-name">${policy.name}</div>
+                  <div class="policy-status-badge">${policy.status}</div>
                 </div>
-                <div class="policy-expiry">
-                  <span class="expiry-label">Expires</span>
-                  <span class="expiry-date">${policy.expiry}</span>
+                <div class="policy-financial">
+                  <div class="financial-item">
+                    <div class="financial-label">Annual Premium</div>
+                    <div class="financial-value">RM ${policy.annualPremium}</div>
+                  </div>
+                  <div class="financial-item">
+                    <div class="financial-label">Annual Limit</div>
+                    <div class="financial-value">RM ${policy.annualLimit}</div>
+                  </div>
                 </div>
-                <button class="policy-action-btn">View</button>
+                <div class="policy-actions">
+                  <button class="policy-action-item" onclick="viewDetails('${policy.policyNo}')">
+                    <i data-lucide="eye"></i>
+                    <span class="policy-action-label">View Details</span>
+                  </button>
+                  <div class="policy-actions-divider"></div>
+                  <button class="policy-action-item" onclick="claimRequest('${policy.policyNo}')">
+                    <i data-lucide="clipboard-list"></i>
+                    <span class="policy-action-label">Claim Request</span>
+                  </button>
+                </div>
               </div>
             `).join('')}
           </div>
         </section>
       `;
+      
+      // Re-initialize icons after rendering
+      lucide.createIcons();
     }
+
+    // Medical plans data (matching medical-plan.html structure)
+    const medicalPlans = [
+      {
+        name: 'Allianz Medicure',
+        coverage: 500000,
+        list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
+        price: 949,
+        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+      },
+      {
+        name: 'Zurich ZMedProtect',
+        coverage: 1000000,
+        list: ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
+        price: 350,
+        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+      },
+      {
+        name: 'SmartCare Optimum Plus Plan 1',
+        coverage: 2100000,
+        list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
+        price: 1441,
+        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+      },
+    ];
+
+    function findPlanByPolicyName(policyName) {
+      // First try to find by exact name match
+      let plan = medicalPlans.find(p => p.name === policyName);
+      
+      // If not found, try to find by checking if policyName is in the list array
+      if (!plan) {
+        plan = medicalPlans.find(p => p.list && p.list.includes(policyName));
+      }
+      
+      return plan;
+    }
+
+    function viewDetails(policyNo) {
+      // Find the policy
+      const policy = activePolicies.find(p => p.policyNo === policyNo);
+      if (!policy) return;
+
+      // Find the matching medical plan
+      const plan = findPlanByPolicyName(policy.name);
+      if (!plan) {
+        alert('Plan details not found');
+        return;
+      }
+
+      // Show benefits modal
+      const modal = document.getElementById('benefits-modal');
+      const modalBody = document.getElementById('benefits-modal-body');
+      
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Policy Name</div>
+          <div style="font-size: 1rem; font-weight: 600; color: var(--text-primary);">${policy.name}</div>
+        </div>
+        <div style="margin-bottom: 1.25rem;">
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Covered Benefits</div>
+          <div class="benefits-list">
+            ${plan.features.map(feature => `
+              <div class="benefit-item">
+                <i data-lucide="check-circle"></i>
+                <span class="benefit-text">${feature}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBenefitsModal() {
+      const modal = document.getElementById('benefits-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function claimRequest(policyNo) {
+      alert(`Claim request for ${policyNo}`);
+    }
+
+    // Close modal when clicking outside
+    document.addEventListener('click', (e) => {
+      const modal = document.getElementById('benefits-modal');
+      if (e.target === modal) {
+        closeBenefitsModal();
+      }
+    });
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
