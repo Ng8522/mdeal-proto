@@ -177,6 +177,15 @@
       flex-shrink: 0;
     }
 
+    .plan-icon img {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
     .plan-info {
       flex: 1;
     }
@@ -351,6 +360,119 @@
       display: block;
     }
 
+    /* Data Sharing Terms modal */
+    .terms-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+    }
+
+    .terms-modal.active {
+      display: flex;
+    }
+
+    .terms-modal-content {
+      width: calc(100% - 2rem);
+      max-width: 400px;
+      max-height: 70vh;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .terms-modal-content {
+        max-width: 360px;
+        margin: 0 1rem;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .terms-modal-content {
+        max-height: 65vh;
+      }
+      .terms-modal-header {
+        padding: 0.85rem 1rem 0.5rem;
+      }
+      .terms-modal-body {
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+      }
+      .terms-modal-footer {
+        padding: 0.6rem 1rem 0.9rem;
+      }
+    }
+
+    .terms-modal-header {
+      padding: 1.25rem 1.25rem 0.75rem;
+      border-bottom: 1px solid #f2f2f7;
+    }
+
+    .terms-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .terms-modal-body {
+      padding: 1rem 1.25rem;
+      overflow-y: auto;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background: #fafafa;
+    }
+
+    .terms-modal-body p {
+      margin-bottom: 0.75rem;
+    }
+
+    .terms-modal-footer {
+      padding: 0.75rem 1.25rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      border-top: 1px solid #f2f2f7;
+      background: #fff;
+    }
+
+    .terms-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #e5e5ea;
+      background: #f5f5f7;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .terms-btn.primary {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .terms-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .terms-btn.primary:disabled {
+      background: #ccc;
+      border-color: #ccc;
+      color: #999;
+    }
+
     .plan-detail-header {
       background: white;
       padding: 1rem 1.25rem;
@@ -405,6 +527,15 @@
       color: white;
       font-weight: 700;
       font-size: 0.75rem;
+      overflow: hidden;
+    }
+
+    .company-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fff;
+      padding: 2px;
     }
 
     .company-name {
@@ -730,6 +861,50 @@
       </div>
     </div>
 
+    <!-- Data Sharing Terms Modal -->
+    <div class="terms-modal" id="terms-modal">
+      <div class="terms-modal-content">
+        <div class="terms-modal-header">
+          <h3 class="terms-modal-title">Data Sharing Terms &amp; Conditions</h3>
+        </div>
+        <div class="terms-modal-body">
+          <p><strong>By agreeing to these terms, you expressly acknowledge and agree to the following:</strong></p>
+          <p>
+            You hereby expressly authorize <strong></strong> to share your Personal Data with the Insurance Provider
+            and Insurance Agency (hereinafter referred to as "Partner"). You further consent to the Partner's Privacy Policy
+            and acknowledge that your Personal Data will be used, processed, and handled in accordance with the Partner's
+            Privacy Policy.
+          </p>
+          <p>
+            You acknowledge that once your Personal Data is shared with the Partner, the Partner will have sole and full
+            control over the copy of your Personal Data, and you will be required to contact the Partner directly for any
+            matters related to your Personal Data.
+          </p>
+          <p>
+            You expressly consent to the transfer of your Personal Data to a location outside Malaysia, subject to the terms
+            outlined in the Partner's Privacy Policy.
+          </p>
+          <p>
+            <strong></strong> shall be released from all obligations and responsibilities related to the copy of
+            Personal Data shared with the Partner. For clarity, <strong></strong> will ensure that any Personal Data
+            retained under its control is processed in accordance with <strong></strong>'s Privacy Policy and
+            applicable laws.
+          </p>
+          <p>
+            You may withdraw your consent for further disclosure of your Personal Data at any time by submitting a request to
+            <a href="mailto:support@mdeal.com.my"></a>. However, such withdrawal may result in the Partner
+            or <strong></strong> declining, refusing, or making services inaccessible to you. Please note that any
+            withdrawal of consent will not affect Personal Data previously shared, for which you must contact the Partner
+            directly.
+          </p>
+        </div>
+        <div class="terms-modal-footer">
+          <button type="button" class="terms-btn" onclick="closeTermsModal()">Close</button>
+          <button type="button" id="accept-terms-btn" class="terms-btn primary" onclick="acceptTermsAndProceed()" disabled>I accept</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
       <a href="index.html" class="nav-item">
@@ -760,46 +935,50 @@
     // Sample medical insurance plans data (same as filter page)
     const medicalPlans = [
       {
-        name: 'Individual Health Plan',
-        coverage: 'RM 500,000',
-        price: 189,
-        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup', 'Ambulance Fee', 'Anaesthetist Fees'],
-        type: 'normal',
-        minAge: 18,
-        maxAge: 65,
-        gender: 'both'
-      },
-      {
-        name: 'Chubb Crystal Sihat',
-        coverage: 'RM 1,000,000',
-        list:  ['Chubb Crystal Sihat 100', 'Chubb Crystal Sihat 200', 'Chubb Crystal Sihat 300'],
+        name: 'Zurich ZMedProtect',
+        coverage: 1000000,
+        list:  ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
         price: 350,
         features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
         type: 'normal',
         minAge: 0,
         maxAge: 80,
-        gender: 'both'
+        gender: 'both',
+        productDisclosureSheet: 'https://edge.sitecorecloud.io/zurichinsurf8c0-zwpshared-prod-d824/media/project/zurich-headless/malaysia/docs/insurance-products/product-disclosure-sheets/zgimb-z-medprotect-pds.pdf',
+        brochure: 'https://edge.sitecorecloud.io/zurichinsurf8c0-zwpshared-prod-d824/media/project/zurich-headless/malaysia/docs/insurance-products/brochures/zgimb-z-medprotect-brochure.pdf',
+        policyWording: 'https://edge.sitecorecloud.io/zurichinsurf8c0-zwpshared-prod-d824/media/project/zurich-headless/malaysia/docs/insurance-products/policy-wordings/zgimb-z-medprotect-policy-wordings.pdf',
+        logo: 'zurich-logo.svg',
       },
       {
-        name: 'Premium Health Plan',
-        coverage: 'RM 2,000,000',
-        price: 550,
-        features: ['Premium Coverage', 'Worldwide Coverage', 'Cashless Treatment', 'Wellness Programs', 'Ambulance Fee', 'Anaesthetist Fees'],
+       name: 'Allianz Medicure', 
+       coverage: 500000,
+       list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
+       price: 949,
+       features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+       type: 'normal',
+       minAge: 0,
+       maxAge: 80,
+       gender: 'both',
+       productDisclosureSheet: 'https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/product-document/AMC_PDS_ENG.pdf',
+       brochure: 'https://mdeal-public-bucket.s3.https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/product-document/AMC_Brochure_ENG.pdf',
+       policyWording: 'https://www.allianz.com.my/content/dam/onemarketing/azmb/wwwallianzcommy/product-document/AMC_PW_ENG.pdf',
+       logo: 'Allianz.svg',
+      },
+      {
+        name: 'SmartCare Optimum Plus Plan 1',
+        coverage: 2100000,
+        list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
+        price: 1441,
+        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
         type: 'normal',
-        minAge: 18,
-        maxAge: 70,
-        gender: 'both'
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+        productDisclosureSheet: 'https://www.generali.com.my/wf-assets/smartcare-optimum-plus-pds',
+        brochure: 'https://www.generali.com.my/wf-assets/smartcare-optimum-plus-brochure-em',
+        policyWording: 'https://www.generali.com.my/wf-assets/smartcare-optimum-plus-pw',
+        logo: 'Assicurazioni_Generali_logo.png',
       },
-      {
-        name: 'Takaful Health Plan',
-        coverage: 'RM 1,500,000',
-        price: 420,
-        features: ['Takaful Coverage', 'OPD Coverage', 'Cashless Treatment', 'Halal Benefits', 'Daily Cash Allowance at Gov Hospital', 'Day Surgery'],
-        type: 'takaful',
-        minAge: 18,
-        maxAge: 65,
-        gender: 'both'
-      }
     ];
 
     // Get filter parameters from URL or sessionStorage
@@ -845,7 +1024,7 @@
 
         // Filter by annual limit range
         if (filters['annual-limit']) {
-          const coverage = parseInt(plan.coverage.replace(/[RM,\s]/g, ''));
+          const coverage = typeof plan.coverage === 'number' ? plan.coverage : parseInt(plan.coverage.replace(/[RM,\s]/g, ''));
           const range = filters['annual-limit'];
           
           if (range === '0-500k' && coverage > 500000) return false;
@@ -868,10 +1047,17 @@
 
     // Render filtered plans
     function renderPlans(plans) {
+      // Sort plans by annual limit (coverage) in ascending order
+      const sortedPlans = [...plans].sort((a, b) => {
+        const coverageA = typeof a.coverage === 'number' ? a.coverage : parseInt(a.coverage.replace(/[RM,\s]/g, ''));
+        const coverageB = typeof b.coverage === 'number' ? b.coverage : parseInt(b.coverage.replace(/[RM,\s]/g, ''));
+        return coverageA - coverageB;
+      });
+      
       const plansList = document.getElementById('plans-list');
       const resultsCount = document.getElementById('results-count');
 
-      if (plans.length === 0) {
+      if (sortedPlans.length === 0) {
         plansList.innerHTML = `
           <div class="empty-state">
             <i data-lucide="search-x" style="color: var(--text-secondary);"></i>
@@ -881,28 +1067,35 @@
         `;
         resultsCount.textContent = '0 plans found';
       } else {
-        resultsCount.textContent = `${plans.length} plan${plans.length > 1 ? 's' : ''} found`;
+        resultsCount.textContent = `${sortedPlans.length} plan${sortedPlans.length > 1 ? 's' : ''} found`;
         
-        plansList.innerHTML = plans.map((plan, index) => `
+        plansList.innerHTML = sortedPlans.map((plan, index) => `
           <div class="plan-card">
             <div class="plan-header">
               <div class="plan-icon">
-                <i data-lucide="shield" style="width: 40px; height: 40px; color: var(--primary-color);"></i>
+                ${plan.logo ? `
+                  <img src="insurance-img/${plan.logo}" alt="${plan.name} logo"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='<span style\\='font-weight: 700; font-size: 1.25rem; color: var(--primary-color);\\'>${plan.name.substring(0, 2).toUpperCase()}</span>';">
+                ` : `
+                  <span style="font-weight: 700; font-size: 1.25rem; color: var(--primary-color);">
+                    ${plan.name.substring(0, 2).toUpperCase()}
+                  </span>
+                `}
               </div>
               <div class="plan-info">
                 <h4 class="plan-name">${plan.name}</h4>
               </div>
             </div>
-            <div class="plan-price">RM ${plan.price.toFixed(2)}</div>
+            <div class="plan-price">RM ${plan.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
             <div class="plan-price-label">per annum</div>
-            <div class="plan-coverage">Annual Limit: ${plan.coverage}</div>
+            <div class="plan-coverage">Annual Limit: RM ${plan.coverage.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
             
             <button class="plan-btn" onclick="viewPlanDetails(${index})">View Details</button>
           </div>
         `).join('');
         
         lucide.createIcons();
-        window.filteredPlans = plans; // Store for detail view
+        window.filteredPlans = sortedPlans; // Store for detail view
       }
     }
 
@@ -916,9 +1109,19 @@
       const dailyPrice = (annualPrice / 365).toFixed(2);
 
       const detailContent = document.getElementById('plan-detail-content');
+      detailContent.setAttribute('data-plan-index', planIndex);
       detailContent.innerHTML = `
         <div class="plan-company-info">
-          <div class="company-logo">Chubb</div>
+          <div class="company-logo">
+            ${plan.logo ? `
+              <img src="insurance-img/${plan.logo}" alt="${plan.name} logo"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<span style\\='font-weight: 700; font-size: 0.85rem;\\'>${plan.name.substring(0, 2).toUpperCase()}</span>';">
+            ` : `
+              <span style="font-weight: 700; font-size: 0.85rem;">
+                ${plan.name.substring(0, 2).toUpperCase()}
+              </span>
+            `}
+          </div>
           <div class="company-name">${plan.name}</div>
         </div>
 
@@ -954,12 +1157,12 @@
               <span class="pricing-label">From</span>
               <div class="pricing-amount">
                 <i data-lucide="info" style="width: 18px; height: 18px; color: var(--text-secondary);"></i>
-                RM ${annualPrice.toFixed(2)}
+                RM ${annualPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </div>
               <span class="pricing-period">per annum</span>
             </div>
             <div class="daily-price">
-              <div class="daily-price-text">RM ${dailyPrice} per day</div>
+              <div class="daily-price-text">RM ${parseFloat(dailyPrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} per day</div>
             </div>
           </div>
         </div>
@@ -987,7 +1190,7 @@
           </div>
           <div class="annual-limit-value">
             <i data-lucide="info" style="width: 18px; height: 18px; color: var(--text-secondary);"></i>
-            ${plan.coverage.replace('RM ', 'RM ').replace(/,/g, ',')}
+            RM ${plan.coverage.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </div>
         </div>
       `;
@@ -1008,6 +1211,10 @@
       const planDetailContent = document.getElementById('plan-detail-content');
       if (!planDetailContent) return;
       
+      // Get the plan index from data attribute
+      const planIndex = planDetailContent.getAttribute('data-plan-index');
+      const plan = planIndex !== null ? window.filteredPlans[planIndex] : null;
+      
       // Check if dropdown already exists
       let dropdown = planDetailContent.querySelector('.pdf-dropdown');
       
@@ -1019,11 +1226,11 @@
         const actionButtons = planDetailContent.querySelector('.action-buttons-top');
         if (!actionButtons) return;
         
-        // PDF files list
+        // PDF files list - use plan data if available, otherwise use defaults
         const pdfFiles = [
-          { name: 'Product Disclosure Sheet',  url: '#' },
-          { name: 'Brochure', url: '#' },
-          { name: 'Certificate Wording', url: '#' },
+          { name: 'Product Disclosure Sheet',  url: plan?.productDisclosureSheet || '#' },
+          { name: 'Brochure', url: plan?.brochure || '#' },
+          { name: 'Certificate Wording', url: plan?.policyWording || '#' },
         ];
 
         const dropdownHTML = `
@@ -1037,7 +1244,6 @@
                     </div>
                     <div class="pdf-details">
                       <div class="pdf-name">${pdf.name}</div>
-                      <div class="pdf-size">${pdf.size}</div>
                     </div>
                   </div>
                   <i data-lucide="chevron-right" class="pdf-arrow"></i>
@@ -1054,10 +1260,7 @@
 
     function openPDF(url, filename) {
       // Open PDF in new tab or download
-      if (url === '#') {
-        // For prototype, show alert
-        alert(`Opening ${filename}...`);
-      } else {
+      if (url !== '#') {
         window.open(url, '_blank');
       }
     }
@@ -1066,13 +1269,27 @@
       const plan = window.filteredPlans[planIndex];
       let compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
       
-      // Check if plan already in compare list
-      const exists = compareList.findIndex(p => p.name === plan.name);
+      // Get the selected variant name if plan has variants
+      let planNameToStore = plan.name;
+      if (plan.list) {
+        const variantSelect = document.getElementById('plan-variant');
+        if (variantSelect) {
+          planNameToStore = variantSelect.value;
+        }
+      }
+      
+      // Check if plan already in compare list (check by the stored name)
+      const exists = compareList.findIndex(p => p.name === planNameToStore);
       if (exists >= 0) {
         compareList.splice(exists, 1);
         alert('Plan removed from compare list');
       } else {
-        compareList.push({ name: plan.name, index: planIndex });
+        // Check if maximum of 3 plans already reached
+        if (compareList.length >= 3) {
+          alert('Maximum of 3 plans can be compared. Please remove a plan first.');
+          return;
+        }
+        compareList.push({ name: planNameToStore, index: planIndex });
         alert('Plan added to compare list');
       }
       
@@ -1098,16 +1315,101 @@
     function openComparePlans() {
       // Get selected plans from sessionStorage or show comparison modal
       const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
-        window.location.href = 'compare-plans.html';
+      window.location.href = 'compare-plans.html';
     }
+
+    let pendingPurchasePlanIndex = null;
 
     function purchasePlan(planIndex) {
       const isGuest = sessionStorage.getItem('isLoggedIn') !== 'true';
       if (isGuest) {
         window.location.href = 'login.html?return=medical-plan.html';
       } else {
-        alert('Redirecting to purchase page...');
+        // Store plan index and show Data Sharing Terms modal
+        pendingPurchasePlanIndex = planIndex;
+        const modal = document.getElementById('terms-modal');
+        if (modal) {
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          
+          // Disable accept button initially
+          const acceptBtn = document.getElementById('accept-terms-btn');
+          if (acceptBtn) {
+            acceptBtn.disabled = true;
+          }
+          
+          // Set up scroll detection
+          const modalBody = modal.querySelector('.terms-modal-body');
+          if (modalBody) {
+            // Reset scroll position
+            modalBody.scrollTop = 0;
+            
+            // Check scroll position function
+            const checkScrollPosition = () => {
+              const scrollTop = modalBody.scrollTop;
+              const scrollHeight = modalBody.scrollHeight;
+              const clientHeight = modalBody.clientHeight;
+              
+              // Check if scrolled to bottom (with 10px tolerance)
+              const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+              
+              if (acceptBtn) {
+                acceptBtn.disabled = !isAtBottom;
+              }
+            };
+            
+            // Add scroll event listener
+            modalBody.addEventListener('scroll', checkScrollPosition);
+            
+            // Check initial state (in case content is short and already fully visible)
+            setTimeout(checkScrollPosition, 100);
+          }
+        }
       }
+    }
+
+    function closeTermsModal() {
+      const modal = document.getElementById('terms-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        // Reset scroll position and button state
+        const modalBody = modal.querySelector('.terms-modal-body');
+        const acceptBtn = document.getElementById('accept-terms-btn');
+        if (modalBody) {
+          modalBody.scrollTop = 0;
+          // Remove scroll event listener by cloning and replacing
+          const newBody = modalBody.cloneNode(true);
+          modalBody.parentNode.replaceChild(newBody, modalBody);
+        }
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+      }
+      pendingPurchasePlanIndex = null;
+    }
+
+    function acceptTermsAndProceed() {
+      // Store selected plan information
+      if (pendingPurchasePlanIndex !== null) {
+        const plan = window.filteredPlans[pendingPurchasePlanIndex];
+        if (plan) {
+          // Get the selected variant name if plan has variants
+          let planNameToStore = plan.name;
+          if (plan.list) {
+            const variantSelect = document.getElementById('plan-variant');
+            if (variantSelect) {
+              planNameToStore = variantSelect.value;
+            }
+          }
+          // Store plan name in sessionStorage for purchase pages
+          sessionStorage.setItem('selectedPlanName', planNameToStore);
+        }
+      }
+      
+      // Continue to purchase flow
+      closeTermsModal();
+      window.location.href = 'purchase-step-1.html';
     }
 
     function showMoreFeatures(planIndex) {

@@ -439,33 +439,33 @@
   <script>
     lucide.createIcons();
 
-    // Medical plans data (same as medical-plan.html)
+    // Available medical plans (should mirror medical-plan.html)
     const medicalPlans = [
       {
-        name: 'Individual Health Plan',
-        coverage: 'RM 500,000',
-        price: 189,
-        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup', 'Ambulance Fee', 'Anaesthetist Fees'],
+        name: 'Zurich ZMedProtect',
+        coverage: 'RM 1,000,000',
+        price: 350,
         type: 'normal',
-        minAge: 18,
-        maxAge: 65,
+        minAge: 0,
+        maxAge: 80,
         gender: 'both',
-        color: '#3b82f6',
+        color: '#0ea5e9',
+        list: ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
         planFeatures: {
-          overallAnnualLimit: 'RM 500,000',
+          overallAnnualLimit: 'RM 1,000,000',
           roomAndBoard: 'RM 300/day',
           ambulanceFee: 'As Charged',
           anaesthetistFee: 'As Charged',
-          dailyCashAllowance: 'RM 50',
+          dailyCashAllowance: 'RM 80',
           daySurgery: 'As Charged',
           emergencyOutpatient: 'As Charged (Max 30 days)',
-          entryAge: 'Age 18 - Age 65',
+          entryAge: 'Age 0 - Age 80',
           hospitalSupplies: 'As Charged',
           inHospitalPhysician: 'As Charged',
           intensiveCareUnit: 'As Charged (Max 30 days)',
           operatingTheatre: 'As Charged',
-          outpatientCancer: '-',
-          outpatientKidney: '-',
+          outpatientCancer: 'As Charged',
+          outpatientKidney: 'As Charged',
           postHospitalisation: 'As Charged (Max 60 days)',
           preHospitalisation: 'As Charged (Max 60 days)',
           nurseAndBoard: 'RM 150',
@@ -474,114 +474,78 @@
           emergencyDental: '-',
           homeNursingCare: '-',
           organTransplant: '-',
-        }
+        },
       },
       {
-        name: 'Chubb Crystal Sihat',
-        coverage: 'RM 1,000,000',
-        list:  ['Chubb Crystal Sihat 100', 'Chubb Crystal Sihat 200', 'Chubb Crystal Sihat 300'],
-        price: 350,
-        features: ['Ambulance Fee', 'Anaesthetist Fees', 'Daily Cash Allowance at Gov Hospital', 'Maternity Benefits', 'Daily Cash Allowance', 'Day Surgery'],
+        name: 'Allianz Medicure',
+        coverage: 'RM 500,000',
+        price: 949,
         type: 'normal',
         minAge: 0,
         maxAge: 80,
         gender: 'both',
-        color: '#EA580C',
+        color: '#2563eb',
+        list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
         planFeatures: {
-          overallAnnualLimit: 'RM 1,000,000',
-          roomAndBoard: 'RM 450/day',
+          overallAnnualLimit: 'RM 500,000',
+          roomAndBoard: 'RM 250/day',
           ambulanceFee: 'As Charged',
           anaesthetistFee: 'As Charged',
-          dailyCashAllowance: 'RM 100',
+          dailyCashAllowance: 'RM 50',
           daySurgery: 'As Charged',
-          emergencyOutpatient: 'As Charged (Max 60 days)',
+          emergencyOutpatient: 'As Charged (Max 30 days)',
           entryAge: 'Age 0 - Age 80',
           hospitalSupplies: 'As Charged',
           inHospitalPhysician: 'As Charged',
-          intensiveCareUnit: 'As Charged (Max 60 days)',
+          intensiveCareUnit: 'As Charged (Max 20 days)',
           operatingTheatre: 'As Charged',
           outpatientCancer: 'As Charged',
           outpatientKidney: 'As Charged',
-          postHospitalisation: 'As Charged (Max 90 days)',
-          preHospitalisation: 'As Charged (Max 60 days)',
-          nurseAndBoard: 'RM 175',
+          postHospitalisation: 'As Charged (Max 30 days)',
+          preHospitalisation: 'As Charged (Max 30 days)',
+          nurseAndBoard: 'RM 120',
           surgicalFees: 'As Charged',
           compassionateAllowance: '-',
           emergencyDental: '-',
           homeNursingCare: '-',
           organTransplant: '-',
-        }
+        },
       },
       {
-        name: 'Premium Health Plan',
-        coverage: 'RM 2,000,000',
-        price: 550,
-        features: ['Premium Coverage', 'Worldwide Coverage', 'Cashless Treatment', 'Wellness Programs', 'Ambulance Fee', 'Anaesthetist Fees'],
+        name: 'SmartCare Optimum Plus Plan 1',
+        coverage: 'RM 2,100,000',
+        price: 1441,
         type: 'normal',
-        minAge: 18,
-        maxAge: 70,
+        minAge: 0,
+        maxAge: 80,
         gender: 'both',
-        color: '#ef4444',
+        color: '#16a34a',
+        list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
         planFeatures: {
-          overallAnnualLimit: 'RM 2,000,000',
-          roomAndBoard: 'RM 1,300/day',
-          ambulanceFee: 'As Charged',
-          anaesthetistFee: 'As Charged',
-          dailyCashAllowance: '-',
-          daySurgery: '-',
-          emergencyOutpatient: 'As Charged',
-          entryAge: 'Age 18 - Age 70',
-          hospitalSupplies: 'As Charged',
-          inHospitalPhysician: 'As Charged',
-          intensiveCareUnit: 'As Charged',
-          operatingTheatre: 'As Charged',
-          outpatientCancer: 'As Charged',
-          outpatientKidney: 'As Charged',
-          postHospitalisation: '-',
-          preHospitalisation: '-',
-          nurseAndBoard: '-',
-          surgicalFees: 'As Charged',
-          compassionateAllowance: 'RM 50 per day, up to maximum RM 1,500 per year',
-          emergencyDental: 'As Charged',
-          homeNursingCare: 'As Charged',
-          organTransplant: 'As Charged',
-        }
-      },
-      {
-        name: 'Takaful Plan 3',
-        coverage: 'RM 1,500,000',
-        price: 420,
-        features: ['Takaful Coverage', 'OPD Coverage', 'Cashless Treatment', 'Halal Benefits', 'Daily Cash Allowance at Gov Hospital', 'Day Surgery'],
-        type: 'takaful',
-        minAge: 18,
-        maxAge: 65,
-        gender: 'both',
-        color: '#10b981',
-        planFeatures: {
-          overallAnnualLimit: 'RM 1,500,000',
+          overallAnnualLimit: 'RM 2,100,000',
           roomAndBoard: 'RM 600/day',
           ambulanceFee: 'As Charged',
           anaesthetistFee: 'As Charged',
-          dailyCashAllowance: 'RM 80',
+          dailyCashAllowance: 'RM 120',
           daySurgery: 'As Charged',
-          emergencyOutpatient: 'As Charged (Max 45 days)',
-          entryAge: 'Age 18 - Age 65',
+          emergencyOutpatient: 'As Charged (Max 60 days)',
+          entryAge: 'Age 0 - Age 80',
           hospitalSupplies: 'As Charged',
           inHospitalPhysician: 'As Charged',
           intensiveCareUnit: 'As Charged (Max 45 days)',
           operatingTheatre: 'As Charged',
-          outpatientCancer: 'RM 30,000/year',
-          outpatientKidney: 'RM 10,000/year',
-          postHospitalisation: '-',
-          preHospitalisation: '-',
-          nurseAndBoard: 'RM 180',
+          outpatientCancer: 'RM 50,000/year',
+          outpatientKidney: 'RM 20,000/year',
+          postHospitalisation: 'As Charged (Max 90 days)',
+          preHospitalisation: 'As Charged (Max 60 days)',
+          nurseAndBoard: 'RM 200',
           surgicalFees: 'As Charged',
-          compassionateAllowance: 'RM 500',
+          compassionateAllowance: 'RM 1,000',
           emergencyDental: 'As Charged',
-          homeNursingCare: 'RM 100',
-          organTransplant: 'RM 15,000',
-        }
-      }
+          homeNursingCare: 'RM 150',
+          organTransplant: 'RM 30,000',
+        },
+      },
     ];
 
     const featureLabels = {
@@ -643,8 +607,19 @@
     function getComparePlans() {
       const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
       return compareList.map(item => {
-        const plan = medicalPlans.find(p => p.name === item.name);
-        return plan ? { ...plan, compareIndex: item.index } : null;
+        // First try to find plan by exact name match
+        let plan = medicalPlans.find(p => p.name === item.name);
+        
+        // If not found, try to find plan where item.name is in the plan's list (variant)
+        if (!plan) {
+          plan = medicalPlans.find(p => p.list && p.list.includes(item.name));
+        }
+        
+        if (plan) {
+          // Override the name with the stored variant name if it's different
+          return { ...plan, name: item.name, compareIndex: item.index };
+        }
+        return null;
       }).filter(plan => plan !== null);
     }
 
@@ -677,123 +652,22 @@
       const fixedBottom = document.getElementById('fixed-bottom');
       const plansCount = document.getElementById('plans-count');
 
-      // If no plans, use mock data
+      // If no plans in sessionStorage, show empty state instead of random mock data
       if (comparePlans.length === 0) {
-        // Add mock plans to comparison (max 3)
-        const mockPlans = [
-          {
-            name: 'Chubb Crystal Sihat',
-            coverage: 'RM 1,000,000',
-            price: 350,
-            type: 'normal',
-            minAge: 0,
-            maxAge: 80,
-            gender: 'both',
-            color: '#EA580C',
-            planFeatures: {
-              overallAnnualLimit: 'RM 1,000,000',
-              roomAndBoard: 'RM 450/day',
-              ambulanceFee: 'As Charged',
-              anaesthetistFee: 'As Charged',
-              dailyCashAllowance: 'RM 100',
-              daySurgery: 'As Charged',
-              emergencyOutpatient: 'As Charged (Max 60 days)',
-              entryAge: 'Age 0 - Age 80',
-              hospitalSupplies: 'As Charged',
-              inHospitalPhysician: 'As Charged',
-              intensiveCareUnit: 'As Charged (Max 60 days)',
-              operatingTheatre: 'As Charged',
-              outpatientCancer: 'As Charged',
-              outpatientKidney: 'As Charged',
-              postHospitalisation: 'As Charged (Max 90 days)',
-              preHospitalisation: 'As Charged (Max 60 days)',
-              nurseAndBoard: 'RM 175',
-              surgicalFees: 'As Charged',
-              compassionateAllowance: '-',
-              emergencyDental: '-',
-              homeNursingCare: '-',
-              organTransplant: '-',
-            }
-          },
-          {
-            name: 'Premium Health Plan',
-            coverage: 'RM 2,000,000',
-            price: 550,
-            type: 'normal',
-            minAge: 18,
-            maxAge: 70,
-            gender: 'both',
-            color: '#ef4444',
-            planFeatures: {
-              overallAnnualLimit: 'RM 2,000,000',
-              roomAndBoard: 'RM 1,300/day',
-              ambulanceFee: 'As Charged',
-              anaesthetistFee: 'As Charged',
-              dailyCashAllowance: '-',
-              daySurgery: '-',
-              emergencyOutpatient: 'As Charged',
-              entryAge: 'Age 18 - Age 70',
-              hospitalSupplies: 'As Charged',
-              inHospitalPhysician: 'As Charged',
-              intensiveCareUnit: 'As Charged',
-              operatingTheatre: 'As Charged',
-              outpatientCancer: 'As Charged',
-              outpatientKidney: 'As Charged',
-              postHospitalisation: '-',
-              preHospitalisation: '-',
-              nurseAndBoard: '-',
-              surgicalFees: 'As Charged',
-              compassionateAllowance: 'RM 50 per day, up to maximum RM 1,500 per year',
-              emergencyDental: 'As Charged',
-              homeNursingCare: 'As Charged',
-              organTransplant: 'As Charged',
-            }
-          },
-          {
-            name: 'Takaful Health Plan',
-            coverage: 'RM 1,500,000',
-            price: 420,
-            type: 'takaful',
-            minAge: 18,
-            maxAge: 65,
-            gender: 'both',
-            color: '#10b981',
-            planFeatures: {
-              overallAnnualLimit: 'RM 1,500,000',
-              roomAndBoard: 'RM 600/day',
-              ambulanceFee: 'As Charged',
-              anaesthetistFee: 'As Charged',
-              dailyCashAllowance: 'RM 80',
-              daySurgery: 'As Charged',
-              emergencyOutpatient: 'As Charged (Max 45 days)',
-              entryAge: 'Age 18 - Age 65',
-              hospitalSupplies: 'As Charged',
-              inHospitalPhysician: 'As Charged',
-              intensiveCareUnit: 'As Charged (Max 45 days)',
-              operatingTheatre: 'As Charged',
-              outpatientCancer: 'RM 30,000/year',
-              outpatientKidney: 'RM 10,000/year',
-              postHospitalisation: '-',
-              preHospitalisation: '-',
-              nurseAndBoard: 'RM 180',
-              surgicalFees: 'As Charged',
-              compassionateAllowance: 'RM 500',
-              emergencyDental: 'As Charged',
-              homeNursingCare: 'RM 100',
-              organTransplant: 'RM 15,000',
-            }
-          }
-        ];
-        
-        // Store mock plans in sessionStorage
-        const mockCompareList = mockPlans.map((plan, index) => ({
-          name: plan.name,
-          index: index
-        }));
-        sessionStorage.setItem('comparePlans', JSON.stringify(mockCompareList));
-        
-        // Use mock plans
-        comparePlans = mockPlans;
+        planSelector.style.display = 'none';
+        fixedBottom.style.display = 'none';
+        plansCount.textContent = 'Swipe to compare 0 plans';
+        mainContent.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="search-x"></i>
+            <p>No plans selected for comparison yet.</p>
+            <button class="empty-state-btn" onclick="window.location.href='medical-plan.html'">
+              Add plans to compare
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
       }
 
       currentPlanIndex = 0;

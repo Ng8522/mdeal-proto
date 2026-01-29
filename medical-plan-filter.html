@@ -164,6 +164,26 @@
     .form-input[type="date"] {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2386868B' stroke-width='2'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
       background-size: 16px;
+      color: var(--text-primary);
+    }
+
+    .form-input[type="date"]::-webkit-datetime-edit-text {
+      color: var(--text-secondary);
+    }
+
+    .form-input[type="date"]::-webkit-datetime-edit-month-field,
+    .form-input[type="date"]::-webkit-datetime-edit-day-field,
+    .form-input[type="date"]::-webkit-datetime-edit-year-field {
+      color: var(--text-primary);
+    }
+
+    .form-input[type="date"]:invalid::-webkit-datetime-edit {
+      color: var(--text-secondary);
+    }
+
+    .form-input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 1;
+      cursor: pointer;
     }
 
     .form-input::placeholder {
@@ -316,7 +336,8 @@
           
           <div class="form-group">
             <label class="form-label" for="dob">Date of Birth</label>
-            <input type="date" class="form-input" id="dob" name="dob" placeholder="mm/dd/yyyy" required>
+            <input type="date" class="form-input" id="dob" name="dob" required>
+            <small style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; display: block;">Format: MM/DD/YYYY</small>
           </div>
           
           <div class="form-group">
@@ -629,7 +650,36 @@
     }
 
     function addToCompare(planIndex) {
-      alert('Plan added to compare list');
+      const plan = window.filteredPlans[planIndex];
+      if (!plan) return;
+      
+      let compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+      
+      // Get the selected variant name if plan has variants
+      let planNameToStore = plan.name;
+      if (plan.list) {
+        const variantSelect = document.getElementById('plan-variant');
+        if (variantSelect) {
+          planNameToStore = variantSelect.value;
+        }
+      }
+      
+      // Check if plan already in compare list (check by the stored name)
+      const exists = compareList.findIndex(p => p.name === planNameToStore);
+      if (exists >= 0) {
+        compareList.splice(exists, 1);
+        alert('Plan removed from compare list');
+      } else {
+        // Check if maximum of 3 plans already reached
+        if (compareList.length >= 3) {
+          alert('Maximum of 3 plans can be compared. Please remove a plan first.');
+          return;
+        }
+        compareList.push({ name: planNameToStore, index: planIndex });
+        alert('Plan added to compare list');
+      }
+      
+      sessionStorage.setItem('comparePlans', JSON.stringify(compareList));
     }
 
     function purchasePlan(planIndex) {
