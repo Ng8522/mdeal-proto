@@ -291,16 +291,18 @@
       background: white;
       border-top: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      padding: 0.75rem 0;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem 0.5rem;
       z-index: 100;
+      gap: 0;
     }
 
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 0.25rem;
       background: none;
       border: none;
@@ -309,8 +311,9 @@
       color: var(--text-secondary);
       transition: color 0.2s;
       text-decoration: none;
-      flex: 1;
+      flex: 1 1 0;
       min-width: 0;
+      text-align: center;
     }
 
     .nav-item.active {
@@ -332,7 +335,7 @@
       justify-content: center;
       border: 3px solid white;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      flex: 0 0 auto;
+      flex: 1 1 0;
     }
 
     .nav-item.help-special .nav-label {

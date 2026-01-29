@@ -789,12 +789,8 @@
     }
 
     function submitApplication() {
-      const isGuest = sessionStorage.getItem('isLoggedIn') !== 'true';
-      if (isGuest) {
-        window.location.href = 'login.html?return=compare-plans.html';
-      } else {
-        alert('Redirecting to application form...');
-      }
+      // Redirect to application form (no login required)
+      alert('Redirecting to application form...');
     }
 
     // Initialize
