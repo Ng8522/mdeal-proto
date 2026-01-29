@@ -161,7 +161,26 @@
       transition: transform 0.3s ease;
     }
 
-    .pdf-page {
+    .pdf-iframe-wrapper {
+      width: 100%;
+      max-width: 95vw;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .pdf-iframe {
+      width: 100%;
+      height: 80vh;
+      min-height: 600px;
+      border: none;
+    }
+
+    .pdf-placeholder {
+      text-align: center;
+      color: var(--text-secondary);
+      padding: 1.5rem;
       background: white;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       border-radius: 4px;
@@ -169,15 +188,9 @@
       max-width: 95vw;
       aspect-ratio: 8.5 / 11;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-    }
-
-    .pdf-placeholder {
-      text-align: center;
-      color: var(--text-secondary);
-      padding: 1.5rem;
     }
 
     .page-number-box {
@@ -312,14 +325,15 @@
     <!-- PDF Content Area -->
     <main class="pdf-content">
       <div class="pdf-container" id="pdf-container" style="transform: scale(1);">
-        <div class="pdf-page">
-          <div class="pdf-placeholder">
-            <div class="page-number-box">
-              <span id="current-page-display">1</span>
-            </div>
-            <p class="page-info">Page <span id="current-page-text">1</span> of <span id="total-pages-text">12</span></p>
-            <p class="page-info-small">PDF content renders here</p>
+        <div class="pdf-iframe-wrapper" id="pdf-wrapper" style="display: none;">
+          <iframe class="pdf-iframe" id="pdf-iframe" src=""></iframe>
+        </div>
+        <div class="pdf-placeholder" id="pdf-placeholder">
+          <div class="page-number-box">
+            <span id="current-page-display">1</span>
           </div>
+          <p class="page-info">Page <span id="current-page-text">1</span> of <span id="total-pages-text">12</span></p>
+          <p class="page-info-small">PDF content renders here</p>
         </div>
       </div>
     </main>
@@ -360,7 +374,7 @@
     let zoom = 100;
     let menuOpen = false;
 
-    // Get document name from URL parameter
+    // Get document name and PDF path from URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const formType = urlParams.get('form') || 'application';
     const documentNames = {
@@ -368,8 +382,26 @@
       'health': 'Allianz Medicure Health Declaration Form',
       'autodebit': 'Allianz Medicure Auto Debit Form'
     };
+    const pdfPaths = {
+      'application': 'pdf-file/allianz_medicure_app_form.pdf',
+      'health': 'pdf-file/allianz_medicure_health_declaration_form.pdf',
+      'autodebit': 'pdf-file/allianz_medicure_auto_debit_form.pdf'
+    };
     const documentName = documentNames[formType] || 'Document.pdf';
+    const pdfPath = pdfPaths[formType] || 'pdf-file/allianz_medicure_app_form.pdf';
+    
     document.getElementById('document-title').textContent = documentName;
+    
+    // Load PDF in iframe
+    const pdfIframe = document.getElementById('pdf-iframe');
+    const pdfWrapper = document.getElementById('pdf-wrapper');
+    const pdfPlaceholder = document.getElementById('pdf-placeholder');
+    
+    if (pdfIframe && pdfWrapper && pdfPlaceholder) {
+      pdfIframe.src = pdfPath + '#page=' + currentPage;
+      pdfWrapper.style.display = 'block';
+      pdfPlaceholder.style.display = 'none';
+    }
 
     function toggleMenu() {
       menuOpen = !menuOpen;
@@ -390,6 +422,11 @@
       if (currentPage > 1) {
         currentPage--;
         updatePageDisplay();
+        // Update PDF iframe to show the correct page
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe) {
+          pdfIframe.src = pdfPath + '#page=' + currentPage;
+        }
       }
     }
 
@@ -397,6 +434,11 @@
       if (currentPage < totalPages) {
         currentPage++;
         updatePageDisplay();
+        // Update PDF iframe to show the correct page
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe) {
+          pdfIframe.src = pdfPath + '#page=' + currentPage;
+        }
       }
     }
 
@@ -405,6 +447,11 @@
       if (pageNum >= 1 && pageNum <= totalPages) {
         currentPage = pageNum;
         updatePageDisplay();
+        // Update PDF iframe to show the correct page
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe) {
+          pdfIframe.src = pdfPath + '#page=' + currentPage;
+        }
       } else {
         document.getElementById('page-input').value = currentPage;
       }
