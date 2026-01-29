@@ -196,12 +196,12 @@
     }
 
     .contact-action-btn.phone {
-      background: var(--primary-color);
+      background: #25D366;
       color: white;
     }
 
     .contact-action-btn.phone:hover {
-      background: #C2410C;
+      background: #20BA5A;
     }
 
     .contact-action-btn.email {
@@ -506,8 +506,8 @@
               <div class="contact-info">
                 <p>${agent.contact.name}</p>
                 <div class="contact-buttons">
-                  <a href="tel:${agent.contact.phone}" class="contact-action-btn phone">
-                    <i data-lucide="phone"></i>
+                  <a href="https://wa.me/${agent.contact.phone.replace(/[\s\-\(\)]/g, '')}" target="_blank" class="contact-action-btn phone">
+                    <i data-lucide="message-circle"></i>
                     <span>${agent.contact.phone}</span>
                   </a>
                   <a href="mailto:${agent.contact.email}" class="contact-action-btn email">

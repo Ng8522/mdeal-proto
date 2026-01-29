@@ -132,25 +132,25 @@
     }
 
     .company-logo {
-      width: 60px;
-      height: 60px;
+      width: 100px;
+      height: 80px;
       border-radius: 8px;
-      background: var(--bg-secondary);
+      background: var(--bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--primary-color);
       border: 1px solid var(--border-color);
+      padding: 0.75rem;
+      overflow: hidden;
     }
 
     .company-logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 4px;
+      display: block;
     }
 
     .company-info {
@@ -325,35 +325,83 @@
     const insuranceCompanies = [
       {
         name: 'Zurich',
-        logo: 'ZH'
+        logo: 'zurich-logo.svg',
+        url: 'https://www.zurich.com.my/customer-hub/my-claims/panel-hospitals/hospitals-for-general-insurance',
       },
       {
         name: 'MSIG',
-        logo: 'MS'
+        logo: 'msig-logo.svg',
+        url: 'https://www.msig.com.my/media/q2khknsw/individualplushspluspanelplushospitalpluslistpluswef_04_12_2024.pdf',
       },
       {
         name: 'Allianz',
-        logo: 'AL'
+        logo: 'Allianz.svg',
+        url: 'https://www.allianz.com.my/personal/help-and-services/ways-to-get-in-touch/allianz-locator.html',
       },
       {
         name: 'Pacific Insurance',
-        logo: 'PI'
+        logo: 'pacific-insurance-logo.svg',
+        url: 'https://www.pacificinsurance.com.my/wp-content/uploads/2025/04/Panel-Hospital-Listing-24032025.pdf'
       },
       {
         name: 'Chubb',
-        logo: 'CB'
+        logo: 'chubb-logo.png',
+        url: 'https://www.chubb.com/my-en/customer-service/panel-hospitals.html',
       },
       {
         name: 'Generali',
-        logo: 'GN'
+        logo: 'Assicurazioni_Generali_logo.png',
+        url: 'https://www.generali.com.my/partnercentre/smartlocator'
       },
       {
         name: 'Tokio Marine',
-        logo: 'TM'
+        logo: 'Tokyo-Marine-Logo.png',
+        url: 'https://www.tokiomarine.com/content/dam/tokiomarine/my/non-life/products/personal/health/documents/TMIM-Panel-Hospital-Oct2024.pdf'
       },
       {
-        name: 'Takaful Malaysia',
-        logo: 'TF'
+        name: 'Syarikat Takaful Malaysia',
+        logo: 'takaful-malaysia-logo.svg',
+        url: 'https://www.takaful-malaysia.com.my/senarai-panel/'
+      },
+      {
+        name: 'AIA Bhd',
+        logo: 'aia-logo.png',
+        url: 'https://www.aia.com.my/en/help-support/locate-us.html'
+      },
+      {
+        name: 'Etiqa',
+        logo: 'etiqa.jpg',
+        url: 'https://www.etiqa.com.my/panels/panel-hospitals',
+      },
+      {
+        name: 'Prudential',
+        logo: 'PR',
+        url: '',
+      },
+      {
+        name: 'Great Eastern',
+        logo: 'GE',
+        url: '',
+      },
+      {
+        name: 'Manulife',
+        logo: 'PR',
+        url: '',
+      },
+      {
+        name: 'Liberty',
+        logo: 'LB',
+        url: '',
+      },
+      {
+        name: 'Lonpac',
+        logo: 'LP',
+        url: '',
+      },
+      {
+        name: 'Berjaya Sompo',
+        logo: 'BS',
+        url: '',
       }
     ];
 
@@ -371,11 +419,15 @@
       } else {
         companiesList.innerHTML = companies.map(company => `
           <div class="company-card">
-            <div class="company-logo">${company.logo}</div>
+            <div class="company-logo">
+              ${company.logo.toLowerCase().endsWith('.svg') || company.logo.toLowerCase().endsWith('.png') || company.logo.toLowerCase().endsWith('.jpg') || company.logo.toLowerCase().endsWith('.webp') || company.logo.toLowerCase().endsWith('.jpeg') ? 
+                `<img src="insurance-img/${company.logo}" alt="${company.name} logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-weight: 700; font-size: 1.25rem; color: var(--primary-color);\\'>${company.name.substring(0, 2).toUpperCase()}</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center';">` : 
+                `<span style="font-weight: 700; font-size: 1.25rem; color: var(--primary-color);">${company.logo}</span>`}
+            </div>
             <div class="company-info">
               <div class="company-name">${company.name}</div>
             </div>
-            <button class="view-btn">Panels</button>
+            <button class="view-btn" onclick="viewCompanyPlans('${company.name}', '${company.url || ''}'); event.stopPropagation();">Panels</button>
           </div>
         `).join('');
         
@@ -384,9 +436,14 @@
     }
 
     // View company plans
-    function viewCompanyPlans(companyName) {
-      // Redirect to filter page with company filter
-      window.location.href = `medical-plan-filter.html?company=${encodeURIComponent(companyName)}`;
+    function viewCompanyPlans(companyName, url) {
+      // Open company website in new tab
+      if (url) {
+        window.open(url, '_blank');
+      } else {
+        // Fallback to Google search if no URL provided
+        window.open('https://www.google.com/search?q=' + encodeURIComponent(companyName + ' insurance malaysia'), '_blank');
+      }
     }
 
     // Initialize
