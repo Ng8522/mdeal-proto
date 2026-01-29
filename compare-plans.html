@@ -13,11 +13,13 @@
     }
 
     :root {
-      --primary-color: #EA580C;
-      --text-primary: #1D1D1F;
+      --primary-color: #0891B2;
+      --secondary-color: #FB7185;
+      --accent-color: #6EE7B7;
+      --text-primary: #334155;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
-      --bg-secondary: #F5F5F7;
+      --bg-secondary: #FAFAF9;
       --border-color: #E5E5EA;
       --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
@@ -350,7 +352,7 @@
     }
 
     .action-btn-primary:hover {
-      background: #C2410C;
+      background: #067A94;
     }
 
     .empty-state {
@@ -385,7 +387,7 @@
     }
 
     .empty-state-btn:hover {
-      background: #C2410C;
+      background: #067A94;
     }
   </style>
 </head>
@@ -688,18 +690,18 @@
       const dotsIndicator = document.getElementById('dots-indicator');
 
       planNameDisplay.textContent = currentPlan.name;
-      planColorBar.style.background = currentPlan.color || '#EA580C';
+        planColorBar.style.background = currentPlan.color || 'var(--primary-color)';
 
       // Render dots
       dotsIndicator.innerHTML = comparePlans.map((plan, index) => `
         <button class="dot ${index === currentPlanIndex ? 'active' : 'inactive'}" 
-                style="background: ${index === currentPlanIndex ? (plan.color || '#EA580C') : 'var(--text-secondary)'}"
+                style="background: ${index === currentPlanIndex ? (plan.color || 'var(--primary-color)') : 'var(--text-secondary)'}"
                 onclick="setCurrentPlan(${index})"></button>
       `).join('');
 
       // Render highlight card
       const highlightCard = `
-        <div class="highlight-card" style="background: ${currentPlan.color || '#EA580C'}">
+        <div class="highlight-card" style="background: ${currentPlan.color || 'var(--primary-color)'}">
           <div class="highlight-grid">
             <div class="highlight-item">
               <p class="highlight-label">Annual Limit</p>

@@ -13,11 +13,13 @@
     }
 
     :root {
-      --primary-color: #EA580C;
-      --text-primary: #1D1D1F;
+      --primary-color: #0891B2;
+      --secondary-color: #FB7185;
+      --accent-color: #6EE7B7;
+      --text-primary: #334155;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
-      --bg-secondary: #F5F5F7;
+      --bg-secondary: #FAFAF9;
       --border-color: #E5E5EA;
       --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
@@ -40,7 +42,8 @@
 
     /* Header */
     .page-header {
-      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      background: white;
+      border-bottom: 1px solid var(--border-color);
       padding: 1rem 1.25rem;
     }
 
@@ -58,7 +61,7 @@
     .header-title h1 {
       font-size: 1.1rem;
       font-weight: 600;
-      color: white;
+      color: var(--text-primary);
       margin: 0;
     }
 
@@ -269,7 +272,7 @@
     }
 
     .nav-btn-primary:hover {
-      background: #C2410C;
+      background: #067A94;
     }
 
     .nav-btn:disabled {
