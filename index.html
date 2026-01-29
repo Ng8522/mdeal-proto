@@ -13,11 +13,13 @@
     }
 
     :root {
-      --primary-color: #EA580C;
-      --text-primary: #1D1D1F;
+      --primary-color: #0D9488;
+      --secondary-color: #D4AF37;
+      --accent-color: #5EEAD4;
+      --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
-      --bg-secondary: #F5F5F7;
+      --bg-secondary: #F8FAFC;
       --border-color: #E5E5EA;
       --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
@@ -41,7 +43,7 @@
 
     /* Header */
     .home-header {
-      background: linear-gradient(135deg, var(--primary-color) 0%, #C2410C 100%);
+      background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 50%, #0A7C70 100%);
       color: white;
       padding: 1rem 1.25rem;
       position: sticky;
@@ -103,7 +105,7 @@
       position: absolute;
       top: -4px;
       right: -4px;
-      background: #FF3B30;
+      background: var(--secondary-color);
       color: white;
       border-radius: 10px;
       width: 20px;
@@ -348,7 +350,7 @@
     }
 
     .plan-btn:hover {
-      background: #C2410C;
+      background: #0A7C70;
     }
 
     .plan-btn:disabled,
@@ -754,7 +756,7 @@
     }
 
     .nav-item.help-special {
-      background: #FF3B30;
+      background: var(--secondary-color);
       color: white;
       border-radius: 50%;
       width: 56px;
@@ -812,8 +814,8 @@
         <section class="quick-actions">
           <h3 class="section-title">Quick Actions</h3>
           <div class="actions-grid">
-            <button class="action-card" style="--action-color: #EA580C" onclick="window.location.href='medical-plan-filter.html'">
-              <div class="action-icon" style="background-color: #EA580C15">
+            <button class="action-card" style="--action-color: var(--primary-color)" onclick="window.location.href='medical-plan-filter.html'">
+              <div class="action-icon" style="background-color: rgba(13, 148, 136, 0.08)">
                 <i data-lucide="shopping-cart"></i>
               </div>
               <span class="action-label">Buy</span>
