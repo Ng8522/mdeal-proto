@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compare Plans - InsureMart</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Plans - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #0D9488;
+      --primary-color: #1B5E4F;
       --secondary-color: #D4AF37;
-      --accent-color: #5EEAD4;
+      --accent-color: #2D8659;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -26,7 +26,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-primary);
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
       color: var(--text-primary);
       overflow-x: hidden;
     }
@@ -34,11 +34,11 @@
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
       position: relative;
     }
 
@@ -390,55 +390,60 @@
       background: #0A7C70;
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <!-- Fixed Header -->
-    <div class="fixed-header">
-      <div class="header-title">
-        <button class="back-btn-header" onclick="window.location.href='medical-plan.html'" aria-label="Back">
-          <i data-lucide="arrow-left"></i>
-        </button>
-        <div class="header-title-content">
-          <h1>Compare Plans</h1>
-          <p id="plans-count">Swipe to compare 0 plans</p>
-        </div>
-      </div>
-      <div class="plan-selector" id="plan-selector" style="display: none;">
-        <div class="plan-nav">
-          <button class="nav-btn" onclick="goToPrevious()" aria-label="Previous plan">
-            <i data-lucide="chevron-left"></i>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Fixed Header -->
+      <div class="fixed-header">
+        <div class="header-title">
+          <button class="back-btn-header"
+            onclick="window.location.href='medical-plan.html'"
+            aria-label="Back">
+            <i data-lucide="arrow-left"></i>
           </button>
-          <div class="plan-info-center">
-            <div class="plan-color-bar" id="plan-color-bar"></div>
-            <p class="plan-name-display" id="plan-name-display"></p>
+          <div class="header-title-content">
+            <h1>Compare Plans</h1>
+            <p id="plans-count">Swipe to compare 0 plans</p>
           </div>
-          <button class="nav-btn" onclick="goToNext()" aria-label="Next plan">
-            <i data-lucide="chevron-right"></i>
-          </button>
         </div>
-        <div class="dots-indicator" id="dots-indicator"></div>
+        <div class="plan-selector" id="plan-selector" style="display: none;">
+          <div class="plan-nav">
+            <button class="nav-btn" onclick="goToPrevious()"
+              aria-label="Previous plan">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="plan-info-center">
+              <div class="plan-color-bar" id="plan-color-bar"></div>
+              <p class="plan-name-display" id="plan-name-display"></p>
+            </div>
+            <button class="nav-btn" onclick="goToNext()" aria-label="Next plan">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+          <div class="dots-indicator" id="dots-indicator"></div>
+        </div>
+      </div>
+
+      <!-- Spacer for fixed header -->
+      <div class="header-spacer"></div>
+
+      <!-- Main Content -->
+      <main class="main-content" id="main-content">
+        <!-- Content will be rendered here -->
+      </main>
+
+      <!-- Fixed Bottom Actions -->
+      <div class="fixed-bottom" id="fixed-bottom" style="display: none;">
+        <div class="action-buttons">
+          <button class="action-btn action-btn-outline"
+            onclick="viewProductSheet()">Product Disclosure Sheet</button>
+          <button class="action-btn action-btn-primary"
+            onclick="submitApplication()">Submit Application</button>
+        </div>
       </div>
     </div>
 
-    <!-- Spacer for fixed header -->
-    <div class="header-spacer"></div>
-
-    <!-- Main Content -->
-    <main class="main-content" id="main-content">
-      <!-- Content will be rendered here -->
-    </main>
-
-    <!-- Fixed Bottom Actions -->
-    <div class="fixed-bottom" id="fixed-bottom" style="display: none;">
-      <div class="action-buttons">
-        <button class="action-btn action-btn-outline" onclick="viewProductSheet()">Product Disclosure Sheet</button>
-        <button class="action-btn action-btn-primary" onclick="submitApplication()">Submit Application</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
+    <script>
     lucide.createIcons();
 
     // Available medical plans (should mirror medical-plan.html)
@@ -800,5 +805,5 @@
       renderComparison();
     });
   </script>
-</body>
+  </body>
 </html>

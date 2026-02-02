@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase - Step 2 - InsureMart</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase - Step 2 - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #0D9488;
+      --primary-color: #1B5E4F;
       --secondary-color: #D4AF37;
-      --accent-color: #5EEAD4;
+      --accent-color: #2D8659;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -26,18 +26,18 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
       color: var(--text-primary);
     }
 
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
     }
 
     /* Header */
@@ -261,130 +261,142 @@
       cursor: not-allowed;
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <!-- Header -->
-    <header class="page-header">
-      <div class="header-top">
-        <div class="header-title">
-          <h1>Contact Information : Step 2 of 4</h1>
-          <p>Next: Fill in Document</p>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="header-top">
+          <div class="header-title">
+            <h1>Contact Information : Step 2 of 4</h1>
+            <p>Next: Fill in Document</p>
+          </div>
+          <div style="width: 40px;"></div>
         </div>
-        <div style="width: 40px;"></div>
+      </header>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
       </div>
-    </header>
 
-    <!-- Progress Bar -->
-    <div class="progress-section">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-    </div>
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="form-card">
+          <h2 class="policy-title" id="policy-title">Insurance Policy: Premier
+            Medic Partner PM 160</h2>
+          <p class="form-instruction">
+            Enter Policy Details. Please provide the required information for
+            your insurance policy. All fields are mandatory.
+          </p>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="form-card">
-        <h2 class="policy-title" id="policy-title">Insurance Policy: Premier Medic Partner PM 160</h2>
-        <p class="form-instruction">
-          Enter Policy Details. Please provide the required information for your insurance policy. All fields are mandatory.
-        </p>
+          <h3 class="section-title">Contact Information</h3>
 
-        <h3 class="section-title">Contact Information</h3>
-
-        <form id="purchase-form">
-          <div class="form-group">
-            <label class="form-label">
-              Address<span class="required">*</span>
-            </label>
-            <textarea name="address" class="form-textarea" placeholder="Enter your address" rows="3"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              Postcode<span class="required">*</span>
-            </label>
-            <input type="text" name="postcode" class="form-input" placeholder="Post Number">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              City<span class="required">*</span>
-            </label>
-            <input type="text" name="city" class="form-input" placeholder="City">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              State<span class="required">*</span>
-            </label>
-            <input type="text" name="state" class="form-input" placeholder="State">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              Country<span class="required">*</span>
-            </label>
-            <select name="country" class="form-select">
-              <option value="">Select your country</option>
-              <option value="MY" selected>Malaysia</option>
-              <option value="SG">Singapore</option>
-              <option value="TH">Thailand</option>
-              <option value="ID">Indonesia</option>
-              <option value="PH">Philippines</option>
-              <option value="VN">Vietnam</option>
-              <option value="BN">Brunei</option>
-              <option value="MM">Myanmar</option>
-              <option value="KH">Cambodia</option>
-              <option value="LA">Laos</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              Email<span class="required">*</span>
-            </label>
-            <input type="email" name="email" class="form-input" placeholder="Email">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              Phone Number (e.g. 129876543)<span class="required">*</span>
-            </label>
-            <div class="phone-input-group">
-              <select name="phoneCountry" class="form-select phone-country-select">
-                <option value="+60" selected>+60 (MY)</option>
-                <option value="+65">+65 (SG)</option>
-                <option value="+66">+66 (TH)</option>
-                <option value="+62">+62 (ID)</option>
-                <option value="+63">+63 (PH)</option>
-                <option value="+84">+84 (VN)</option>
-                <option value="+673">+673 (BN)</option>
-                <option value="+95">+95 (MM)</option>
-                <option value="+855">+855 (KH)</option>
-                <option value="+856">+856 (LA)</option>
-              </select>
-              <input type="tel" name="phoneNumber" class="form-input phone-number-input" placeholder="Phone number">
+          <form id="purchase-form">
+            <div class="form-group">
+              <label class="form-label">
+                Address<span class="required">*</span>
+              </label>
+              <textarea name="address" class="form-textarea"
+                placeholder="Enter your address" rows="3"></textarea>
             </div>
-          </div>
-        </form>
+
+            <div class="form-group">
+              <label class="form-label">
+                Postcode<span class="required">*</span>
+              </label>
+              <input type="text" name="postcode" class="form-input"
+                placeholder="Post Number">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                City<span class="required">*</span>
+              </label>
+              <input type="text" name="city" class="form-input"
+                placeholder="City">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                State<span class="required">*</span>
+              </label>
+              <input type="text" name="state" class="form-input"
+                placeholder="State">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Country<span class="required">*</span>
+              </label>
+              <select name="country" class="form-select">
+                <option value>Select your country</option>
+                <option value="MY" selected>Malaysia</option>
+                <option value="SG">Singapore</option>
+                <option value="TH">Thailand</option>
+                <option value="ID">Indonesia</option>
+                <option value="PH">Philippines</option>
+                <option value="VN">Vietnam</option>
+                <option value="BN">Brunei</option>
+                <option value="MM">Myanmar</option>
+                <option value="KH">Cambodia</option>
+                <option value="LA">Laos</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Email<span class="required">*</span>
+              </label>
+              <input type="email" name="email" class="form-input"
+                placeholder="Email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Phone Number (e.g. 129876543)<span class="required">*</span>
+              </label>
+              <div class="phone-input-group">
+                <select name="phoneCountry"
+                  class="form-select phone-country-select">
+                  <option value="+60" selected>+60 (MY)</option>
+                  <option value="+65">+65 (SG)</option>
+                  <option value="+66">+66 (TH)</option>
+                  <option value="+62">+62 (ID)</option>
+                  <option value="+63">+63 (PH)</option>
+                  <option value="+84">+84 (VN)</option>
+                  <option value="+673">+673 (BN)</option>
+                  <option value="+95">+95 (MM)</option>
+                  <option value="+855">+855 (KH)</option>
+                  <option value="+856">+856 (LA)</option>
+                </select>
+                <input type="tel" name="phoneNumber"
+                  class="form-input phone-number-input"
+                  placeholder="Phone number">
+              </div>
+            </div>
+          </form>
+        </div>
+      </main>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <button type="button" class="nav-btn nav-btn-secondary"
+          onclick="goToPrevious()">
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
+          Previous
+        </button>
+        <button type="button" class="nav-btn nav-btn-primary"
+          onclick="goToNext()">
+          Next
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </button>
       </div>
-    </main>
-
-    <!-- Navigation Buttons -->
-    <div class="form-navigation">
-      <button type="button" class="nav-btn nav-btn-secondary" onclick="goToPrevious()">
-        <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i>
-        Previous
-      </button>
-      <button type="button" class="nav-btn nav-btn-primary" onclick="goToNext()">
-        Next
-        <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
-      </button>
     </div>
-  </div>
 
-  <script>
+    <script>
     lucide.createIcons();
 
     // Update progress bar
@@ -448,6 +460,5 @@
       window.location.href = 'purchase-step-3.html';
     }
   </script>
-</body>
+  </body>
 </html>
-

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase - Step 3 - InsureMart</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase - Step 3 - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #0D9488;
+      --primary-color: #1B5E4F;
       --secondary-color: #D4AF37;
-      --accent-color: #5EEAD4;
+      --accent-color: #2D8659;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -26,18 +26,18 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
       color: var(--text-primary);
     }
 
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
     }
 
     /* Header */
@@ -332,78 +332,97 @@
       cursor: not-allowed;
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <!-- Header -->
-    <header class="page-header">
-      <div class="header-top">
-        <div class="header-title">
-          <h1>Fill in Document : Step 3 of 4</h1><p>Next: Summary</p>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="header-top">
+          <div class="header-title">
+            <h1>Fill in Document : Step 3 of 4</h1><p>Next: Summary</p>
+          </div>
+          <div style="width: 40px;"></div>
         </div>
-        <div style="width: 40px;"></div>
-      </div>
-    </header>
+      </header>
 
-    <!-- Progress Bar -->
-    <div class="progress-section">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="form-card">
+          <h2 class="policy-title" id="policy-title">Insurance Policy: Premier
+            Medic Partner PM 160</h2>
+          <p class="form-instruction">Please provide the required information
+            for your insurance policy. All fields are mandatory.</p>
+
+          <h3 class="section-title">Required Forms Submission</h3>
+          <div class="instructions-list">
+            <div class="instruction-item">Click each form to open and review the
+              pre-filled information</div>
+            <div class="instruction-item">Save the completed forms to your
+              device for your records</div>
+            <div class="instruction-item">Leave signature fields blank - these
+              will be completed during the final processing stage</div>
+          </div>
+
+          <div class="form-item">
+            <a href="pdf-viewer.html?form=application"
+              class="form-item-label">Allianz Medicure Application Form</a>
+            <div class="form-checkbox" data-form="application"
+              id="checkbox-application"></div>
+          </div>
+
+          <div class="form-item">
+            <a href="pdf-viewer.html?form=health"
+              class="form-item-label">Allianz Medicure Health Declaration
+              Form</a>
+            <div class="form-checkbox" data-form="health"
+              id="checkbox-health"></div>
+          </div>
+
+          <div class="form-item">
+            <a href="pdf-viewer.html?form=autodebit"
+              class="form-item-label">Allianz Medicure Auto Debit Form</a>
+            <div class="form-checkbox" data-form="autodebit"
+              id="checkbox-autodebit"></div>
+          </div>
+
+          <div class="form-note">
+            <p class="form-note-text"><strong>Note:</strong> You don't need to
+              fill up the auto debit form if you are not the primary
+              cardholder.</p>
+            <label class="form-note-checkbox">
+              <input type="checkbox" id="not-primary-cardholder"
+                onchange="handleNotPrimaryCardholder()">
+              <span class="form-note-checkbox-label">Please check this box if
+                you are not the primary cardholder for the auto debit
+                authorization.</span>
+            </label>
+          </div>
+        </div>
+      </main>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <button class="nav-btn nav-btn-secondary"
+          onclick="window.location.href='purchase-step-2.html'">
+          <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+          Back
+        </button>
+        <button class="nav-btn nav-btn-primary" id="next-btn"
+          onclick="proceedToNext()">
+          Next
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </button>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="form-card">
-        <h2 class="policy-title" id="policy-title">Insurance Policy: Premier Medic Partner PM 160</h2>
-        <p class="form-instruction">Please provide the required information for your insurance policy. All fields are mandatory.</p>
-
-        <h3 class="section-title">Required Forms Submission</h3>
-      <div class="instructions-list">
-        <div class="instruction-item">Click each form to open and review the pre-filled information</div>
-        <div class="instruction-item">Save the completed forms to your device for your records</div>
-        <div class="instruction-item">Leave signature fields blank - these will be completed during the final processing stage</div>
-      </div>
-
-      <div class="form-item">
-        <a href="pdf-viewer.html?form=application" class="form-item-label">Allianz Medicure Application Form</a>
-        <div class="form-checkbox" data-form="application" id="checkbox-application"></div>
-      </div>
-
-      <div class="form-item">
-        <a href="pdf-viewer.html?form=health" class="form-item-label">Allianz Medicure Health Declaration Form</a>
-        <div class="form-checkbox" data-form="health" id="checkbox-health"></div>
-      </div>
-
-      <div class="form-item">
-        <a href="pdf-viewer.html?form=autodebit" class="form-item-label">Allianz Medicure Auto Debit Form</a>
-        <div class="form-checkbox" data-form="autodebit" id="checkbox-autodebit"></div>
-      </div>
-
-      <div class="form-note">
-        <p class="form-note-text"><strong>Note:</strong> You don't need to fill up the auto debit form if you are not the primary cardholder.</p>
-        <label class="form-note-checkbox">
-          <input type="checkbox" id="not-primary-cardholder" onchange="handleNotPrimaryCardholder()">
-          <span class="form-note-checkbox-label">Please check this box if you are not the primary cardholder for the auto debit authorization.</span>
-        </label>
-      </div>
-      </div>
-    </main>
-
-    <!-- Navigation Buttons -->
-    <div class="form-navigation">
-      <button class="nav-btn nav-btn-secondary" onclick="window.location.href='purchase-step-2.html'">
-        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-        Back
-      </button>
-      <button class="nav-btn nav-btn-primary" id="next-btn" onclick="proceedToNext()">
-        Next
-        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-      </button>
-    </div>
-  </div>
-
-  <script>
+    <script>
     lucide.createIcons();
 
     // Update policy title from sessionStorage
@@ -514,6 +533,5 @@
       });
     });
   </script>
-</body>
+  </body>
 </html>
-

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF Viewer - InsureMart</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #0D9488;
+      --primary-color: #1B5E4F;
       --secondary-color: #D4AF37;
-      --accent-color: #5EEAD4;
+      --accent-color: #2D8659;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -25,7 +25,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
       color: var(--text-primary);
       overflow: hidden;
     }
@@ -33,11 +33,11 @@
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
       height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
     }
 
     /* Mobile Header */
@@ -292,83 +292,89 @@
       color: var(--text-secondary);
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <!-- Mobile Header -->
-    <header class="header">
-      <div class="header-top">
-        <button class="header-btn" onclick="toggleMenu()">
-          <i data-lucide="menu" id="menu-icon" style="width: 20px; height: 20px;"></i>
-        </button>
-        <h1 class="header-title" id="document-title">Document.pdf</h1>
-        <button class="header-btn" onclick="savePDF()">
-          <i data-lucide="save" style="width: 20px; height: 20px;"></i>
-        </button>
-      </div>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Mobile Header -->
+      <header class="header">
+        <div class="header-top">
+          <button class="header-btn" onclick="toggleMenu()">
+            <i data-lucide="menu" id="menu-icon"
+              style="width: 20px; height: 20px;"></i>
+          </button>
+          <h1 class="header-title" id="document-title">Document.pdf</h1>
+          <button class="header-btn" onclick="savePDF()">
+            <i data-lucide="save" style="width: 20px; height: 20px;"></i>
+          </button>
+        </div>
 
-      <!-- Collapsible Menu -->
-      <div class="menu-panel" id="menu-panel">
-        <div class="menu-item">
-          <span class="menu-label">Zoom</span>
-          <div class="zoom-controls">
-            <button class="zoom-btn" onclick="zoomOut()" id="zoom-out-btn">
-              <i data-lucide="zoom-out" style="width: 16px; height: 16px;"></i>
-            </button>
-            <span class="zoom-value" id="zoom-value">100%</span>
-            <button class="zoom-btn" onclick="zoomIn()" id="zoom-in-btn">
-              <i data-lucide="zoom-in" style="width: 16px; height: 16px;"></i>
-            </button>
+        <!-- Collapsible Menu -->
+        <div class="menu-panel" id="menu-panel">
+          <div class="menu-item">
+            <span class="menu-label">Zoom</span>
+            <div class="zoom-controls">
+              <button class="zoom-btn" onclick="zoomOut()" id="zoom-out-btn">
+                <i data-lucide="zoom-out"
+                  style="width: 16px; height: 16px;"></i>
+              </button>
+              <span class="zoom-value" id="zoom-value">100%</span>
+              <button class="zoom-btn" onclick="zoomIn()" id="zoom-in-btn">
+                <i data-lucide="zoom-in" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- PDF Content Area -->
-    <main class="pdf-content">
-      <div class="pdf-container" id="pdf-container" style="transform: scale(1);">
-        <div class="pdf-iframe-wrapper" id="pdf-wrapper" style="display: none;">
-          <iframe class="pdf-iframe" id="pdf-iframe" src=""></iframe>
-        </div>
-        <div class="pdf-placeholder" id="pdf-placeholder">
-          <div class="page-number-box">
-            <span id="current-page-display">1</span>
+      <!-- PDF Content Area -->
+      <main class="pdf-content">
+        <div class="pdf-container" id="pdf-container"
+          style="transform: scale(1);">
+          <div class="pdf-iframe-wrapper" id="pdf-wrapper"
+            style="display: none;">
+            <iframe class="pdf-iframe" id="pdf-iframe" src></iframe>
           </div>
-          <p class="page-info">Page <span id="current-page-text">1</span> of <span id="total-pages-text">12</span></p>
-          <p class="page-info-small">PDF content renders here</p>
+          <div class="pdf-placeholder" id="pdf-placeholder">
+            <div class="page-number-box">
+              <span id="current-page-display">1</span>
+            </div>
+            <p class="page-info">Page <span id="current-page-text">1</span> of
+              <span id="total-pages-text">12</span></p>
+            <p class="page-info-small">PDF content renders here</p>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
 
-    <!-- Bottom Navigation Bar -->
-    <footer class="footer">
-      <div class="footer-controls">
-        <button class="nav-btn" onclick="goToPreviousPage()" id="prev-btn">
-          <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
-        </button>
+      <!-- Bottom Navigation Bar -->
+      <footer class="footer">
+        <div class="footer-controls">
+          <button class="nav-btn" onclick="goToPreviousPage()" id="prev-btn">
+            <i data-lucide="chevron-left"
+              style="width: 20px; height: 20px;"></i>
+          </button>
 
-        <div class="page-input-group">
-          <input
-            type="number"
-            class="page-input"
-            id="page-input"
-            value="1"
-            min="1"
-            max="12"
-            onchange="goToPage(this.value)"
-          />
-          <span class="page-separator">/</span>
-          <span class="page-separator" id="total-pages">12</span>
+          <div class="page-input-group">
+            <input
+              type="number"
+              class="page-input"
+              id="page-input"
+              value="1"
+              min="1"
+              max="12"
+              onchange="goToPage(this.value)" />
+            <span class="page-separator">/</span>
+            <span class="page-separator" id="total-pages">12</span>
+          </div>
+
+          <button class="nav-btn" onclick="goToNextPage()" id="next-btn">
+            <i data-lucide="chevron-right"
+              style="width: 20px; height: 20px;"></i>
+          </button>
         </div>
+      </footer>
+    </div>
 
-        <button class="nav-btn" onclick="goToNextPage()" id="next-btn">
-          <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
-        </button>
-      </div>
-    </footer>
-  </div>
-
-  <script>
+    <script>
     lucide.createIcons();
 
     let currentPage = 1;
@@ -512,6 +518,5 @@
     updatePageDisplay();
     updateZoom();
   </script>
-</body>
+  </body>
 </html>
-

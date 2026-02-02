@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase - Summary - InsureMart</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase - Summary - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
     * {
       margin: 0;
       padding: 0;
@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #0D9488;
+      --primary-color: #1B5E4F;
       --secondary-color: #D4AF37;
-      --accent-color: #5EEAD4;
+      --accent-color: #2D8659;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -26,18 +26,18 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: var(--bg-secondary);
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
       color: var(--text-primary);
     }
 
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: var(--bg-primary);
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
     }
 
     /* Header */
@@ -279,153 +279,162 @@
       cursor: not-allowed;
     }
   </style>
-</head>
-<body>
-  <div class="app">
-    <!-- Header -->
-    <header class="page-header">
-      <div class="header-top">
-        <div class="header-title">
-          <h1>Summary : Step 4 of 4</h1>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="header-top">
+          <div class="header-title">
+            <h1>Summary : Step 4 of 4</h1>
+          </div>
+          <div style="width: 40px;"></div>
         </div>
-        <div style="width: 40px;"></div>
+      </header>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
       </div>
-    </header>
 
-    <!-- Progress Bar -->
-    <div class="progress-section">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="form-card">
-        <h2 class="customer-summary-title">Customer Summary</h2>
-        <p class="form-instruction">
-          Please review your policy details before final submission.
-        </p>
-
-        <div class="success-banner">
-          <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
-          <span class="success-banner-text">Completed and verified</span>
-        </div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Insurance Plan</div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Insurance Plan</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="insurance-plan">-</span>
-            </div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Company Name</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="company-name">-</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Period of Insurance</div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Start Date</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="start-date">-</span>
-            </div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">End Date</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="end-date">-</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Premium Breakdown</div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Gross Premium</span>
-              <span class="summary-label-small">Premium Kasar</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="gross-premium">-</span>
-            </div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Service Tax on Premium (0.00%)</span>
-              <span class="summary-label-small">Cukai Perkhidmatan atas Premium</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="service-tax">-</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Summary</div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Total Premium</span>
-              <span class="summary-label-small">Jumlah Premium</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value-large" id="total-premium">-</span>
-            </div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Intermediary Commission (15.00%)</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="commission">-</span>
-            </div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label-group">
-              <span class="summary-label">Stamp Duty</span>
-              <span class="summary-label-small" style="font-style: italic;">Duti Setem</span>
-            </div>
-            <div class="summary-value-group">
-              <span class="summary-value" id="stamp-duty">RM 10.00</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="tax-note">
-          <p class="tax-note-text">
-            Please be informed that you are obligated to pay any applicable taxes (including but not limited to service tax and stamp duty) imposed by the Malaysian tax authorities in relation to your policy.
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="form-card">
+          <h2 class="customer-summary-title">Customer Summary</h2>
+          <p class="form-instruction">
+            Please review your policy details before final submission.
           </p>
+
+          <div class="success-banner">
+            <i data-lucide="check-circle"
+              style="width: 20px; height: 20px;"></i>
+            <span class="success-banner-text">Completed and verified</span>
+          </div>
+
+          <div class="summary-section">
+            <div class="summary-section-title">Insurance Plan</div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Insurance Plan</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="insurance-plan">-</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Company Name</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="company-name">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <div class="summary-section-title">Period of Insurance</div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Start Date</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="start-date">-</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">End Date</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="end-date">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <div class="summary-section-title">Premium Breakdown</div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Gross Premium</span>
+                <span class="summary-label-small">Premium Kasar</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="gross-premium">-</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Service Tax on Premium
+                  (0.00%)</span>
+                <span class="summary-label-small">Cukai Perkhidmatan atas
+                  Premium</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="service-tax">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-section">
+            <div class="summary-section-title">Summary</div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Total Premium</span>
+                <span class="summary-label-small">Jumlah Premium</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value-large" id="total-premium">-</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Intermediary Commission
+                  (15.00%)</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="commission">-</span>
+              </div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label-group">
+                <span class="summary-label">Stamp Duty</span>
+                <span class="summary-label-small"
+                  style="font-style: italic;">Duti Setem</span>
+              </div>
+              <div class="summary-value-group">
+                <span class="summary-value" id="stamp-duty">RM 10.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tax-note">
+            <p class="tax-note-text">
+              Please be informed that you are obligated to pay any applicable
+              taxes (including but not limited to service tax and stamp duty)
+              imposed by the Malaysian tax authorities in relation to your
+              policy.
+            </p>
+          </div>
         </div>
+      </main>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <button class="nav-btn nav-btn-secondary"
+          onclick="window.location.href='purchase-step-3.html'">
+          <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+          Back
+        </button>
+        <button class="nav-btn nav-btn-primary" onclick="submitApplication()">
+          Submit Application
+          <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+        </button>
       </div>
-    </main>
-
-    <!-- Navigation Buttons -->
-    <div class="form-navigation">
-      <button class="nav-btn nav-btn-secondary" onclick="window.location.href='purchase-step-3.html'">
-        <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-        Back
-      </button>
-      <button class="nav-btn nav-btn-primary" onclick="submitApplication()">
-        Submit Application
-        <i data-lucide="check" style="width: 18px; height: 18px;"></i>
-      </button>
     </div>
-  </div>
 
-  <script>
+    <script>
     lucide.createIcons();
 
     // Medical plans data
@@ -548,5 +557,5 @@
       }
     }
   </script>
-</body>
+  </body>
 </html>
