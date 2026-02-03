@@ -190,13 +190,103 @@
     }
 
     .policy-status-badge {
-      background: var(--primary-color);
       color: white;
       padding: 0.25rem 0.625rem;
       border-radius: 12px;
       font-size: 0.6875rem;
       font-weight: 600;
       white-space: nowrap;
+    }
+
+    .policy-status-badge.pending {
+      background: #F59E0B;
+    }
+
+    .policy-status-badge.active {
+      background: #10B981;
+    }
+
+    .policy-status-badge.rejected {
+      background: #EF4444;
+    }
+
+    .policy-status-badge.processing {
+      background: #3B82F6;
+    }
+
+    .agent-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+
+    .agent-info-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .agent-info-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .agent-info-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.125rem;
+    }
+
+    .agent-info-contact {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .agent-connect-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      white-space: nowrap;
+    }
+
+    .agent-connect-btn:hover {
+      background: #0A7C70;
+    }
+
+    .agent-connect-btn i {
+      width: 14px;
+      height: 14px;
+    }
+
+    .no-agent {
+      padding: 0.875rem;
+      background: #FFF3CD;
+      border: 1px solid #FFE69C;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #856404;
+      text-align: center;
     }
 
     .policy-financial {
@@ -435,6 +525,152 @@
       color: var(--text-primary);
       line-height: 1.5;
     }
+
+    /* Agent Connect Modal */
+    .agent-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .agent-modal.active {
+      display: flex;
+    }
+
+    .agent-modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .agent-modal-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .agent-modal-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .agent-modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .agent-modal-body {
+      padding: 1.25rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .agent-detail-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .agent-detail-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .agent-detail-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .agent-detail-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .agent-detail-subvalue {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .agent-contact-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .contact-method-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      justify-content: flex-start;
+    }
+
+    .contact-method-btn.phone {
+      background: #25D366;
+      color: white;
+    }
+
+    .contact-method-btn.phone:hover {
+      background: #20BA5A;
+    }
+
+    .contact-method-btn.email {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .contact-method-btn.email:hover {
+      background: var(--border-color);
+    }
+
+    .contact-method-btn i {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .agent-status-info {
+      background: #E8F5E9;
+      border: 1px solid #4CAF50;
+      border-radius: 8px;
+      padding: 0.875rem;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      color: #2E7D32;
+      line-height: 1.5;
+    }
   </style>
   </head>
   <body>
@@ -496,6 +732,21 @@
       </div>
     </div>
 
+    <!-- Agent Connect Modal -->
+    <div class="agent-modal" id="agent-modal">
+      <div class="agent-modal-content">
+        <div class="agent-modal-header">
+          <h3 class="agent-modal-title">Agent Connect</h3>
+          <button class="agent-modal-close" onclick="closeAgentModal()">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+        </div>
+        <div class="agent-modal-body" id="agent-modal-body">
+          <!-- Agent information will be rendered here -->
+        </div>
+      </div>
+    </div>
+
     <script>
     lucide.createIcons();
 
@@ -514,7 +765,13 @@
         expiry: '20 Apr 2025', 
         annualLimit: '50,000.00',
         status: 'PENDING',
-        annualPremium: '949.00'
+        annualPremium: '949.00',
+        agent: {
+          name: 'Inmaco (PJ) Sdn Bhd',
+          contactName: 'Mr. Roy Yap Che How',
+          phone: '+60 18-779-7764',
+          email: 'inmaco.royyap@gmail.com'
+        }
       }
     ];
 
@@ -532,7 +789,7 @@
               <div class="policy-card">
                 <div class="policy-header">
                   <div class="policy-name">${policy.name}</div>
-                  <div class="policy-status-badge">${policy.status}</div>
+                  <div class="policy-status-badge ${policy.status.toLowerCase()}">${policy.status}</div>
                 </div>
                 <div class="policy-financial">
                   <div class="financial-item">
@@ -550,6 +807,13 @@
                     <span class="policy-action-label">View Details</span>
                   </button>
                   <div class="policy-actions-divider"></div>
+                  ${policy.agent ? `
+                  <button class="policy-action-item" onclick="viewAgentConnect('${policy.policyNo}')">
+                    <i data-lucide="handshake"></i>
+                    <span class="policy-action-label">Agent Connect</span>
+                  </button>
+                  <div class="policy-actions-divider"></div>
+                  ` : ''}
                   <button class="policy-action-item" onclick="claimRequest('${policy.policyNo}')">
                     <i data-lucide="clipboard-list"></i>
                     <span class="policy-action-label">Claim Request</span>
@@ -663,11 +927,89 @@
       alert(`Claim request for ${policyNo}`);
     }
 
-    // Close modal when clicking outside
+    function viewAgentConnect(policyNo) {
+      // Find the policy
+      const policy = activePolicies.find(p => p.policyNo === policyNo);
+      if (!policy || !policy.agent) {
+        alert('No agent assigned to this policy');
+        return;
+      }
+
+      const agent = policy.agent;
+      
+      // Show agent modal
+      const modal = document.getElementById('agent-modal');
+      const modalBody = document.getElementById('agent-modal-body');
+      
+      modalBody.innerHTML = `
+        <div class="agent-detail-section">
+          <div class="agent-detail-label">Connected Agent</div>
+          <div class="agent-detail-value">${agent.name}</div>
+          <div class="agent-detail-subvalue">${agent.contactName}</div>
+        </div>
+
+        <div class="agent-detail-section">
+          <div class="agent-detail-label">Policy Information</div>
+          <div class="agent-detail-value">${policy.name}</div>
+          <div class="agent-detail-subvalue">Policy No: ${policy.policyNo}</div>
+        </div>
+
+        <div class="agent-detail-section">
+          <div class="agent-detail-label">Contact Methods</div>
+          <div class="agent-contact-methods">
+            <a href="https://wa.me/${agent.phone.replace(/[\s\-\(\)]/g, '')}" target="_blank" class="contact-method-btn phone">
+              <i data-lucide="message-circle"></i>
+              <span>${agent.phone}</span>
+            </a>
+            <a href="mailto:${agent.email}" class="contact-method-btn email">
+              <i data-lucide="mail"></i>
+              <span>${agent.email}</span>
+            </a>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; padding: 0.875rem; background: var(--bg-secondary); border-radius: 8px; font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; text-align: center;">
+          Need help? Feel free to contact your agent anytime. They're here to assist you with any questions about your policy.
+        </div>
+      `;
+
+      lucide.createIcons();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAgentModal() {
+      const modal = document.getElementById('agent-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function connectToAgent(policyNo, phone, email, agentName, contactName) {
+      // Get policy reference
+      const policy = activePolicies.find(p => p.policyNo === policyNo);
+      const policyName = policy ? policy.name : 'Insurance Policy';
+      
+      // Navigate to agent connect page
+      const params = new URLSearchParams({
+        agentName: agentName,
+        contactName: contactName,
+        policyNo: policyNo,
+        policyName: policyName
+      });
+      
+      window.location.href = `agent-connect.html?${params.toString()}`;
+    }
+
+    // Close modals when clicking outside
     document.addEventListener('click', (e) => {
-      const modal = document.getElementById('benefits-modal');
-      if (e.target === modal) {
+      const benefitsModal = document.getElementById('benefits-modal');
+      const agentModal = document.getElementById('agent-modal');
+      
+      if (e.target === benefitsModal) {
         closeBenefitsModal();
+      }
+      if (e.target === agentModal) {
+        closeAgentModal();
       }
     });
 
