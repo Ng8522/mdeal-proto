@@ -13,9 +13,9 @@
     }
 
     :root {
-      --primary-color: #1B5E4F;
-      --secondary-color: #D4AF37;
-      --accent-color: #2D8659;
+      --primary-color: #FF5B61;
+      --secondary-color: #F59E0B;
+      --accent-color: #FF4A50;
       --text-primary: #1E293B;
       --text-secondary: #86868B;
       --bg-primary: #FFFFFF;
@@ -26,25 +26,25 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
       color: var(--text-primary);
     }
 
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
+      background: linear-gradient(180deg, #FFF5F5 0%, #FFEBEB 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
+      box-shadow: 0 0 30px rgba(255, 91, 97, 0.15);
     }
 
     /* Header */
     .home-header {
-      background: linear-gradient(135deg, #2D8659 0%, #1B5E4F 50%, #0F4C3A 100%);
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 50%, #FF3940 100%);
       padding: 1rem 1.25rem;
-      box-shadow: 0 8px 32px rgba(27, 94, 79, 0.2);
+      box-shadow: 0 8px 32px rgba(255, 91, 97, 0.2);
     }
 
     .header-top {
@@ -164,29 +164,56 @@
     .plan-card {
       background: white;
       border-radius: 12px;
-      padding: 1.25rem;
+      padding: 1rem;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
     }
 
-    .plan-header {
+    .plan-card-wrapper {
       display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
     .plan-icon {
       flex-shrink: 0;
+      display: flex;
+      align-items: flex-start;
     }
 
     .plan-icon img {
-      width: 40px;
-      height: 40px;
+      width: 56px;
+      height: 70px;
       border-radius: 8px;
       object-fit: contain;
       background: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .plan-icon span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 70px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary-color);
+    }
+
+    .plan-content-wrapper {
+      flex: 1;
+    }
+
+    .plan-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .plan-info {
@@ -194,10 +221,11 @@
     }
 
     .plan-name {
-      font-size: 1.1rem;
+      font-size: 0.9375rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 0.25rem;
+      margin: 0;
+      line-height: 1.3;
     }
 
     .plan-description {
@@ -206,24 +234,48 @@
       margin: 0;
     }
 
-    .plan-coverage {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary-color);
-      margin-bottom: 1rem;
+    .plan-content-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .plan-price-section {
+      flex: 1;
     }
 
     .plan-price {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .plan-price-label {
       font-size: 0.75rem;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
+    }
+
+    .plan-coverage {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    .plan-coverage-label {
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-coverage-value {
+      font-size: 0.875rem;
+      font-weight: 600;
     }
 
     .plan-features {
@@ -248,15 +300,15 @@
       color: white;
       border: none;
       border-radius: 8px;
-      padding: 0.875rem;
-      font-size: 1rem;
+      padding: 0.75rem;
+      font-size: 0.875rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
     }
 
     .plan-btn:hover {
-      background: #0A7C70;
+      background: #FF4A50;
     }
 
     .empty-state {
@@ -313,7 +365,7 @@
     }
 
     .nav-item.help-special {
-      background: var(--secondary-color);
+      background: var(--primary-color);
       color: white;
       border-radius: 50%;
       width: 56px;
@@ -328,6 +380,7 @@
       border: 3px solid white;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       flex: 1 1 0;
+      position: relative;
     }
 
     .nav-item.help-special .nav-label {
@@ -336,6 +389,43 @@
       font-weight: 600;
       color: white;
       margin: 0;
+      line-height: 1;
+    }
+
+    .nav-item.help-special .ai-badge {
+      position: absolute;
+      top: -12px;
+      right: -20px;
+      background: white;
+      border-radius: 12px;
+      padding: 0.25rem 0.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .nav-item.help-special .ai-badge i {
+      width: 12px;
+      height: 12px;
+      color: var(--primary-color);
+    }
+
+    .nav-item.help-special .ai-badge::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid white;
     }
 
     .nav-item.help-special i {
@@ -587,7 +677,7 @@
     }
 
     .action-btn-top.primary:hover {
-      background: #0A7C70;
+      background: #FF4A50;
     }
 
     .plan-select-section {
@@ -944,12 +1034,15 @@
         </a>
         <a href="help.html" class="nav-item help-special">
           <span class="nav-label">Help</span>
+          <span class="ai-badge">
+            <span>AI Consultant</span>
+          </span>
+        </a>
+        <a href="deals.html" class="nav-item">
+          <i data-lucide="tag" style="width: 24px; height: 24px;"></i>
+          <span class="nav-label">Deals</span>
         </a>
         <a href="profile.html" class="nav-item">
-          <i data-lucide="user" style="width: 24px; height: 24px;"></i>
-          <span class="nav-label">Profile</span>
-        </a>
-        <a href="more.html" class="nav-item">
           <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
           <span class="nav-label">More</span>
         </a>
@@ -1098,25 +1191,33 @@
         
         plansList.innerHTML = sortedPlans.map((plan, index) => `
           <div class="plan-card">
-            <div class="plan-header">
+            <div class="plan-card-wrapper">
               <div class="plan-icon">
                 ${plan.logo ? `
                   <img src="insurance-img/${plan.logo}" alt="${plan.name} logo"
-                    onerror="this.style.display='none'; this.parentElement.innerHTML='<span style\\='font-weight: 700; font-size: 1.25rem; color: var(--primary-color);\\'>${plan.name.substring(0, 2).toUpperCase()}</span>';">
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='<span>${plan.name.substring(0, 2).toUpperCase()}</span>';">
                 ` : `
-                  <span style="font-weight: 700; font-size: 1.25rem; color: var(--primary-color);">
-                    ${plan.name.substring(0, 2).toUpperCase()}
-                  </span>
+                  <span>${plan.name.substring(0, 2).toUpperCase()}</span>
                 `}
               </div>
-              <div class="plan-info">
-                <h4 class="plan-name">${plan.name}</h4>
+              <div class="plan-content-wrapper">
+                <div class="plan-header">
+                  <div class="plan-info">
+                    <h4 class="plan-name">${plan.name}</h4>
+                  </div>
+                </div>
+                <div class="plan-content-row">
+                  <div class="plan-price-section">
+                    <div class="plan-price">RM ${plan.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                    <div class="plan-price-label">per annum</div>
+                  </div>
+                  <div class="plan-coverage">
+                    <div class="plan-coverage-label">Annual Limit:</div>
+                    <div class="plan-coverage-value">RM ${plan.coverage.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="plan-price">RM ${plan.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-            <div class="plan-price-label">per annum</div>
-            <div class="plan-coverage">Annual Limit: RM ${plan.coverage.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-            
             <button class="plan-btn" onclick="viewPlanDetails(${index})">View Details</button>
           </div>
         `).join('');
