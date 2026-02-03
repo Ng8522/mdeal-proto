@@ -748,9 +748,25 @@
         // Get selected plan name before clearing
         const selectedPlanName = sessionStorage.getItem('selectedPlanName') || 'Insurance Policy';
         
-        // Store payment method for application complete page
+        // Get user location from step 2 data before clearing
+        let userState = '';
+        let userCountry = '';
+        try {
+          const step2Data = sessionStorage.getItem('purchaseStep2');
+          if (step2Data) {
+            const data = JSON.parse(step2Data);
+            userState = data.state || '';
+            userCountry = data.country || 'MY';
+          }
+        } catch (e) {
+          console.error('Error parsing step 2 data:', e);
+        }
+        
+        // Store payment method and user location for application complete page
         sessionStorage.setItem('paymentMethod', paymentMethod);
         sessionStorage.setItem('paymentStatus', 'completed');
+        if (userState) sessionStorage.setItem('userState', userState);
+        if (userCountry) sessionStorage.setItem('userCountry', userCountry);
         
         // Clear all purchase-related session storage
         const keysToRemove = [

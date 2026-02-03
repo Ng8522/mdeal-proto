@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Connected - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #1B5E4F;
+      --secondary-color: #D4AF37;
+      --accent-color: #2D8659;
+      --text-primary: #1E293B;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
+      color: var(--text-primary);
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
+    }
+
+    /* Header */
+    .page-header {
+      background: linear-gradient(135deg, #2D8659 0%, #1B5E4F 50%, #0F4C3A 100%);
+      padding: 1rem 1.25rem;
+      box-shadow: 0 8px 32px rgba(27, 94, 79, 0.2);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-title h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: #E8F5E9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .success-icon i {
+      color: #4CAF50;
+      width: 48px;
+      height: 48px;
+    }
+
+    .success-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .success-message {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 300px;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 360px;
+      text-align: left;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .message-box {
+      background: #E8F5E9;
+      border: 1px solid #4CAF50;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .message-box-text {
+      font-size: 0.875rem;
+      color: #2E7D32;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.875rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #0A7C70;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(234, 88, 12, 0.1);
+    }
+  </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="header-top">
+          <div class="header-title">
+            <h1>Agent Connected</h1>
+          </div>
+          <div style="width: 40px;"></div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="success-icon">
+          <i data-lucide="check-circle"></i>
+        </div>
+
+        <h2 class="success-title">Information Sent Successfully!</h2>
+        <p class="success-message">
+          Your application information has been sent to the selected agent. They will contact you soon to assist with the next steps.
+        </p>
+
+        <div class="message-box">
+          <p class="message-box-text">
+            <strong>What happens next?</strong><br>
+            The agent will review your application and contact you within 1-2 business days via phone or email to proceed with your insurance policy.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-item">
+            <span class="info-label">Selected Agent</span>
+            <span class="info-value" id="agent-name">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Contact Person</span>
+            <span class="info-value" id="contact-name">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Application Reference</span>
+            <span class="info-value" id="reference-number">-</span>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary"
+            onclick="window.location.href='index.html'">
+            <i data-lucide="home" style="width: 18px; height: 18px;"></i>
+            Back to Home
+          </button>
+          <button class="btn btn-secondary"
+            onclick="window.location.href='policy.html'">
+            <i data-lucide="file-text" style="width: 18px; height: 18px;"></i>
+            View My Policies
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <script>
+    lucide.createIcons();
+
+    // Load agent and application information
+    document.addEventListener('DOMContentLoaded', () => {
+      // Get agent info from URL parameters or sessionStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const agentName = urlParams.get('agentName') || '';
+      const contactName = urlParams.get('contactName') || '';
+      
+      // Try to get from sessionStorage if not in URL
+      let selectedAgent = null;
+      try {
+        const agentData = sessionStorage.getItem('selectedAgent');
+        if (agentData) {
+          selectedAgent = JSON.parse(agentData);
+        }
+      } catch (e) {
+        console.error('Error parsing agent data:', e);
+      }
+
+      // Display agent information
+      const displayAgentName = agentName || (selectedAgent ? selectedAgent.name : 'Agent');
+      const displayContactName = contactName || (selectedAgent ? selectedAgent.contactName : 'Contact Person');
+      
+      document.getElementById('agent-name').textContent = displayAgentName;
+      document.getElementById('contact-name').textContent = displayContactName;
+
+      // Get application reference from URL or generate one
+      const refNumber = urlParams.get('ref') || generateReferenceNumber();
+      document.getElementById('reference-number').textContent = refNumber;
+    });
+
+    function generateReferenceNumber() {
+      const prefix = 'APP';
+      const timestamp = Date.now().toString().slice(-8);
+      const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      return `${prefix}-${timestamp}-${random}`;
+    }
+  </script>
+  </body>
+</html>
+

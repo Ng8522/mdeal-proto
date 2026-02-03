@@ -102,7 +102,7 @@
     .progress-fill {
       height: 100%;
       background: var(--primary-color);
-      width: 40%;
+      width: 66.67%;
       transition: width 0.3s ease;
     }
 
@@ -268,8 +268,8 @@
       <header class="page-header">
         <div class="header-top">
           <div class="header-title">
-            <h1>Contact Information : Step 2 of 4</h1>
-            <p>Next: Fill in Document</p>
+            <h1>Contact Information : Step 2 of 3</h1>
+            <p>Next: Summary</p>
           </div>
           <div style="width: 40px;"></div>
         </div>
@@ -402,7 +402,7 @@
     // Update progress bar
     function updateProgress(step) {
       const progressFill = document.getElementById('progress-fill');
-      const percentage = (step / 4) * 100;
+      const percentage = (step / 3) * 100;
       progressFill.style.width = percentage + '%';
     }
 
@@ -457,7 +457,7 @@
       sessionStorage.setItem('purchaseStep2', JSON.stringify(data));
       
       // Navigate to next step
-      window.location.href = 'purchase-step-3.html';
+      window.location.href = 'purchase-step-4.html';
     }
   </script>
   </body>

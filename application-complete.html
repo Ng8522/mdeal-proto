@@ -69,11 +69,13 @@
     .main-content {
       flex: 1;
       padding: 2rem 1.25rem;
+      padding-bottom: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: center;
+      overflow-y: auto;
     }
 
     .success-icon {
@@ -183,6 +185,134 @@
     .btn-secondary:hover {
       background: rgba(234, 88, 12, 0.1);
     }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn:disabled:hover {
+      background: var(--primary-color);
+    }
+
+    .agents-section {
+      width: 100%;
+      max-width: 360px;
+      margin-bottom: 2rem;
+    }
+
+    .agents-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .agents-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .agent-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1rem;
+      border: 2px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .agent-card:hover {
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 12px rgba(27, 94, 79, 0.15);
+    }
+
+    .agent-card.selected {
+      border-color: var(--primary-color);
+      background: #E8F5E9;
+      box-shadow: 0 4px 12px rgba(27, 94, 79, 0.2);
+    }
+
+
+    .agent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .agent-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .agent-reg {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .agent-contact {
+      margin-top: 1rem;
+    }
+
+    .connect-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .connect-btn:hover {
+      background: #0A7C70;
+    }
+
+    .connect-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .no-agents {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .selection-note {
+      background: #FFF3CD;
+      border: 1px solid #FFE69C;
+      border-radius: 8px;
+      padding: 0.875rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: #856404;
+      text-align: left;
+    }
+
+    .selection-note i {
+      margin-right: 0.5rem;
+    }
   </style>
   </head>
   <body>
@@ -203,10 +333,9 @@
           <i data-lucide="check-circle"></i>
         </div>
 
-        <h2 class="success-title">Application Submitted Successfully!</h2>
+        <h2 class="success-title">Application Completed!</h2>
         <p class="success-message">
-          Your insurance application has been received. You will receive a
-          confirmation email shortly with your policy details.
+          Your insurance application proposal form had been completed. Please select an agent to assist you. We will send your information to them for future steps.
         </p>
 
         <div class="info-card">
@@ -224,18 +353,18 @@
           </div>
         </div>
 
-        <div class="action-buttons">
-          <button class="btn btn-primary"
-            onclick="window.location.href='index.html'">
-            <i data-lucide="home" style="width: 18px; height: 18px;"></i>
-            Back to Home
-          </button>
-          <button class="btn btn-secondary"
-            onclick="window.location.href='policy.html'">
-            <i data-lucide="file-text" style="width: 18px; height: 18px;"></i>
-            View My Policies
-          </button>
+        <!-- Recommended Agents Section -->
+        <div class="agents-section" id="agents-section" style="display: none;">
+          <h3 class="agents-title">Select an Agent</h3>
+          <p class="agents-subtitle" id="agents-subtitle">Choose an agent to assist you (Required)</p>
+          <div class="selection-note">
+            <i data-lucide="info" style="width: 16px; height: 16px;"></i>
+            Please select one agent to proceed
+          </div>
+          <div id="agents-list"></div>
         </div>
+
+       
       </main>
     </div>
 
@@ -250,6 +379,292 @@
       return `${prefix}-${timestamp}-${random}`;
     }
 
+    // Insurance agents data
+    const insuranceAgents = [
+      {
+        name: 'Inmaco (PJ) Sdn Bhd',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Mr. Roy Yap Che How',
+          phone: '+60 18-779-7764',
+          email: 'inmaco.royyap@gmail.com'
+        },
+        providers: [
+          { name: 'MSIG Insurance (Malaysia) Bhd', logo: 'MS' },
+          { name: 'Allianz General Insurance Company (Malaysia) Berhad', logo: 'AL' }
+        ],
+        address: '601, 6th floor, Block B, Phileo Damansara 2, Jalan 16/11, Off Jalan Damansara, Pusat Perdagangan Phileo Damansara, Petaling Jaya, Selangor 46350 Malaysia',
+        state: 'Selangor',
+        country: 'Malaysia'
+      },
+      {
+        name: 'Facdeal Resources',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Mr. Albert Lee Chung Yeow',
+          phone: '+60 16-623-5768',
+          email: 'albertlee99.my@gmail.com'
+        },
+        providers: [
+          { name: 'ZURICH Zurich Insurance Group', logo: 'ZH' }
+        ],
+        address: 'No.22 Jalan Sepadu 25/122A, Taman Perindustrian Axis, Seksyen 25, Shah Alam, Selangor 40400 Malaysia',
+        state: 'Selangor',
+        country: 'Malaysia'
+      },
+      {
+        name: 'Trillion Business Agency Sdn Bhd',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Ms. May Ng',
+          phone: '+60 10-001-1212',
+          email: 'info@trilliongroup.com.my'
+        },
+        providers: [],
+        address: '17-2, Jalan Sri Hartamas 7, Taman Sri Hartamas, Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur 50480 Malaysia',
+        state: 'Kuala Lumpur',
+        country: 'Malaysia'
+      },
+      {
+        name: 'Li Feng Private Wealth Sdn Bhd',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Mr. SG Kew',
+          phone: '+612 6880086',
+          email: 'admin@whitegroup.asia'
+        },
+        providers: [
+          { name: 'PACIFIC INSURANCE Pacific Insurance Berhad', logo: 'PI' },
+          { name: 'CHUBB Chubb Insurance Malaysia Berhad', logo: 'CB' },
+          { name: 'Syarikat Takaful Malaysia Keluarga Berhad', logo: 'TF' }
+        ],
+        address: '11-08 Block B 11th Floor, Phileo Damansara 1 Jalan 16/11, Petaling Jaya, Kuala Lumpur 47010 Malaysia',
+        state: 'Selangor',
+        country: 'Malaysia'
+      },
+      {
+        name: 'Keek Eng Wah',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Keek Eng Wah',
+          phone: '+612 6880086',
+          email: 'admin@whitegroup.asia'
+        },
+        providers: [
+          { name: 'Tokio Marine Insurans (Malaysia) Bhd', logo: 'TM' }
+        ],
+        address: '11-08 Block B 11th Floor, Phileo Damansara 1 Jalan 16/11, Petaling Jaya, Kuala Lumpur 47010 Malaysia',
+        state: 'Selangor',
+        country: 'Malaysia'
+      },
+      {
+        name: 'Seah Ling Yean',
+        regNo: 'PIAM Reg No: 55576-00',
+        contact: {
+          name: 'Seah Ling Yean',
+          phone: '+612 6880086',
+          email: 'admin@whitegroup.asia'
+        },
+        providers: [
+          { name: 'GENERALI Generali Insurance Malaysia Berhad', logo: 'GN' }
+        ],
+        address: '11-08 Block B 11th Floor, Phileo Damansara 1 Jalan 16/11, Petaling Jaya, Kuala Lumpur 47010 Malaysia',
+        state: 'Selangor',
+        country: 'Malaysia'
+      }
+    ];
+
+    // Get state name from code or text
+    function getStateName(state) {
+      if (!state) return '';
+      const stateMap = {
+        'Selangor': 'Selangor',
+        'Kuala Lumpur': 'Kuala Lumpur',
+        'Wilayah Persekutuan': 'Kuala Lumpur',
+        'KL': 'Kuala Lumpur',
+        'PJ': 'Selangor',
+        'Petaling Jaya': 'Selangor'
+      };
+      return stateMap[state] || state;
+    }
+
+    // Get country name from code
+    function getCountryName(countryCode) {
+      const countryMap = {
+        'MY': 'Malaysia',
+        'SG': 'Singapore',
+        'TH': 'Thailand',
+        'ID': 'Indonesia',
+        'PH': 'Philippines',
+        'VN': 'Vietnam',
+        'BN': 'Brunei',
+        'MM': 'Myanmar',
+        'KH': 'Cambodia',
+        'LA': 'Laos'
+      };
+      return countryMap[countryCode] || countryCode || 'Malaysia';
+    }
+
+    // Filter agents by state and country
+    function filterAgentsByLocation(state, country) {
+      const stateName = getStateName(state);
+      const countryName = getCountryName(country);
+      
+      // If no location provided, return all agents
+      if (!stateName && !countryName) {
+        return insuranceAgents;
+      }
+      
+      return insuranceAgents.filter(agent => {
+        const agentState = agent.state || '';
+        const agentCountry = agent.country || 'Malaysia';
+        
+        // Match by state and country
+        if (stateName && countryName) {
+          return agentState.toLowerCase().includes(stateName.toLowerCase()) && 
+                 agentCountry.toLowerCase() === countryName.toLowerCase();
+        }
+        // Match by country only
+        if (countryName) {
+          return agentCountry.toLowerCase() === countryName.toLowerCase();
+        }
+        return false;
+      });
+    }
+
+    // Render recommended agents
+    function renderRecommendedAgents(state, country) {
+      const agentsSection = document.getElementById('agents-section');
+      const agentsList = document.getElementById('agents-list');
+      const agentsSubtitle = document.getElementById('agents-subtitle');
+      
+      const filteredAgents = filterAgentsByLocation(state, country);
+      
+      if (filteredAgents.length === 0) {
+        agentsList.innerHTML = '<div class="no-agents">No agents found in your area. <a href="find-an-agent.html" style="color: var(--primary-color); text-decoration: underline;">View all agents</a></div>';
+        agentsSection.style.display = 'block';
+        return;
+      }
+
+      const stateName = getStateName(state);
+      const countryName = getCountryName(country);
+      if (stateName || countryName) {
+        agentsSubtitle.textContent = `Agents in ${stateName || countryName}`;
+      } else {
+        agentsSubtitle.textContent = 'Select an agent to assist you';
+      }
+
+      agentsList.innerHTML = filteredAgents.map((agent, index) => `
+        <div class="agent-card" data-agent-index="${index}" onclick="selectAgent(${index}, '${agent.name.replace(/'/g, "\\'")}', '${agent.contact.name.replace(/'/g, "\\'")}', '${agent.contact.phone}', '${agent.contact.email.replace(/'/g, "\\'")}')">
+          <div class="agent-header">
+            <div>
+              <div class="agent-name">${agent.name}</div>
+              <div class="agent-reg">${agent.regNo}</div>
+            </div>
+          </div>
+          <div style="font-size: 0.875rem; color: var(--text-primary); margin-bottom: 1rem;">
+            ${agent.contact.name}
+          </div>
+          <div class="agent-contact">
+            <button class="connect-btn" onclick="event.stopPropagation(); connectToAgent('${agent.contact.phone}', '${agent.contact.email}')">
+              <i data-lucide="user-plus"></i>
+              <span>Connect</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+      agentsSection.style.display = 'block';
+      
+      // Store agents for selection
+      window.filteredAgentsList = filteredAgents;
+    }
+
+    // Store selected agent
+    let selectedAgentIndex = -1;
+
+    function selectAgent(index, name, contactName, phone, email) {
+      // Remove previous selection
+      document.querySelectorAll('.agent-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      const selectedCard = document.querySelector(`[data-agent-index="${index}"]`);
+      if (selectedCard) {
+        selectedCard.classList.add('selected');
+      }
+      
+      selectedAgentIndex = index;
+      
+      // Enable continue button
+      const continueBtn = document.getElementById('continue-btn');
+      if (continueBtn) {
+        continueBtn.disabled = false;
+      }
+      
+      // Store selected agent info
+      window.selectedAgent = {
+        name: name,
+        contactName: contactName,
+        phone: phone,
+        email: email
+      };
+    }
+
+    function connectToAgent(phone, email) {
+      // Get selected agent info
+      const agentCard = event.target.closest('.agent-card');
+      const agentIndex = agentCard ? agentCard.getAttribute('data-agent-index') : -1;
+      
+      if (agentIndex === -1) {
+        return;
+      }
+      
+      // Select the agent first
+      if (window.filteredAgentsList && window.filteredAgentsList[agentIndex]) {
+        const agent = window.filteredAgentsList[agentIndex];
+        selectAgent(agentIndex, agent.name, agent.contact.name, agent.contact.phone, agent.contact.email);
+      }
+      
+      // Get application reference
+      const refNumber = document.getElementById('reference-number').textContent;
+      
+      // Get agent name and contact name
+      const agentName = agentCard.querySelector('.agent-name').textContent;
+      const contactName = agentCard.querySelector('div[style*="font-size: 0.875rem"]').textContent.trim();
+      
+      // Store selected agent
+      if (window.selectedAgent) {
+        sessionStorage.setItem('selectedAgent', JSON.stringify(window.selectedAgent));
+      }
+      
+      // Navigate to connection confirmation page
+      const params = new URLSearchParams({
+        agentName: agentName,
+        contactName: contactName,
+        ref: refNumber
+      });
+      
+      window.location.href = `agent-connect.html?${params.toString()}`;
+    }
+
+    function handleContinue() {
+      if (selectedAgentIndex === -1) {
+        alert('Please select an agent to continue');
+        return;
+      }
+      
+      // Store selected agent in sessionStorage
+      if (window.selectedAgent) {
+        sessionStorage.setItem('selectedAgent', JSON.stringify(window.selectedAgent));
+      }
+      
+      // Redirect to home or policy page
+      window.location.href = 'index.html';
+    }
+
     // Load data and clear session storage
     document.addEventListener('DOMContentLoaded', () => {
       // Get plan name from URL parameter first (since sessionStorage is cleared before redirect)
@@ -259,6 +674,24 @@
       // If not in URL, try sessionStorage (fallback)
       if (!planName) {
         planName = sessionStorage.getItem('selectedPlanName');
+      }
+      
+      // Get user location from sessionStorage (saved by payment step)
+      let userState = sessionStorage.getItem('userState') || '';
+      let userCountry = sessionStorage.getItem('userCountry') || 'MY';
+      
+      // Fallback: try to get from step 2 data if still available
+      if (!userState && !userCountry) {
+        try {
+          const step2Data = sessionStorage.getItem('purchaseStep2');
+          if (step2Data) {
+            const data = JSON.parse(step2Data);
+            userState = data.state || '';
+            userCountry = data.country || 'MY';
+          }
+        } catch (e) {
+          console.error('Error parsing step 2 data:', e);
+        }
       }
       
       // Generate reference number
@@ -277,6 +710,15 @@
       });
       document.getElementById('submitted-date').textContent = submittedDate;
 
+      // Show recommended agents based on location
+      // Always show agents if location is available, otherwise show all agents
+      if (userState || userCountry) {
+        renderRecommendedAgents(userState, userCountry);
+      } else {
+        // If no location, show all agents (user must still select one)
+        renderRecommendedAgents('', '');
+      }
+
       // Clear all purchase-related session storage AFTER displaying the data
       const keysToRemove = [
         'selectedPlanName',
@@ -290,7 +732,9 @@
         'form_autodebit',
         'not_primary_cardholder',
         'purchaseStep1',
-        'purchaseStep2'
+        'purchaseStep2',
+        'userState',
+        'userCountry'
       ];
 
       keysToRemove.forEach(key => {
