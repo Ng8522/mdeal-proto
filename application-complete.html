@@ -242,8 +242,7 @@
 
     .agent-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      flex-direction: column;
       margin-bottom: 1rem;
     }
 
@@ -252,11 +251,13 @@
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 0.25rem;
+      line-height: 1.3;
     }
 
     .agent-reg {
       font-size: 0.75rem;
       color: var(--text-secondary);
+      line-height: 1.3;
     }
 
     .agent-contact {
@@ -557,10 +558,8 @@
       agentsList.innerHTML = filteredAgents.map((agent, index) => `
         <div class="agent-card" data-agent-index="${index}" onclick="selectAgent(${index}, '${agent.name.replace(/'/g, "\\'")}', '${agent.contact.name.replace(/'/g, "\\'")}', '${agent.contact.phone}', '${agent.contact.email.replace(/'/g, "\\'")}')">
           <div class="agent-header">
-            <div>
-              <div class="agent-name">${agent.name}</div>
-              <div class="agent-reg">${agent.regNo}</div>
-            </div>
+            <div class="agent-name">${agent.name}</div>
+            <div class="agent-reg">${agent.regNo}</div>
           </div>
           <div style="font-size: 0.875rem; color: var(--text-primary); margin-bottom: 1rem;">
             ${agent.contact.name}
