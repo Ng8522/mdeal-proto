@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #1B5E4F;
+      --secondary-color: #D4AF37;
+      --accent-color: #2D8659;
+      --text-primary: #1E293B;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
+      color: var(--text-primary);
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
+    }
+
+    /* Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 50%, #0A7C70 100%);
+      padding: 1rem 1.25rem;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    .header-title h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    /* Progress Bar */
+    .progress-section {
+      background: white;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-color);
+      width: 100%;
+      transition: width 0.3s ease;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-instruction {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .amount-summary {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .amount-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .amount-row:last-child {
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .amount-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .amount-value {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .amount-value-large {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .section-title:first-child {
+      margin-top: 0;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-method {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: white;
+    }
+
+    .payment-method:hover {
+      border-color: var(--primary-color);
+      background: var(--bg-secondary);
+    }
+
+    .payment-method.selected {
+      border-color: var(--primary-color);
+      background: #E8F5E9;
+    }
+
+    .payment-method input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .payment-method-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .payment-method-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      color: var(--primary-color);
+    }
+
+    .payment-method-text {
+      flex: 1;
+    }
+
+    .payment-method-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .payment-method-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-label .required {
+      color: var(--primary-color);
+      margin-left: 2px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.875rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      background: white;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .card-input-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .card-input-group .form-input {
+      flex: 1;
+    }
+
+    .card-input-group .form-input:first-child {
+      flex: 2;
+    }
+
+    .security-note {
+      background: #FFF3CD;
+      border: 1px solid #FFE69C;
+      border-radius: 8px;
+      padding: 0.875rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .security-note i {
+      color: #856404;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .security-note-text {
+      font-size: 0.75rem;
+      color: #856404;
+      line-height: 1.5;
+    }
+
+    .payment-hidden {
+      display: none;
+    }
+
+    /* Navigation Buttons */
+    .form-navigation {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 0.875rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn-secondary {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .nav-btn-secondary:hover {
+      background: rgba(234, 88, 12, 0.1);
+    }
+
+    .nav-btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .nav-btn-primary:hover {
+      background: #0A7C70;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="page-header">
+        <div class="header-top">
+          <div class="header-title">
+            <h1>Payment : Step 4 of 4</h1>
+          </div>
+          <div style="width: 40px;"></div>
+        </div>
+      </header>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="form-card">
+          <h2 class="payment-title">Payment</h2>
+          <p class="form-instruction">
+            Complete your payment to finalize your insurance application.
+          </p>
+
+          <div class="amount-summary">
+            <div class="amount-row">
+              <span class="amount-label">Total Premium</span>
+              <span class="amount-value" id="total-premium-display">-</span>
+            </div>
+            <div class="amount-row">
+              <span class="amount-label">Stamp Duty</span>
+              <span class="amount-value" id="stamp-duty-display">RM 10.00</span>
+            </div>
+            <div class="amount-row">
+              <span class="amount-label">Total Amount</span>
+              <span class="amount-value-large" id="total-amount-display">-</span>
+            </div>
+          </div>
+
+          <h3 class="section-title">Payment Method</h3>
+          <div class="payment-methods">
+            <label class="payment-method" onclick="selectPaymentMethod('card')">
+              <input type="radio" name="paymentMethod" value="card" checked onchange="togglePaymentForm('card')">
+              <div class="payment-method-label">
+                <div class="payment-method-icon">
+                  <i data-lucide="credit-card" style="width: 20px; height: 20px;"></i>
+                </div>
+                <div class="payment-method-text">
+                  <div class="payment-method-name">Credit / Debit Card</div>
+                  <div class="payment-method-desc">Visa, Mastercard, Amex</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="payment-method" onclick="selectPaymentMethod('bank')">
+              <input type="radio" name="paymentMethod" value="bank" onchange="togglePaymentForm('bank')">
+              <div class="payment-method-label">
+                <div class="payment-method-icon">
+                  <i data-lucide="building-2" style="width: 20px; height: 20px;"></i>
+                </div>
+                <div class="payment-method-text">
+                  <div class="payment-method-name">Bank Transfer</div>
+                  <div class="payment-method-desc">FPX, Online Banking</div>
+                </div>
+              </div>
+            </label>
+
+            <label class="payment-method" onclick="selectPaymentMethod('ewallet')">
+              <input type="radio" name="paymentMethod" value="ewallet" onchange="togglePaymentForm('ewallet')">
+              <div class="payment-method-label">
+                <div class="payment-method-icon">
+                  <i data-lucide="smartphone" style="width: 20px; height: 20px;"></i>
+                </div>
+                <div class="payment-method-text">
+                  <div class="payment-method-name">E-Wallet</div>
+                  <div class="payment-method-desc">GrabPay, Touch 'n Go, Boost</div>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <!-- Credit Card Form -->
+          <div id="card-form" class="payment-form">
+            <div class="form-group">
+              <label class="form-label">
+                Card Number<span class="required">*</span>
+              </label>
+              <input type="text" id="card-number" class="form-input" 
+                placeholder="1234 5678 9012 3456" 
+                maxlength="19"
+                oninput="formatCardNumber(this)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                Cardholder Name<span class="required">*</span>
+              </label>
+              <input type="text" id="card-name" class="form-input" 
+                placeholder="Name on card">
+            </div>
+
+            <div class="form-group">
+              <div class="card-input-group">
+                <div style="flex: 2;">
+                  <label class="form-label">
+                    Expiry Date<span class="required">*</span>
+                  </label>
+                  <input type="text" id="card-expiry" class="form-input" 
+                    placeholder="MM/YY" 
+                    maxlength="5"
+                    oninput="formatExpiry(this)">
+                </div>
+                <div style="flex: 1;">
+                  <label class="form-label">
+                    CVV<span class="required">*</span>
+                  </label>
+                  <input type="text" id="card-cvv" class="form-input" 
+                    placeholder="123" 
+                    maxlength="4"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
+              </div>
+            </div>
+
+            <div class="security-note">
+              <i data-lucide="lock" style="width: 16px; height: 16px;"></i>
+              <p class="security-note-text">
+                Your payment information is encrypted and secure. We do not store your card details.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bank Transfer Form -->
+          <div id="bank-form" class="payment-form payment-hidden">
+            <div class="form-group">
+              <label class="form-label">
+                Select Bank<span class="required">*</span>
+              </label>
+              <select id="bank-select" class="form-input">
+                <option value="">Choose your bank</option>
+                <option value="maybank">Maybank</option>
+                <option value="cimb">CIMB Bank</option>
+                <option value="public">Public Bank</option>
+                <option value="rhb">RHB Bank</option>
+                <option value="hongleong">Hong Leong Bank</option>
+                <option value="ambank">AmBank</option>
+                <option value="uob">UOB Bank</option>
+                <option value="ocbc">OCBC Bank</option>
+              </select>
+            </div>
+            <div class="security-note">
+              <i data-lucide="info" style="width: 16px; height: 16px;"></i>
+              <p class="security-note-text">
+                You will be redirected to your bank's secure payment page to complete the transaction.
+              </p>
+            </div>
+          </div>
+
+          <!-- E-Wallet Form -->
+          <div id="ewallet-form" class="payment-form payment-hidden">
+            <div class="form-group">
+              <label class="form-label">
+                Select E-Wallet<span class="required">*</span>
+              </label>
+              <select id="ewallet-select" class="form-input">
+                <option value="">Choose e-wallet</option>
+                <option value="grabpay">GrabPay</option>
+                <option value="tng">Touch 'n Go eWallet</option>
+                <option value="boost">Boost</option>
+                <option value="bigpay">BigPay</option>
+              </select>
+            </div>
+            <div class="security-note">
+              <i data-lucide="info" style="width: 16px; height: 16px;"></i>
+              <p class="security-note-text">
+                You will be redirected to your e-wallet app to complete the payment.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <button class="nav-btn nav-btn-secondary"
+          onclick="window.location.href='purchase-step-4.html'">
+          <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+          Back
+        </button>
+        <button class="nav-btn nav-btn-primary" id="pay-btn" onclick="processPayment()">
+          <i data-lucide="lock" style="width: 18px; height: 18px;"></i>
+          Pay Now
+        </button>
+      </div>
+    </div>
+
+    <script>
+    lucide.createIcons();
+
+    // Medical plans data
+    const medicalPlans = [
+      {
+        name: 'Allianz Medicure',
+        coverage: 500000,
+        list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
+        price: 949,
+        company: 'Allianz General Insurance Company (Malaysia) Berhad',
+      },
+      {
+        name: 'Zurich ZMedProtect',
+        coverage: 1000000,
+        list: ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
+        price: 350,
+        company: 'Zurich Insurance Malaysia Berhad',
+      },
+      {
+        name: 'SmartCare Optimum Plus Plan 1',
+        coverage: 2100000,
+        list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
+        price: 1441,
+        company: 'Generali Insurance Malaysia Berhad',
+      },
+    ];
+
+    function findPlanByPolicyName(policyName) {
+      let plan = medicalPlans.find(p => p.name === policyName);
+      if (!plan) {
+        plan = medicalPlans.find(p => p.list && p.list.includes(policyName));
+      }
+      return plan;
+    }
+
+    function formatCurrency(amount) {
+      return `RM ${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function calculatePremium(grossPremium) {
+      const serviceTax = 0;
+      const serviceTaxAmount = grossPremium * (serviceTax / 100);
+      const totalPremium = grossPremium + serviceTaxAmount;
+      return {
+        gross: grossPremium,
+        serviceTax: serviceTaxAmount,
+        total: totalPremium
+      };
+    }
+
+    // Load payment amount
+    document.addEventListener('DOMContentLoaded', () => {
+      const selectedPlanName = sessionStorage.getItem('selectedPlanName') || 'Allianz Medicure Plan 1';
+      const plan = findPlanByPolicyName(selectedPlanName);
+      
+      if (plan) {
+        const premium = calculatePremium(plan.price);
+        const stampDuty = 10.00;
+        const totalAmount = premium.total + stampDuty;
+        
+        document.getElementById('total-premium-display').textContent = formatCurrency(premium.total);
+        document.getElementById('stamp-duty-display').textContent = formatCurrency(stampDuty);
+        document.getElementById('total-amount-display').textContent = formatCurrency(totalAmount);
+      }
+    });
+
+    function selectPaymentMethod(method) {
+      document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+      });
+      // Find the selected payment method and add selected class
+      const selectedRadio = document.querySelector(`input[value="${method}"]`);
+      if (selectedRadio) {
+        selectedRadio.closest('.payment-method').classList.add('selected');
+      }
+    }
+
+    function togglePaymentForm(method) {
+      // Hide all forms
+      document.getElementById('card-form').classList.add('payment-hidden');
+      document.getElementById('bank-form').classList.add('payment-hidden');
+      document.getElementById('ewallet-form').classList.add('payment-hidden');
+      
+      // Show selected form
+      if (method === 'card') {
+        document.getElementById('card-form').classList.remove('payment-hidden');
+      } else if (method === 'bank') {
+        document.getElementById('bank-form').classList.remove('payment-hidden');
+      } else if (method === 'ewallet') {
+        document.getElementById('ewallet-form').classList.remove('payment-hidden');
+      }
+    }
+
+    function formatCardNumber(input) {
+      let value = input.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      input.value = formattedValue;
+    }
+
+    function formatExpiry(input) {
+      let value = input.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+      }
+      input.value = value;
+    }
+
+    function validateCardForm() {
+      const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+      const cardName = document.getElementById('card-name').value.trim();
+      const cardExpiry = document.getElementById('card-expiry').value;
+      const cardCvv = document.getElementById('card-cvv').value;
+
+      if (!cardNumber || cardNumber.length < 13) {
+        alert('Please enter a valid card number');
+        return false;
+      }
+      if (!cardName) {
+        alert('Please enter cardholder name');
+        return false;
+      }
+      if (!cardExpiry || cardExpiry.length !== 5) {
+        alert('Please enter a valid expiry date (MM/YY)');
+        return false;
+      }
+      if (!cardCvv || cardCvv.length < 3) {
+        alert('Please enter a valid CVV');
+        return false;
+      }
+      return true;
+    }
+
+    function validateBankForm() {
+      const bank = document.getElementById('bank-select').value;
+      if (!bank) {
+        alert('Please select a bank');
+        return false;
+      }
+      return true;
+    }
+
+    function validateEwalletForm() {
+      const ewallet = document.getElementById('ewallet-select').value;
+      if (!ewallet) {
+        alert('Please select an e-wallet');
+        return false;
+      }
+      return true;
+    }
+
+    function processPayment() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      let isValid = false;
+
+      if (paymentMethod === 'card') {
+        isValid = validateCardForm();
+      } else if (paymentMethod === 'bank') {
+        isValid = validateBankForm();
+      } else if (paymentMethod === 'ewallet') {
+        isValid = validateEwalletForm();
+      }
+
+      if (!isValid) {
+        return;
+      }
+
+      // Disable button during processing
+      const payBtn = document.getElementById('pay-btn');
+      payBtn.disabled = true;
+      payBtn.innerHTML = '<i data-lucide="loader" style="width: 18px; height: 18px;"></i> Processing...';
+      lucide.createIcons();
+
+      // Simulate payment processing
+      setTimeout(() => {
+        // Get selected plan name before clearing
+        const selectedPlanName = sessionStorage.getItem('selectedPlanName') || 'Insurance Policy';
+        
+        // Store payment method for application complete page
+        sessionStorage.setItem('paymentMethod', paymentMethod);
+        sessionStorage.setItem('paymentStatus', 'completed');
+        
+        // Clear all purchase-related session storage
+        const keysToRemove = [
+          'selectedPlanName',
+          'pendingPurchasePlanIndex',
+          'filter_dob',
+          'filter_gender',
+          'filter_annual-limit',
+          'filter_plan-type',
+          'form_application',
+          'form_health',
+          'form_autodebit',
+          'not_primary_cardholder',
+          'purchaseStep1',
+          'purchaseStep2'
+        ];
+
+        keysToRemove.forEach(key => {
+          sessionStorage.removeItem(key);
+        });
+        
+        // Redirect to application complete page
+        window.location.href = `application-complete.html?planName=${encodeURIComponent(selectedPlanName)}`;
+      }, 2000);
+    }
+
+    // Initialize - select card payment by default
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('.payment-method').classList.add('selected');
+      lucide.createIcons();
+    });
+  </script>
+  </body>
+</html>
+
