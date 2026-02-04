@@ -147,26 +147,49 @@
       line-height: 1.3;
     }
 
+    .highlight-actions {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 80px;
+    }
+
+    .purchase-plan-btn,
     .remove-plan-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 6px;
-      padding: 0.5rem 0.75rem;
+      flex-shrink: 0;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.5rem;
       font-size: 0.75rem;
-      color: white;
+      color: var(--text-primary);
       cursor: pointer;
       transition: all 0.2s;
-      margin-top: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.375rem;
+      gap: 0.25rem;
       width: 100%;
+      height: 60px;
+      flex-direction: column;
     }
 
+    .purchase-plan-btn:hover,
     .remove-plan-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: var(--bg-secondary);
+      border-color: var(--primary-color);
+    }
+
+    .purchase-plan-btn i,
+    .remove-plan-btn i {
+      color: var(--text-primary);
+    }
+
+    .purchase-plan-btn i,
+    .remove-plan-btn i {
+      width: 16px;
+      height: 16px;
     }
 
     .dots-indicator {
@@ -196,12 +219,12 @@
 
     /* Spacer for fixed header */
     .header-spacer {
-      height: 144px;
+      height: 72px;
     }
 
     @media (max-width: 428px) {
       .header-spacer {
-        height: 144px;
+        height: 72px;
       }
     }
 
@@ -209,47 +232,195 @@
     .main-content {
       flex: 1;
       overflow-y: auto;
-      padding-bottom: 120px;
+      padding-bottom: 100px;
+    }
+
+    /* Compare Plans Cards Container */
+    .compare-plans-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .compare-plan-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
     }
 
     /* Highlight Card */
     .highlight-card {
-      margin: 1rem;
       padding: 1rem;
       border-radius: 12px;
-      color: white;
-    }
-
-    .highlight-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      background: white;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
       gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
-    .highlight-item {
+    .highlight-icon {
+      flex-shrink: 0;
+      width: 25%;
+      max-width: 80px;
+      aspect-ratio: 1;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      overflow: hidden;
+    }
+
+    .highlight-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: white;
+      padding: 4px;
+    }
+
+    .highlight-icon span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .highlight-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-width: 0;
+    }
+
+    .highlight-detail-item {
       display: flex;
       flex-direction: column;
     }
 
+    .highlight-plan-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .highlight-plan-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
     .highlight-label {
       font-size: 0.75rem;
-      opacity: 0.8;
-      margin-bottom: 0.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.125rem;
     }
 
     .highlight-value {
-      font-size: 1.125rem;
+      font-size: 0.9375rem;
       font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
     }
 
-    .highlight-value-small {
-      font-size: 0.875rem;
-      font-weight: 600;
-    }
 
     /* Feature Categories */
     .feature-categories {
       margin-top: 1rem;
+      display: none;
+    }
+
+    .feature-categories.show {
+      display: block;
+    }
+
+    .show-benefits-btn {
+      width: calc(100% - 2rem);
+      margin: 1rem;
+      padding: 0.875rem 1rem;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .show-benefits-btn:hover {
+      background: var(--bg-secondary);
+      border-color: var(--primary-color);
+      box-shadow: 0 2px 12px rgba(255, 91, 97, 0.15);
+    }
+
+    .show-benefits-btn i {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s;
+    }
+
+    .show-benefits-btn.active i {
+      transform: rotate(180deg);
+    }
+
+    /* Compare Benefits Section */
+    .compare-benefits-section {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      padding: 1rem;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      z-index: 30;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .compare-benefits-btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .compare-benefits-btn:hover {
+      background: #FF4A50;
+    }
+
+    .compare-benefits-btn i {
+      width: 18px;
+      height: 18px;
     }
 
     .category-item {
@@ -389,6 +560,119 @@
     .empty-state-btn:hover {
       background: #FF4A50;
     }
+
+    /* Data Sharing Terms modal */
+    .terms-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+    }
+
+    .terms-modal.active {
+      display: flex;
+    }
+
+    .terms-modal-content {
+      width: calc(100% - 2rem);
+      max-width: 400px;
+      max-height: 70vh;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .terms-modal-content {
+        max-width: 360px;
+        margin: 0 1rem;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .terms-modal-content {
+        max-height: 65vh;
+      }
+      .terms-modal-header {
+        padding: 0.85rem 1rem 0.5rem;
+      }
+      .terms-modal-body {
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+      }
+      .terms-modal-footer {
+        padding: 0.6rem 1rem 0.9rem;
+      }
+    }
+
+    .terms-modal-header {
+      padding: 1.25rem 1.25rem 0.75rem;
+      border-bottom: 1px solid #f2f2f7;
+    }
+
+    .terms-modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .terms-modal-body {
+      padding: 1rem 1.25rem;
+      overflow-y: auto;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background: #fafafa;
+    }
+
+    .terms-modal-body p {
+      margin-bottom: 0.75rem;
+    }
+
+    .terms-modal-footer {
+      padding: 0.75rem 1.25rem 1.25rem;
+      display: flex;
+      gap: 0.75rem;
+      border-top: 1px solid #f2f2f7;
+      background: #fff;
+    }
+
+    .terms-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #e5e5ea;
+      background: #f5f5f7;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .terms-btn.primary {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: #fff;
+    }
+
+    .terms-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .terms-btn.primary:disabled {
+      background: #ccc;
+      border-color: #ccc;
+      color: #999;
+    }
   </style>
   </head>
   <body>
@@ -432,13 +716,74 @@
         <!-- Content will be rendered here -->
       </main>
 
-      <!-- Fixed Bottom Actions -->
-      <div class="fixed-bottom" id="fixed-bottom" style="display: none;">
-        <div class="action-buttons">
-          <button class="action-btn action-btn-outline"
-            onclick="viewProductSheet()">Product Disclosure Sheet</button>
-          <button class="action-btn action-btn-primary"
-            onclick="submitApplication()">Submit Application</button>
+      <!-- Compare Benefits Button -->
+      <div class="compare-benefits-section" id="compare-benefits-section" style="display: none;">
+        <button class="compare-benefits-btn" onclick="window.location.href='compare-benefits.html'">
+          <i data-lucide="git-compare"></i>
+          <span>Compare Benefits</span>
+        </button>
+      </div>
+
+
+      <!-- Data Sharing Terms Modal -->
+      <div class="terms-modal" id="terms-modal">
+        <div class="terms-modal-content">
+          <div class="terms-modal-header">
+            <h3 class="terms-modal-title">Data Sharing Terms &amp;
+              Conditions</h3>
+          </div>
+          <div class="terms-modal-body">
+            <p><strong>By agreeing to these terms, you expressly acknowledge and
+                agree to the following:</strong></p>
+            <p>
+              You hereby expressly authorize <strong></strong> to share your
+              Personal Data with the Insurance Provider
+              and Insurance Agency (hereinafter referred to as "Partner"). You
+              further consent to the Partner's Privacy Policy
+              and acknowledge that your Personal Data will be used, processed,
+              and handled in accordance with the Partner's
+              Privacy Policy.
+            </p>
+            <p>
+              You acknowledge that once your Personal Data is shared with the
+              Partner, the Partner will have sole and full
+              control over the copy of your Personal Data, and you will be
+              required to contact the Partner directly for any
+              matters related to your Personal Data.
+            </p>
+            <p>
+              You expressly consent to the transfer of your Personal Data to a
+              location outside Malaysia, subject to the terms
+              outlined in the Partner's Privacy Policy.
+            </p>
+            <p>
+              <strong></strong> shall be released from all obligations and
+              responsibilities related to the copy of
+              Personal Data shared with the Partner. For clarity,
+              <strong></strong> will ensure that any Personal Data
+              retained under its control is processed in accordance with
+              <strong></strong>'s Privacy Policy and
+              applicable laws.
+            </p>
+            <p>
+              You may withdraw your consent for further disclosure of your
+              Personal Data at any time by submitting a request to
+              <a href="mailto:support@mdeal.com.my"></a>. However, such
+              withdrawal may result in the Partner
+              or <strong></strong> declining, refusing, or making services
+              inaccessible to you. Please note that any
+              withdrawal of consent will not affect Personal Data previously
+              shared, for which you must contact the Partner
+              directly.
+            </p>
+          </div>
+          <div class="terms-modal-footer">
+            <button type="button" class="terms-btn"
+              onclick="closeTermsModal()">Close</button>
+            <button type="button" id="accept-terms-btn"
+              class="terms-btn primary" onclick="acceptTermsAndProceed()"
+              disabled>I accept</button>
+          </div>
         </div>
       </div>
     </div>
@@ -458,6 +803,7 @@
         gender: 'both',
         color: '#0ea5e9',
         list: ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
+        logo: 'zurich-logo.svg',
         planFeatures: {
           overallAnnualLimit: 'RM 1,000,000',
           roomAndBoard: 'RM 300/day',
@@ -493,6 +839,7 @@
         gender: 'both',
         color: '#2563eb',
         list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
+        logo: 'Allianz.svg',
         planFeatures: {
           overallAnnualLimit: 'RM 500,000',
           roomAndBoard: 'RM 250/day',
@@ -528,6 +875,7 @@
         gender: 'both',
         color: '#16a34a',
         list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
+        logo: 'Assicurazioni_Generali_logo.png',
         planFeatures: {
           overallAnnualLimit: 'RM 2,100,000',
           roomAndBoard: 'RM 600/day',
@@ -609,11 +957,12 @@
 
     let currentPlanIndex = 0;
     let comparePlans = [];
+    let benefitsVisible = false;
 
     // Get plans from comparison list
     function getComparePlans() {
       const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
-      return compareList.map(item => {
+      const plans = compareList.map(item => {
         // First try to find plan by exact name match
         let plan = medicalPlans.find(p => p.name === item.name);
         
@@ -628,6 +977,13 @@
         }
         return null;
       }).filter(plan => plan !== null);
+      
+      // Sort by price (lowest to highest)
+      return plans.sort((a, b) => {
+        const priceA = a.price || 0;
+        const priceB = b.price || 0;
+        return priceA - priceB;
+      });
     }
 
     // Render value
@@ -656,14 +1012,18 @@
       comparePlans = getComparePlans();
       const mainContent = document.getElementById('main-content');
       const planSelector = document.getElementById('plan-selector');
-      const fixedBottom = document.getElementById('fixed-bottom');
       const plansCount = document.getElementById('plans-count');
 
-      // If no plans in sessionStorage, show empty state instead of random mock data
-      if (comparePlans.length === 0) {
+      // Hide swipe navigation
+      if (planSelector) {
         planSelector.style.display = 'none';
-        fixedBottom.style.display = 'none';
-        plansCount.textContent = 'Swipe to compare 0 plans';
+      }
+
+      // If no plans in sessionStorage, show empty state
+      if (comparePlans.length === 0) {
+        if (plansCount) {
+          plansCount.textContent = 'Compare 0 plans';
+        }
         mainContent.innerHTML = `
           <div class="empty-state">
             <i data-lucide="search-x"></i>
@@ -677,101 +1037,140 @@
         return;
       }
 
-      currentPlanIndex = 0;
-      planSelector.style.display = 'block';
-      fixedBottom.style.display = 'block';
-      plansCount.textContent = `Swipe to compare ${comparePlans.length} plans`;
-      renderPlan();
+      if (plansCount) {
+        plansCount.textContent = `Comparing ${comparePlans.length} plan${comparePlans.length > 1 ? 's' : ''}`;
+      }
+      
+      // Show Compare Benefits button if there are plans
+      const compareBenefitsSection = document.getElementById('compare-benefits-section');
+      if (compareBenefitsSection && comparePlans.length > 0) {
+        compareBenefitsSection.style.display = 'block';
+      }
+      
+      renderAllPlans();
     }
 
-    // Render current plan
-    function renderPlan() {
+    // Render all plans as cards
+    function renderAllPlans() {
       if (comparePlans.length === 0) return;
 
-      const currentPlan = comparePlans[currentPlanIndex];
       const mainContent = document.getElementById('main-content');
-      const planNameDisplay = document.getElementById('plan-name-display');
-      const planColorBar = document.getElementById('plan-color-bar');
-      const dotsIndicator = document.getElementById('dots-indicator');
+      
+      const plansHTML = comparePlans.map((plan, index) => {
+        const price = plan.price || 0;
+        const priceFormatted = `RM ${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const planInitials = plan.name.substring(0, 2).toUpperCase();
 
-      planNameDisplay.textContent = currentPlan.name;
-      planColorBar.style.background = currentPlan.color || 'var(--primary-color)';
-
-      // Render dots
-      dotsIndicator.innerHTML = comparePlans.map((plan, index) => `
-        <button class="dot ${index === currentPlanIndex ? 'active' : 'inactive'}" 
-                style="background: ${index === currentPlanIndex ? (plan.color || 'var(--primary-color)') : 'var(--text-secondary)'}"
-                onclick="setCurrentPlan(${index})"></button>
-      `).join('');
-
-      // Render highlight card
-      const highlightCard = `
-        <div class="highlight-card" style="background: ${currentPlan.color || 'var(--primary-color)'}">
-          <div class="highlight-grid">
-            <div class="highlight-item">
-              <p class="highlight-label">Annual Limit</p>
-              <p class="highlight-value">${currentPlan.planFeatures?.overallAnnualLimit || currentPlan.coverage}</p>
-            </div>
-            <div class="highlight-item">
-              <p class="highlight-label">Room & Board</p>
-              <p class="highlight-value">${currentPlan.planFeatures?.roomAndBoard || '-'}</p>
-            </div>
-            <div class="highlight-item">
-              <p class="highlight-label">ICU</p>
-              <p class="highlight-value-small">${currentPlan.planFeatures?.intensiveCareUnit || '-'}</p>
-            </div>
-            <div class="highlight-item">
-              <p class="highlight-label">Surgical Fees</p>
-              <p class="highlight-value-small">${currentPlan.planFeatures?.surgicalFees || '-'}</p>
-            </div>
-          </div>
-          <button class="remove-plan-btn" onclick="removePlanFromCompare('${currentPlan.name}')">
-            <i data-lucide="x" style="width: 14px; height: 14px;"></i>
-            Remove from Compare
-          </button>
-        </div>
-      `;
-
-      // Render all features together (no categories)
-      const allFeatures = featureCategories.flatMap(category => category.features);
-      const featuresHTML = allFeatures.map(featureKey => {
-        const value = currentPlan.planFeatures?.[featureKey] || '-';
         return `
-          <div class="feature-item">
-            <p class="feature-label">${featureLabels[featureKey]}</p>
-            ${renderValue(value)}
+          <div class="compare-plan-card">
+            <div class="highlight-card">
+              <div class="highlight-icon">
+                ${plan.logo ? `
+                  <img src="insurance-img/${plan.logo}" alt="${plan.name} logo"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='<span>${planInitials}</span>';">
+                ` : `
+                  <span>${planInitials}</span>
+                `}
+              </div>
+              <div class="highlight-details">
+                <p class="highlight-plan-name">${plan.name}</p>
+                <div class="highlight-detail-item">
+                  <p class="highlight-label">Annual Premium</p>
+                  <p class="highlight-value">${priceFormatted}</p>
+                </div>
+                <div class="highlight-detail-item">
+                  <p class="highlight-label">Annual Limit</p>
+                  <p class="highlight-value">${plan.planFeatures?.overallAnnualLimit || plan.coverage}</p>
+                </div>
+              </div>
+              <div class="highlight-actions">
+                <button class="purchase-plan-btn" onclick="purchasePlan('${plan.name}')" title="Purchase">
+                  <i data-lucide="shopping-cart"></i>
+                  <span style="font-size: 0.625rem;">Purchase</span>
+                </button>
+                <button class="remove-plan-btn" onclick="removePlanFromCompare('${plan.name}')" title="Remove from Compare">
+                  <i data-lucide="x"></i>
+                  <span style="font-size: 0.625rem;">Remove</span>
+                </button>
+              </div>
+            </div>
           </div>
         `;
       }).join('');
 
-      const categoriesHTML = `
-        <div class="category-item">
-          <div class="category-features">
-            ${featuresHTML}
-          </div>
-        </div>
-      `;
-
-      mainContent.innerHTML = highlightCard + '<div class="feature-categories">' + categoriesHTML + '</div>';
+      mainContent.innerHTML = plansHTML;
       lucide.createIcons();
     }
 
-    // Navigation functions
-    function goToPrevious() {
-      currentPlanIndex = currentPlanIndex === 0 ? comparePlans.length - 1 : currentPlanIndex - 1;
-      renderPlan();
+
+    // Toggle benefits visibility
+    function toggleBenefits() {
+      benefitsVisible = !benefitsVisible;
+      const featureCategories = document.getElementById('feature-categories');
+      const showBtn = document.getElementById('show-benefits-btn');
+      
+      if (featureCategories && showBtn) {
+        const btnSpan = showBtn.querySelector('span');
+        
+        if (benefitsVisible) {
+          featureCategories.classList.add('show');
+          showBtn.classList.add('active');
+          if (btnSpan) btnSpan.textContent = 'Hide Benefits Details';
+        } else {
+          featureCategories.classList.remove('show');
+          showBtn.classList.remove('active');
+          if (btnSpan) btnSpan.textContent = 'Show Benefits Details';
+        }
+        
+        // Recreate icons after text change
+        lucide.createIcons();
+      }
     }
 
-    function goToNext() {
-      currentPlanIndex = currentPlanIndex === comparePlans.length - 1 ? 0 : currentPlanIndex + 1;
-      renderPlan();
+    // Purchase plan
+    function purchasePlan(planName) {
+      // Store the plan name for purchase flow
+      sessionStorage.setItem('selectedPlanName', planName);
+      // Show Data Sharing Terms modal first (same as medical-plan.html)
+      const modal = document.getElementById('terms-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Disable accept button initially
+        const acceptBtn = document.getElementById('accept-terms-btn');
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+        
+        // Set up scroll detection
+        const modalBody = modal.querySelector('.terms-modal-body');
+        if (modalBody) {
+          // Reset scroll position
+          modalBody.scrollTop = 0;
+          
+          // Check scroll position function
+          const checkScrollPosition = () => {
+            const scrollTop = modalBody.scrollTop;
+            const scrollHeight = modalBody.scrollHeight;
+            const clientHeight = modalBody.clientHeight;
+            
+            // Check if scrolled to bottom (with 10px tolerance)
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+            
+            if (acceptBtn) {
+              acceptBtn.disabled = !isAtBottom;
+            }
+          };
+          
+          // Add scroll event listener
+          modalBody.addEventListener('scroll', checkScrollPosition);
+          
+          // Check initial state (in case content is short and already fully visible)
+          setTimeout(checkScrollPosition, 100);
+        }
+      }
     }
-
-    function setCurrentPlan(index) {
-      currentPlanIndex = index;
-      renderPlan();
-    }
-
 
     // Remove plan from comparison
     function removePlanFromCompare(planName) {
@@ -791,13 +1190,81 @@
     }
 
     // Action functions
-    function viewProductSheet() {
-      alert('Opening Product Disclosure Sheet...');
+    function submitApplication() {
+      // Show Data Sharing Terms modal first (same as medical-plan.html)
+      const modal = document.getElementById('terms-modal');
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Disable accept button initially
+        const acceptBtn = document.getElementById('accept-terms-btn');
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+        
+        // Set up scroll detection
+        const modalBody = modal.querySelector('.terms-modal-body');
+        if (modalBody) {
+          // Reset scroll position
+          modalBody.scrollTop = 0;
+          
+          // Check scroll position function
+          const checkScrollPosition = () => {
+            const scrollTop = modalBody.scrollTop;
+            const scrollHeight = modalBody.scrollHeight;
+            const clientHeight = modalBody.clientHeight;
+            
+            // Check if scrolled to bottom (with 10px tolerance)
+            const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+            
+            if (acceptBtn) {
+              acceptBtn.disabled = !isAtBottom;
+            }
+          };
+          
+          // Add scroll event listener
+          modalBody.addEventListener('scroll', checkScrollPosition);
+          
+          // Check initial state (in case content is short and already fully visible)
+          setTimeout(checkScrollPosition, 100);
+        }
+      }
     }
 
-    function submitApplication() {
-      // Redirect to application form (no login required)
-      alert('Redirecting to application form...');
+    function closeTermsModal() {
+      const modal = document.getElementById('terms-modal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        // Reset scroll position and button state
+        const modalBody = modal.querySelector('.terms-modal-body');
+        const acceptBtn = document.getElementById('accept-terms-btn');
+        if (modalBody) {
+          modalBody.scrollTop = 0;
+          // Remove scroll event listener by cloning and replacing
+          const newBody = modalBody.cloneNode(true);
+          modalBody.parentNode.replaceChild(newBody, modalBody);
+        }
+        if (acceptBtn) {
+          acceptBtn.disabled = true;
+        }
+      }
+    }
+
+    function acceptTermsAndProceed() {
+      // Store selected plan information
+      if (comparePlans.length > 0 && currentPlanIndex >= 0 && currentPlanIndex < comparePlans.length) {
+        const currentPlan = comparePlans[currentPlanIndex];
+        if (currentPlan) {
+          // Store plan name in sessionStorage for purchase pages
+          sessionStorage.setItem('selectedPlanName', currentPlan.name);
+        }
+      }
+      
+      // Continue to purchase flow
+      closeTermsModal();
+      window.location.href = 'purchase-step-1.html';
     }
 
     // Initialize

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Plans - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #1B5E4F;
+      --secondary-color: #D4AF37;
+      --accent-color: #2D8659;
+      --text-primary: #1E293B;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #F0F9F7 0%, #E8F5F1 100%);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #F0F9F7 0%, #E8F5F1 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(27, 94, 79, 0.15);
+      position: relative;
+    }
+
+    /* Fixed Header */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      z-index: 30;
+    }
+
+    .header-title {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn-header {
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .back-btn-header:hover {
+      background: var(--bg-secondary);
+    }
+
+    .header-title-content {
+      flex: 1;
+    }
+
+    .header-title-content h1 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .header-title-content p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .plan-selector {
+      padding: 0.75rem 1rem;
+    }
+
+    .plan-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .nav-btn {
+      background: var(--bg-secondary);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--border-color);
+    }
+
+    .plan-info-center {
+      flex: 1;
+      text-align: center;
+    }
+
+    .plan-color-bar {
+      height: 6px;
+      width: 64px;
+      border-radius: 999px;
+      margin: 0 auto 0.5rem;
+    }
+
+    .plan-name-display {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+
+    .dots-indicator {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .dot {
+      height: 8px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dot.active {
+      width: 24px;
+    }
+
+    .dot.inactive {
+      width: 8px;
+      background: var(--text-secondary);
+      opacity: 0.3;
+    }
+
+    /* Spacer for fixed header */
+    .header-spacer {
+      height: 144px;
+    }
+
+    @media (max-width: 428px) {
+      .header-spacer {
+        height: 144px;
+      }
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 120px;
+    }
+
+    /* Highlight Card */
+    .highlight-card {
+      margin: 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .highlight-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .highlight-label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-bottom: 0.25rem;
+    }
+
+    .highlight-value {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+    .highlight-value-small {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* Feature Categories */
+    .feature-categories {
+      margin-top: 1rem;
+    }
+
+    .category-item {
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .category-features {
+      padding: 0.5rem 1rem;
+    }
+
+    .feature-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+
+    .feature-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-value {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-value.not-included {
+      color: var(--text-secondary);
+    }
+
+    .feature-value.as-charged {
+      color: #16a34a;
+    }
+
+    .check-icon {
+      width: 16px;
+      height: 16px;
+      color: #16a34a;
+    }
+
+    .minus-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--text-secondary);
+    }
+
+    /* Fixed Bottom Actions */
+    .fixed-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-color);
+      padding: 1rem;
+      z-index: 30;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 0.875rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .action-btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .action-btn-outline:hover {
+      background: rgba(27, 94, 79, 0.1);
+    }
+
+    .action-btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .action-btn-primary:hover {
+      background: #0A7C70;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+      color: var(--text-secondary);
+    }
+
+    .empty-state p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.875rem 1.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .empty-state-btn:hover {
+      background: #0A7C70;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Fixed Header -->
+      <div class="fixed-header">
+        <div class="header-title">
+          <button class="back-btn-header"
+            onclick="window.location.href='medical-plan.html'"
+            aria-label="Back">
+            <i data-lucide="arrow-left"></i>
+          </button>
+          <div class="header-title-content">
+            <h1>Compare Plans</h1>
+            <p id="plans-count">Swipe to compare 0 plans</p>
+          </div>
+        </div>
+        <div class="plan-selector" id="plan-selector" style="display: none;">
+          <div class="plan-nav">
+            <button class="nav-btn" onclick="goToPrevious()"
+              aria-label="Previous plan">
+              <i data-lucide="chevron-left"></i>
+            </button>
+            <div class="plan-info-center">
+              <div class="plan-color-bar" id="plan-color-bar"></div>
+              <p class="plan-name-display" id="plan-name-display"></p>
+            </div>
+            <button class="nav-btn" onclick="goToNext()" aria-label="Next plan">
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+          <div class="dots-indicator" id="dots-indicator"></div>
+        </div>
+      </div>
+
+      <!-- Spacer for fixed header -->
+      <div class="header-spacer"></div>
+
+      <!-- Main Content -->
+      <main class="main-content" id="main-content">
+        <!-- Content will be rendered here -->
+      </main>
+
+    </div>
+
+    <script>
+    lucide.createIcons();
+
+    // Available medical plans (should mirror medical-plan.html)
+    const medicalPlans = [
+      {
+        name: 'Zurich ZMedProtect',
+        coverage: 'RM 1,000,000',
+        price: 350,
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+        color: '#0ea5e9',
+        list: ['Zurich ZMedProtect Plan 1', 'Zurich ZMedProtect Plan 2', 'Zurich ZMedProtect Plan 3'],
+        logo: 'zurich-logo.svg',
+        planFeatures: {
+          overallAnnualLimit: 'RM 1,000,000',
+          roomAndBoard: 'RM 300/day',
+          ambulanceFee: 'As Charged',
+          anaesthetistFee: 'As Charged',
+          dailyCashAllowance: 'RM 80',
+          daySurgery: 'As Charged',
+          emergencyOutpatient: 'As Charged (Max 30 days)',
+          entryAge: 'Age 0 - Age 80',
+          hospitalSupplies: 'As Charged',
+          inHospitalPhysician: 'As Charged',
+          intensiveCareUnit: 'As Charged (Max 30 days)',
+          operatingTheatre: 'As Charged',
+          outpatientCancer: 'As Charged',
+          outpatientKidney: 'As Charged',
+          postHospitalisation: 'As Charged (Max 60 days)',
+          preHospitalisation: 'As Charged (Max 60 days)',
+          nurseAndBoard: 'RM 150',
+          surgicalFees: 'As Charged',
+          compassionateAllowance: '-',
+          emergencyDental: '-',
+          homeNursingCare: '-',
+          organTransplant: '-',
+        },
+      },
+      {
+        name: 'Allianz Medicure',
+        coverage: 'RM 500,000',
+        price: 949,
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+        color: '#2563eb',
+        list: ['Allianz Medicure Plan 1', 'Allianz Medicure Plan 2', 'Allianz Medicure Plan 3'],
+        logo: 'Allianz.svg',
+        planFeatures: {
+          overallAnnualLimit: 'RM 500,000',
+          roomAndBoard: 'RM 250/day',
+          ambulanceFee: 'As Charged',
+          anaesthetistFee: 'As Charged',
+          dailyCashAllowance: 'RM 50',
+          daySurgery: 'As Charged',
+          emergencyOutpatient: 'As Charged (Max 30 days)',
+          entryAge: 'Age 0 - Age 80',
+          hospitalSupplies: 'As Charged',
+          inHospitalPhysician: 'As Charged',
+          intensiveCareUnit: 'As Charged (Max 20 days)',
+          operatingTheatre: 'As Charged',
+          outpatientCancer: 'As Charged',
+          outpatientKidney: 'As Charged',
+          postHospitalisation: 'As Charged (Max 30 days)',
+          preHospitalisation: 'As Charged (Max 30 days)',
+          nurseAndBoard: 'RM 120',
+          surgicalFees: 'As Charged',
+          compassionateAllowance: '-',
+          emergencyDental: '-',
+          homeNursingCare: '-',
+          organTransplant: '-',
+        },
+      },
+      {
+        name: 'SmartCare Optimum Plus Plan 1',
+        coverage: 'RM 2,100,000',
+        price: 1441,
+        type: 'normal',
+        minAge: 0,
+        maxAge: 80,
+        gender: 'both',
+        color: '#16a34a',
+        list: ['SmartCare Optimum Plus Plan 1', 'SmartCare Optimum Plus Plan 2', 'SmartCare Optimum Plus Plan 3'],
+        logo: 'Assicurazioni_Generali_logo.png',
+        planFeatures: {
+          overallAnnualLimit: 'RM 2,100,000',
+          roomAndBoard: 'RM 600/day',
+          ambulanceFee: 'As Charged',
+          anaesthetistFee: 'As Charged',
+          dailyCashAllowance: 'RM 120',
+          daySurgery: 'As Charged',
+          emergencyOutpatient: 'As Charged (Max 60 days)',
+          entryAge: 'Age 0 - Age 80',
+          hospitalSupplies: 'As Charged',
+          inHospitalPhysician: 'As Charged',
+          intensiveCareUnit: 'As Charged (Max 45 days)',
+          operatingTheatre: 'As Charged',
+          outpatientCancer: 'RM 50,000/year',
+          outpatientKidney: 'RM 20,000/year',
+          postHospitalisation: 'As Charged (Max 90 days)',
+          preHospitalisation: 'As Charged (Max 60 days)',
+          nurseAndBoard: 'RM 200',
+          surgicalFees: 'As Charged',
+          compassionateAllowance: 'RM 1,000',
+          emergencyDental: 'As Charged',
+          homeNursingCare: 'RM 150',
+          organTransplant: 'RM 30,000',
+        },
+      },
+    ];
+
+    const featureLabels = {
+      overallAnnualLimit: 'Overall Annual Limit',
+      roomAndBoard: 'Room & Board',
+      ambulanceFee: 'Ambulance Fee',
+      anaesthetistFee: 'Anaesthetist Fee',
+      dailyCashAllowance: 'Daily Cash Allowance at Gov Hospital',
+      daySurgery: 'Day Surgery',
+      emergencyOutpatient: 'Emergency Accidental Outpatient Treatment',
+      entryAge: 'Entry Age',
+      hospitalSupplies: 'Hospital Supplies and Services',
+      inHospitalPhysician: 'In-Hospital Physician Visit',
+      intensiveCareUnit: 'Intensive Care Unit (ICU)',
+      operatingTheatre: 'Operating Theatre',
+      outpatientCancer: 'Outpatient Cancer Treatment',
+      outpatientKidney: 'Outpatient Kidney Dialysis Treatment',
+      postHospitalisation: 'Post-Hospitalisation Benefit',
+      preHospitalisation: 'Pre-Hospitalisation Benefit',
+      nurseAndBoard: 'Nurse and Board',
+      surgicalFees: 'Surgical Fees',
+      compassionateAllowance: 'Compassionate Allowance',
+      emergencyDental: 'Emergency Accidental Dental Care',
+      homeNursingCare: 'Home Nursing Care',
+      organTransplant: 'Organ Transplant',
+    };
+
+    const featureCategories = [
+      {
+        name: 'Core Benefits',
+        features: ['overallAnnualLimit', 'roomAndBoard', 'nurseAndBoard', 'surgicalFees', 'intensiveCareUnit'],
+      },
+      {
+        name: 'Hospital Services',
+        features: ['operatingTheatre', 'hospitalSupplies', 'inHospitalPhysician', 'anaesthetistFee', 'ambulanceFee', 'daySurgery'],
+      },
+      {
+        name: 'Outpatient',
+        features: ['emergencyOutpatient', 'outpatientCancer', 'outpatientKidney'],
+      },
+      {
+        name: 'Pre & Post Hospital',
+        features: ['preHospitalisation', 'postHospitalisation'],
+      },
+      {
+        name: 'Additional Benefits',
+        features: ['dailyCashAllowance', 'compassionateAllowance', 'emergencyDental', 'homeNursingCare', 'organTransplant'],
+      },
+      {
+        name: 'Eligibility',
+        features: ['entryAge'],
+      },
+    ];
+
+    let currentPlanIndex = 0;
+    let comparePlans = [];
+
+    // Get plans from comparison list
+    function getComparePlans() {
+      const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+      return compareList.map(item => {
+        // First try to find plan by exact name match
+        let plan = medicalPlans.find(p => p.name === item.name);
+        
+        // If not found, try to find plan where item.name is in the plan's list (variant)
+        if (!plan) {
+          plan = medicalPlans.find(p => p.list && p.list.includes(item.name));
+        }
+        
+        if (plan) {
+          // Override the name with the stored variant name if it's different
+          return { ...plan, name: item.name, compareIndex: item.index };
+        }
+        return null;
+      }).filter(plan => plan !== null);
+    }
+
+    // Render value
+    function renderValue(value) {
+      if (value === '-') {
+        return `
+          <div class="feature-value not-included">
+            <i data-lucide="minus" class="minus-icon"></i>
+            <span>Not included</span>
+          </div>
+        `;
+      }
+      if (value === 'As Charged') {
+        return `
+          <div class="feature-value as-charged">
+            <i data-lucide="check" class="check-icon"></i>
+            <span>As Charged</span>
+          </div>
+        `;
+      }
+      return `<span class="feature-value">${value}</span>`;
+    }
+
+    // Render comparison
+    function renderComparison() {
+      comparePlans = getComparePlans();
+      const mainContent = document.getElementById('main-content');
+      const planSelector = document.getElementById('plan-selector');
+      const plansCount = document.getElementById('plans-count');
+
+      // If no plans in sessionStorage, show empty state instead of random mock data
+      if (comparePlans.length === 0) {
+        planSelector.style.display = 'none';
+        plansCount.textContent = 'Swipe to compare 0 plans';
+        mainContent.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="search-x"></i>
+            <p>No plans selected for comparison yet.</p>
+            <button class="empty-state-btn" onclick="window.location.href='medical-plan.html'">
+              Add plans to compare
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      currentPlanIndex = 0;
+      planSelector.style.display = 'block';
+      plansCount.textContent = `Swipe to compare ${comparePlans.length} plans`;
+      renderPlan();
+    }
+
+    // Render current plan
+    function renderPlan() {
+      if (comparePlans.length === 0) return;
+
+      const currentPlan = comparePlans[currentPlanIndex];
+      const mainContent = document.getElementById('main-content');
+      const planNameDisplay = document.getElementById('plan-name-display');
+      const planColorBar = document.getElementById('plan-color-bar');
+      const dotsIndicator = document.getElementById('dots-indicator');
+
+      planNameDisplay.textContent = currentPlan.name;
+      planColorBar.style.background = currentPlan.color || 'var(--primary-color)';
+
+      // Render dots
+      dotsIndicator.innerHTML = comparePlans.map((plan, index) => `
+        <button class="dot ${index === currentPlanIndex ? 'active' : 'inactive'}" 
+                style="background: ${index === currentPlanIndex ? (plan.color || 'var(--primary-color)') : 'var(--text-secondary)'}"
+                onclick="setCurrentPlan(${index})"></button>
+      `).join('');
+
+      // Render highlight card
+      const highlightCard = `
+        <div class="highlight-card" style="background: ${currentPlan.color || 'var(--primary-color)'}">
+          <div class="highlight-grid">
+            <div class="highlight-item">
+              <p class="highlight-label">Annual Limit</p>
+              <p class="highlight-value">${currentPlan.planFeatures?.overallAnnualLimit || currentPlan.coverage}</p>
+            </div>
+            <div class="highlight-item">
+              <p class="highlight-label">Room & Board</p>
+              <p class="highlight-value">${currentPlan.planFeatures?.roomAndBoard || '-'}</p>
+            </div>
+            <div class="highlight-item">
+              <p class="highlight-label">ICU</p>
+              <p class="highlight-value-small">${currentPlan.planFeatures?.intensiveCareUnit || '-'}</p>
+            </div>
+            <div class="highlight-item">
+              <p class="highlight-label">Surgical Fees</p>
+              <p class="highlight-value-small">${currentPlan.planFeatures?.surgicalFees || '-'}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Render all features together (no categories)
+      const allFeatures = featureCategories.flatMap(category => category.features);
+      const featuresHTML = allFeatures.map(featureKey => {
+        const value = currentPlan.planFeatures?.[featureKey] || '-';
+        return `
+          <div class="feature-item">
+            <p class="feature-label">${featureLabels[featureKey]}</p>
+            ${renderValue(value)}
+          </div>
+        `;
+      }).join('');
+
+      const categoriesHTML = `
+        <div class="category-item">
+          <div class="category-features">
+            ${featuresHTML}
+          </div>
+        </div>
+      `;
+
+      mainContent.innerHTML = highlightCard + '<div class="feature-categories">' + categoriesHTML + '</div>';
+      lucide.createIcons();
+    }
+
+    // Navigation functions
+    function goToPrevious() {
+      currentPlanIndex = currentPlanIndex === 0 ? comparePlans.length - 1 : currentPlanIndex - 1;
+      renderPlan();
+    }
+
+    function goToNext() {
+      currentPlanIndex = currentPlanIndex === comparePlans.length - 1 ? 0 : currentPlanIndex + 1;
+      renderPlan();
+    }
+
+    function setCurrentPlan(index) {
+      currentPlanIndex = index;
+      renderPlan();
+    }
+
+
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderComparison();
+    });
+  </script>
+  </body>
+</html>
