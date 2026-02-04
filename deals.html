@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Deals - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #FF5B61;
+      --secondary-color: #F59E0B;
+      --accent-color: #FF4A50;
+      --text-primary: #1E293B;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      font-size: 14px;
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #FFF5F5 0%, #FFEBEB 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(255, 91, 97, 0.15);
+      position: relative;
+    }
+
+    /* Header */
+    .home-header {
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 50%, #FF3940 100%);
+      padding: 1rem 1.25rem;
+      box-shadow: 0 8px 32px rgba(255, 91, 97, 0.2);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-greeting {
+      flex: 1;
+    }
+
+    .brand-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 0.25rem;
+    }
+
+    .user-greeting h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+    }
+
+    /* Main Content */
+    .home-main {
+      flex: 1;
+      padding: 1.5rem 1.25rem;
+      padding-bottom: 100px;
+      overflow-y: auto;
+    }
+
+    /* Deals Section */
+    .deals-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header {
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* Deal Cards */
+    .deals-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .deal-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      display: flex;
+      border: 1px solid var(--border-color);
+    }
+
+    .deal-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .deal-image {
+      width: 33.33%;
+      flex-shrink: 0;
+      min-height: 80px;
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .deal-image.has-image {
+      background: #f5f5f5;
+      padding: 0;
+      display: block;
+      align-items: stretch;
+    }
+
+    .deal-image.has-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 80px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .deal-image-content {
+      text-align: center;
+      color: white;
+    }
+
+    .deal-image-content i {
+      width: 36px;
+      height: 36px;
+      opacity: 0.9;
+    }
+
+    .deal-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0.75rem;
+    }
+
+    .deal-title-section {
+      flex: 0 0 33.33%;
+      margin-bottom: 0.25rem;
+    }
+
+    .deal-title {
+      font-size: 0.8125rem;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .deal-category {
+      font-size: 0.6875rem;
+      color: var(--text-secondary);
+      margin-top: 0.125rem;
+    }
+
+    .deal-bottom-section {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 0.75rem;
+    }
+
+    .deal-description {
+      flex: 2;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .deal-btn {
+      flex: 1;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .deal-btn:hover {
+      background: #FF4A50;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 428px;
+      background: white;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem 0.5rem;
+      z-index: 100;
+      gap: 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      text-decoration: none;
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+
+    .nav-item.help-special {
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      min-width: 56px;
+      max-width: 56px;
+      padding: 0;
+      margin-top: -0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      flex: 1 1 0;
+      position: relative;
+    }
+
+    .nav-item.help-special .nav-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .nav-item.help-special .ai-badge {
+      position: absolute;
+      top: -12px;
+      right: -20px;
+      background: white;
+      border-radius: 12px;
+      padding: 0.25rem 0.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .nav-item.help-special .ai-badge i {
+      width: 12px;
+      height: 12px;
+      color: var(--primary-color);
+    }
+
+    .nav-item.help-special .ai-badge::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 20px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid white;
+    }
+
+    .nav-item.help-special i {
+      display: none;
+    }
+
+    .nav-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .nav-item i {
+      width: 24px;
+      height: 24px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="home-header">
+        <div class="header-top">
+          <div class="user-greeting">
+            <div class="brand-name">InsureMart</div>
+            <h2>Special Deals</h2>
+          </div>
+          <div class="header-actions">
+            <button class="back-btn" onclick="window.history.back()">
+              <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="home-main">
+        <!-- Active Deals Section -->
+        <div class="deals-section">
+          <div class="deals-grid" id="deals-grid">
+            <!-- Deal cards will be inserted here -->
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+          <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+          <span class="nav-label">Explore</span>
+        </a>
+        <a href="policy.html" class="nav-item">
+          <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+          <span class="nav-label">My Policies</span>
+        </a>
+        <a href="help.html" class="nav-item help-special">
+          <span class="nav-label">Help</span>
+          <span class="ai-badge">
+            <span>AI Consultant</span>
+          </span>
+        </a>
+        <a href="deals.html" class="nav-item active">
+          <i data-lucide="tag" style="width: 24px; height: 24px;"></i>
+          <span class="nav-label">Deals</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <i data-lucide="more-vertical" style="width: 24px; height: 24px;"></i>
+          <span class="nav-label">More</span>
+        </a>
+      </nav>
+    </div>
+
+    <script>
+    // Sample deals data
+    const deals = [
+      {
+        id: 1,
+        title: "Insuremart Start Operation Now, left your expirience today",
+        category: "Notifications",
+        imageUrl: 'deals/google-play.jpg',
+        button: "Start Now",
+        buttonLink: "https://www.bilibili.com/video/BV1wz421U7er?vd_source=6bba6f624161b942a586e3065b5bb385"
+      },
+      {
+        id: 2,
+        title: "What is Insuremart? Know us in Youtube",
+        category: "Notifications",
+        imageUrl: "deals/youtube.jpg",
+        button: "Watch Now",
+        buttonLink: "https://youtu.be/dQw4w9WgXcQ?si=ylCYWoS9BzK2eRAr"
+      }, 
+      {
+        id: 3,
+        title: "Lonpac logo image had been change",
+        category: "News",
+        imageUrl: "insurance-img/lonpac.png",
+        button: "View",
+        buttonLink: "https://www.bernama.com/en/news.php?id=2350144#:~:text=Public%20Bank%2C%20the%20country's%20third,and%20customers%2C%22%20he%20said."
+      },
+      {
+        id: 5,
+        title: "Early Bird Special",
+        category: "Promotions",
+        discount: "25% OFF",
+        expiry: "2024-12-31",
+        imageIcon: "heart-pulse",
+        button: "Claim"
+      },
+      {
+        id: 4,
+        title: "Family Package Deal",
+        category: "Promotions",
+        discount: "30% OFF",
+        expiry: "2024-11-30",
+        imageIcon: "users",
+        button: "Claim"
+      },
+    ];
+
+    // Format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffTime = date - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays < 0) {
+        return "Expired";
+      } else if (diffDays === 0) {
+        return "Expires today";
+      } else if (diffDays === 1) {
+        return "Expires tomorrow";
+      } else if (diffDays <= 7) {
+        return `Expires in ${diffDays} days`;
+      } else {
+        return `Valid until ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+      }
+    }
+
+    // Render deals
+    function renderDeals() {
+      const dealsGrid = document.getElementById('deals-grid');
+      
+      if (deals.length === 0) {
+        dealsGrid.innerHTML = `
+          <div class="empty-state">
+            <i data-lucide="tag-off"></i>
+            <p>No deals available at the moment</p>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem;">Check back later for new offers!</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      dealsGrid.innerHTML = deals.map(deal => {
+        const hasImage = deal.imageUrl ? 'has-image' : '';
+        let imageContent;
+        
+        if (deal.imageUrl) {
+          // Use actual image
+          imageContent = `<img src="${deal.imageUrl}" alt="${deal.title}" style="width: 100%; height: 100%; min-height: 80px; object-fit: cover; display: block;">`;
+        } else {
+          // Use icon with red background
+          imageContent = `<div class="deal-image-content"><i data-lucide="${deal.imageIcon || 'tag'}"></i></div>`;
+        }
+        
+        const buttonText = deal.button || 'View';
+        const buttonAction = deal.buttonLink 
+          ? `window.open('${deal.buttonLink}', '_blank')`
+          : `claimDeal(${deal.id})`;
+        
+        return `
+        <div class="deal-card" onclick="viewDeal(${deal.id})">
+          <div class="deal-image ${hasImage}">
+            ${imageContent}
+          </div>
+          <div class="deal-content">
+            <div class="deal-title-section">
+              <h3 class="deal-title">${deal.title}</h3>
+              ${deal.category ? `<div class="deal-category">${deal.category}</div>` : ''}
+            </div>
+            <div class="deal-bottom-section">
+              <button class="deal-btn" onclick="event.stopPropagation(); ${buttonAction}">
+                ${buttonText}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // View deal details
+    function viewDeal(dealId) {
+      const deal = deals.find(d => d.id === dealId);
+      if (deal) {
+        // If deal has buttonLink, open it
+        if (deal.buttonLink) {
+          window.open(deal.buttonLink, '_blank');
+        }
+      }
+    }
+
+    // Claim deal
+    function claimDeal(dealId) {
+      const deal = deals.find(d => d.id === dealId);
+      if (deal) {
+        if (deal.buttonLink) {
+          window.open(deal.buttonLink, '_blank');
+        } 
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderDeals();
+    });
+    </script>
+  </body>
+</html>
+
