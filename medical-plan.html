@@ -28,6 +28,7 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
       color: var(--text-primary);
+      font-size: 14px;
     }
 
     .app {
@@ -68,7 +69,7 @@
     }
 
     .user-greeting h2 {
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: white;
       margin: 0;
@@ -142,7 +143,7 @@
     }
 
     .section-title {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
       margin-bottom: 1rem;
       color: var(--text-primary);
@@ -221,7 +222,7 @@
     }
 
     .plan-name {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       font-weight: 600;
       color: var(--text-primary);
       margin: 0;
@@ -246,7 +247,7 @@
     }
 
     .plan-price {
-      font-size: 1.125rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.25rem;
@@ -305,8 +306,8 @@
       color: white;
       border: none;
       border-radius: 8px;
-      padding: 0.75rem;
-      font-size: 0.875rem;
+      padding: 0.625rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s;
@@ -322,8 +323,8 @@
       color: var(--primary-color);
       border: 2px solid var(--primary-color);
       border-radius: 8px;
-      padding: 0.75rem;
-      font-size: 0.875rem;
+      padding: 0.625rem;
+      font-size: 0.8125rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
@@ -332,6 +333,17 @@
     .plan-btn-compare:hover {
       background: var(--primary-color);
       color: white;
+    }
+
+    .plan-btn-compare.added {
+      background: #16a34a;
+      color: white;
+      border-color: #16a34a;
+    }
+
+    .plan-btn-compare.added:hover {
+      background: #15803d;
+      border-color: #15803d;
     }
 
     .empty-state {
@@ -674,12 +686,12 @@
       flex: 1;
       min-width: calc(33.333% - 0.35rem);
       max-width: calc(50% - 0.25rem);
-      padding: 0.625rem 0.75rem;
+      padding: 0.5rem 0.625rem;
       border: 2px solid var(--primary-color);
       border-radius: 8px;
       background: white;
       color: var(--primary-color);
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
       cursor: pointer;
       display: flex;
@@ -785,7 +797,7 @@
     }
 
     .pricing-amount {
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-primary);
       display: flex;
@@ -862,7 +874,7 @@
     }
 
     .annual-limit-value {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-primary);
       display: flex;
@@ -1246,7 +1258,23 @@
       } else {
         resultsCount.textContent = `${sortedPlans.length} plan${sortedPlans.length > 1 ? 's' : ''} found`;
         
-        plansList.innerHTML = sortedPlans.map((plan, index) => `
+        // Check compare list to see which plans are already added
+        const compareList = JSON.parse(sessionStorage.getItem('comparePlans') || '[]');
+        
+        plansList.innerHTML = sortedPlans.map((plan, index) => {
+          // Check if this plan (or any of its variants) is in compare list
+          const isInCompare = compareList.some(item => {
+            // Check exact name match
+            if (item.name === plan.name) return true;
+            // Check if item.name is in plan's variant list
+            if (plan.list && plan.list.includes(item.name)) return true;
+            return false;
+          });
+          
+          const compareButtonClass = isInCompare ? 'plan-btn-compare added' : 'plan-btn-compare';
+          const compareButtonText = isInCompare ? 'Added to Compare' : 'Add to Compare';
+          
+          return `
           <div class="plan-card">
             <div class="plan-card-wrapper">
               <div class="plan-icon">
@@ -1277,10 +1305,11 @@
             </div>
             <div class="plan-buttons">
               <button class="plan-btn" onclick="viewPlanDetails(${index})">View Details</button>
-              <button class="plan-btn-compare" onclick="addToCompare(${index})">Add to Compare</button>
+              <button class="${compareButtonClass}" onclick="addToCompare(${index})">${compareButtonText}</button>
             </div>
           </div>
-        `).join('');
+        `;
+        }).join('');
         
         lucide.createIcons();
         window.filteredPlans = sortedPlans; // Store for detail view
@@ -1458,12 +1487,26 @@
       if (plan.list) {
         const variantSelect = document.getElementById('plan-variant');
         if (variantSelect) {
+          // Modal is open, use selected variant
           planNameToStore = variantSelect.value;
+        } else {
+          // Modal is not open, use first variant by default
+          planNameToStore = plan.list[0];
         }
       }
       
-      // Check if plan already in compare list (check by the stored name)
-      const exists = compareList.findIndex(p => p.name === planNameToStore);
+      // Check if plan already in compare list (check by the stored name and also check if any variant is in the list)
+      const exists = compareList.findIndex(p => {
+        // Check exact match
+        if (p.name === planNameToStore) return true;
+        // Check if any variant of this plan is already in compare list
+        if (plan.list && plan.list.includes(p.name)) return true;
+        // Check if the stored name matches any variant of a plan in compare list
+        const comparePlan = medicalPlans.find(mp => mp.name === p.name || (mp.list && mp.list.includes(p.name)));
+        if (comparePlan && comparePlan.list && comparePlan.list.includes(planNameToStore)) return true;
+        return false;
+      });
+      
       if (exists >= 0) {
         compareList.splice(exists, 1);
         alert('Plan removed from compare list');
@@ -1479,6 +1522,10 @@
       
       sessionStorage.setItem('comparePlans', JSON.stringify(compareList));
       updateCompareBadge();
+      // Re-render plans to update button states
+      const filters = getFilters();
+      const filteredPlans = filterPlans(filters);
+      renderPlans(filteredPlans);
     }
 
     // Update compare badge count
