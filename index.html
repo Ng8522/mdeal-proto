@@ -14,240 +14,513 @@
 
     :root {
       --primary-color: #FF5B61;
+      --primary-dark: #E84C52;
       --secondary-color: #F59E0B;
       --accent-color: #FF4A50;
       --text-primary: #1E293B;
-      --text-secondary: #86868B;
+      --text-secondary: #64748B;
       --bg-primary: #FFFFFF;
-      --bg-secondary: #F8FAFC;
-      --border-color: #E5E5EA;
-      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --bg-secondary: #FFF5F5;
+      --bg-pink: #FFEBEB;
+      --border-color: #F1F5F9;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 24px rgba(255, 91, 97, 0.15);
     }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
+      background: #F8FAFC;
       color: var(--text-primary);
-      line-height: 1.6;
+      line-height: 1.5;
       font-size: 14px;
     }
 
     .app {
       max-width: 428px;
       margin: 0 auto;
-      background: linear-gradient(180deg, #FFF5F5 0%, #FFEBEB 100%);
+      background: #FFFFFF;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 0 30px rgba(255, 91, 97, 0.15);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
     }
 
     /* Header */
     .home-header {
-      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 50%, #FF3940 100%);
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 50%, #E84C52 100%);
       color: white;
-      padding: 0.75rem 1rem;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 8px 32px rgba(255, 91, 97, 0.2);
     }
 
-    .header-top {
+    .header-top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0.75rem 1rem;
     }
 
-    .user-greeting {
-      flex: 1;
-    }
-
-    .user-greeting h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0;
-      line-height: 1.2;
-    }
-
-    .brand-name {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      opacity: 0.85;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 0.125rem;
-    }
-
-    .guest-badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.25rem 0.75rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-
-    .notification-btn {
-      position: relative;
-      background: rgba(255, 255, 255, 0.2);
+    .menu-btn {
+      background: none;
       border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
     }
 
-    .notification-badge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: var(--secondary-color);
-      color: white;
-      border-radius: 10px;
-      width: 20px;
-      height: 20px;
+    .brand-logo {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 600;
     }
 
-    .login-header-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+    .brand-logo-text {
+      font-size: 1.125rem;
+      font-weight: 700;
       color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .login-header-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+      letter-spacing: 0.5px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .header-icon-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+      position: relative;
+    }
+
+    .header-icon-btn.chat-btn {
+      background: rgba(37, 211, 102, 0.2);
+      border-radius: 50%;
+      color: #25D366;
+      transition: all 0.2s ease;
+    }
+
+    .header-icon-btn.chat-btn:hover {
+      background: rgba(37, 211, 102, 0.35);
+      transform: scale(1.1);
+    }
+
+    .header-icon-btn.chat-btn i {
+      color: #25D366;
+    }
+
+    .chat-pulse {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 10px;
+      height: 10px;
+      background: #25D366;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      animation: pulse-ring 1.5s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(37, 211, 102, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: var(--secondary-color);
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      background: linear-gradient(180deg, #FFD4D6 0%, #FFECD2 100%);
+      padding: 1.25rem 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-bottom: 1rem;
+    }
+
+    .welcome-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .user-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .welcome-illustration {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      pointer-events: none;
+    }
+
+    .illustration-left,
+    .illustration-right {
+      width: 100px;
+      height: 100px;
+    }
+
+    /* Stats Row */
+    .stats-card {
+      background: white;
+      margin: -0.5rem 1rem 0;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: stretch;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      text-align: center;
+      border-right: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .stat-item:hover {
+      background: var(--bg-secondary);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .vitality-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+
+    .vitality-icon {
+      color: var(--primary-color);
+    }
+
+    .vitality-text {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      line-height: 1.2;
     }
 
     /* Main Content */
     .home-main {
       flex: 1;
-      padding: 1.5rem 1.25rem;
+      background: var(--bg-pink);
+      padding: 1.25rem 1rem;
       padding-bottom: 100px;
       overflow-y: auto;
     }
 
+    /* What's New Section */
+    .whats-new-section {
+      margin-bottom: 1.5rem;
+    }
 
-    /* Quick Actions */
-    .quick-actions {
-      margin-bottom: 2rem;
+    .whats-new-scroll {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .whats-new-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .whats-new-card {
+      min-width: 120px;
+      flex: 1;
+      max-width: 140px;
+      background: white;
+      border-radius: 16px;
+      padding: 0.875rem;
+      box-shadow: var(--shadow);
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 140px;
+    }
+
+    .whats-new-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      margin-bottom: 0.375rem;
+      align-self: flex-start;
+    }
+
+    .badge-updates {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .badge-new {
+      background: #10B981;
+      color: white;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: auto;
+      line-height: 1.3;
+    }
+
+    .card-illustration {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .card-illustration img {
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .card-illustration svg {
+      width: 40px;
+      height: 40px;
+      color: var(--primary-color);
+    }
+
+    /* Featured Services */
+    .featured-section {
+      margin-bottom: 1.5rem;
     }
 
     .section-title {
       font-size: 1.125rem;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 1rem;
       color: var(--text-primary);
     }
 
-    .actions-grid {
+    .services-grid {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.5rem;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
       padding-bottom: 0.5rem;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .actions-grid::-webkit-scrollbar {
+    .services-grid::-webkit-scrollbar {
       display: none;
     }
 
-    .action-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 0.75rem;
+    .service-item {
+      min-width: 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      min-width: 80px;
-      flex: 1;
-      max-width: 120px;
+      padding: 0.5rem;
+      transition: transform 0.2s;
     }
 
-    .action-card:hover {
+    .service-item:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow);
     }
 
-    .action-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: white;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
     }
 
-    .action-label {
-      font-size: 0.75rem;
-      font-weight: 500;
+    .service-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--primary-color);
+    }
+
+    .service-label {
+      font-size: 0.7rem;
       color: var(--text-primary);
       text-align: center;
-      line-height: 1.2;
-    }
-
-    /* Insurance Type Toggle */
-    .insurance-type-section {
-      margin-bottom: 2rem;
-    }
-
-    .type-toggle {
-      display: flex;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      padding: 4px;
-      gap: 4px;
-    }
-
-    .type-btn {
-      flex: 1;
-      padding: 0.75rem 1rem;
-      border: none;
-      background: transparent;
-      border-radius: 8px;
       font-weight: 500;
+      line-height: 1.2;
+      max-width: 72px;
+    }
+
+    /* Highlights Section */
+    .highlights-section {
+      background: white;
+      margin: 0 -1rem;
+      padding: 1.5rem 1rem;
+    }
+
+    .highlights-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .highlights-indicator {
+      width: 4px;
+      height: 20px;
+      background: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    .highlights-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .highlights-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .highlight-card {
+      min-width: 200px;
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
+      border-radius: 16px;
+      overflow: hidden;
       cursor: pointer;
+      transition: transform 0.2s;
+      box-shadow: var(--shadow);
+    }
+
+    .highlight-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .highlight-image {
+      height: 120px;
+      background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-secondary);
-      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .type-btn.active {
+    .highlight-image svg {
+      width: 64px;
+      height: 64px;
+      color: white;
+      opacity: 0.8;
+    }
+
+    .promo-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
       background: white;
       color: var(--primary-color);
-      box-shadow: var(--shadow);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .highlight-content {
+      padding: 1rem;
+    }
+
+    .highlight-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .highlight-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
     }
 
     /* Plans Section */
     .plans-section {
-      margin-bottom: 2rem;
+      background: white;
+      margin: 0 -1rem;
+      padding: 1.5rem 1rem;
+      margin-top: 1rem;
     }
 
     .section-header {
@@ -261,9 +534,12 @@
       background: none;
       border: none;
       color: var(--primary-color);
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
 
     .plans-list {
@@ -273,13 +549,18 @@
     }
 
     .plan-card {
-      background: white;
+      background: var(--bg-secondary);
       border: 1px solid var(--border-color);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .plan-card:hover {
+      box-shadow: var(--shadow);
     }
 
     .plan-header {
@@ -289,444 +570,110 @@
     }
 
     .plan-icon {
-      width: 56px;
-      height: 56px;
-      background: var(--bg-secondary);
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      background: white;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(255, 91, 97, 0.15);
     }
 
-    .plan-name {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .plan-description {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .plan-coverage {
-      font-size: 1rem;
-      font-weight: 600;
+    .plan-icon i {
+      width: 28px;
+      height: 28px;
       color: var(--primary-color);
-    }
-
-    .plan-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .plan-features li {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-    }
-
-    .plan-card.coming-soon {
-      opacity: 0.7;
-      position: relative;
     }
 
     .plan-info {
       flex: 1;
-      position: relative;
+    }
+
+    .plan-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-description {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
     }
 
     .coming-soon-badge {
       display: inline-block;
       background: var(--text-secondary);
       color: white;
-      padding: 0.25rem 0.625rem;
-      border-radius: 8px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      margin-left: 0.5rem;
-      vertical-align: middle;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .plan-coverage {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .plan-features li {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      background: white;
+      padding: 0.375rem 0.625rem;
+      border-radius: 20px;
+    }
+
+    .plan-features li i {
+      width: 14px;
+      height: 14px;
+      margin-right: 0.375rem;
+      color: #10B981;
+    }
+
+    .plan-card.coming-soon {
+      opacity: 0.7;
     }
 
     .plan-btn {
       background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 8px;
-      padding: 0.75rem;
-      font-weight: 500;
+      border-radius: 10px;
+      padding: 0.875rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
+      font-size: 0.875rem;
     }
 
     .plan-btn:hover {
-      background: #FF4A50;
+      background: var(--primary-dark);
+      transform: translateY(-1px);
     }
 
     .plan-btn:disabled,
     .plan-btn.coming-soon-btn {
-      background: var(--bg-secondary);
+      background: #E2E8F0;
       color: var(--text-secondary);
       cursor: not-allowed;
-    }
-
-    .plan-btn.coming-soon-btn:hover {
-      background: var(--bg-secondary);
-    }
-
-    /* Policies Section */
-    .policies-section {
-      margin-bottom: 2rem;
-    }
-
-    .policies-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .policy-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .policy-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .policy-type {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .policy-number {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .policy-coverage {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    .policy-expiry {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .expiry-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-    }
-
-    .expiry-date {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .policy-action-btn {
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 0.75rem;
-      font-weight: 500;
-      cursor: pointer;
-    }
-
-    /* Guest Prompt */
-    .guest-prompt-section {
-      margin-top: 2rem;
-    }
-
-    .guest-prompt-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .guest-prompt-card h3 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
-    .guest-prompt-card p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-
-    .guest-prompt-buttons {
-      display: flex;
-      gap: 0.75rem;
-      width: 100%;
-    }
-
-    .guest-login-prompt-btn,
-    .guest-signup-prompt-btn {
-      flex: 1;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-    }
-
-    .guest-login-prompt-btn {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .guest-signup-prompt-btn {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-    }
-
-    /* Help Section */
-    .help-section {
-      margin-bottom: 2rem;
-    }
-
-    .help-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .help-card h3 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
-    .help-card p {
-      color: var(--text-secondary);
-    }
-
-    .help-options {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .help-option-btn {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .help-option-btn:hover {
-      transform: translateX(4px);
-    }
-
-    .help-option-content {
-      flex: 1;
-      text-align: left;
-    }
-
-    .help-option-content h4 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-
-    .help-option-content p {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-    }
-
-    /* Profile Section */
-    .profile-section {
-      margin-bottom: 2rem;
-    }
-
-    .profile-guest-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .profile-guest-card h3 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-
-    .profile-guest-card p {
-      color: var(--text-secondary);
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-guest-buttons {
-      display: flex;
-      gap: 0.75rem;
-      width: 100%;
-    }
-
-    .profile-login-btn,
-    .profile-signup-btn {
-      flex: 1;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      border: none;
-    }
-
-    .profile-login-btn {
-      background: var(--primary-color);
-      color: white;
-    }
-
-    .profile-signup-btn {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-    }
-
-    .profile-header-card {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--primary-color);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0 auto 1rem;
-    }
-
-    .profile-header-card h3 {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .profile-header-card p {
-      color: var(--text-secondary);
-    }
-
-    .profile-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .profile-menu-item {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .profile-menu-item:hover {
-      background: var(--bg-secondary);
-    }
-
-    .profile-menu-label {
-      flex: 1;
-      text-align: left;
-      font-weight: 500;
-    }
-
-    .profile-menu-arrow {
-      color: var(--text-secondary);
-      font-size: 1.25rem;
-    }
-
-    .logout-menu-item {
-      border-color: #FFE5E5;
-    }
-
-    .logout-menu-item:hover {
-      background: #FFF5F5;
-    }
-
-    /* More Section */
-    .more-section {
-      margin-bottom: 2rem;
-    }
-
-    .more-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .more-menu-item {
-      background: white;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .more-menu-item:hover {
-      background: var(--bg-secondary);
-    }
-
-    .more-menu-label {
-      flex: 1;
-      text-align: left;
-      font-weight: 500;
-    }
-
-    .more-menu-arrow {
-      color: var(--text-secondary);
-      font-size: 0.875rem;
+      transform: none;
     }
 
     /* Bottom Navigation */
@@ -815,12 +762,6 @@
       z-index: 10;
     }
 
-    .nav-item.help-special .ai-badge i {
-      width: 12px;
-      height: 12px;
-      color: var(--primary-color);
-    }
-
     .nav-item.help-special .ai-badge::after {
       content: '';
       position: absolute;
@@ -842,9 +783,26 @@
       font-weight: 500;
     }
 
+
     /* Hidden class */
     .hidden {
       display: none !important;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.4s ease-out forwards;
     }
   </style>
   </head>
@@ -852,95 +810,171 @@
     <div class="app">
       <!-- Header -->
       <header class="home-header">
-        <div class="header-top">
-          <div class="user-greeting">
-            <div class="brand-name"> InsureMart</div>
-            <h2 id="header-title"></h2>
+        <div class="header-top-bar">
+          <button class="menu-btn">
+            <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+          </button>
+          <div class="brand-logo">
+            <span class="brand-logo-text">INSURER MART</span>
+          </div>
+          <div class="header-actions">
+            <button class="header-icon-btn chat-btn" onclick="window.open('https://wa.me/60122190198', '_blank')">
+              <i data-lucide="message-circle" style="width: 22px; height: 22px;"></i>
+              <span class="chat-pulse"></span>
+            </button>
+            <button class="header-icon-btn">
+              <i data-lucide="bell" style="width: 22px; height: 22px;"></i>
+              <span class="notification-dot"></span>
+            </button>
           </div>
         </div>
+        
       </header>
+
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <div class="welcome-content">
+          <p class="welcome-text">Welcome back,</p>
+          <h2 class="user-name" id="user-name-display">Guest User</h2>
+        </div>
+        <div class="welcome-illustration">
+          <!-- Decorative background -->
+        </div>
+      </section>
+
+      <!-- Stats Card -->
+      <div class="stats-card">
+        <div class="stat-item" onclick="window.location.href='policy.html'">
+          <div class="stat-label">Individual<br>Plans</div>
+          <div class="stat-value" id="individual-plans-count">0</div>
+        </div>
+        <div class="stat-item" onclick="window.location.href='policy.html'">
+          <div class="stat-label">Family<br>Plans</div>
+          <div class="stat-value" id="family-plans-count">0</div>
+        </div>
+        <div class="stat-item vitality-item">
+          <i data-lucide="heart-pulse" class="vitality-icon" style="width: 24px; height: 24px;"></i>
+          <span class="vitality-text">Join Health<br>Program</span>
+        </div>
+      </div>
 
       <!-- Main Content -->
       <main class="home-main">
-        <!-- Quick Actions -->
-        <section class="quick-actions">
-          <h3 class="section-title">Quick Actions</h3>
-          <div class="actions-grid">
-            <button class="action-card"
-              style="--action-color: var(--primary-color)"
-              onclick="window.location.href='medical-plan-filter.html'">
-              <div class="action-icon"
-                style="background-color: rgba(255, 91, 97, 0.15)">
-                <!-- Buy - Folder/Cart icon -->
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true">
-                  <path d="M16 20 L16 48 L48 48 L48 20 L32 20 L28 16 L16 16 Z" fill="#FF5B61" stroke="#FF5B61" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M16 20 L32 20 L28 16 L16 16 Z" fill="#FF4A50"/>
-                  <circle cx="24" cy="50" r="3" fill="#FF5B61"/>
-                  <circle cx="40" cy="50" r="3" fill="#FF5B61"/>
-                </svg>
+        <!-- What's New Section -->
+        <section class="whats-new-section">
+          <div class="whats-new-scroll">
+            <div class="whats-new-card" onclick="window.location.href='policy.html'">
+              <span class="card-badge badge-updates">• New Updates</span>
+              <h4 class="card-title">Things to do</h4>
+              <div class="card-illustration">
+                <i data-lucide="clipboard-list"></i>
               </div>
-              <span class="action-label">Buy</span>
-            </button>
-            <button class="action-card" style="--action-color: var(--primary-color)"
-              onclick="handleClaimClick()">
-              <div class="action-icon" style="background-color: rgba(255, 91, 97, 0.15)">
-                <!-- Claims - Document with folded corner -->
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true">
-                  <rect x="16" y="12" width="32" height="44" rx="2" fill="#FFE5E5" stroke="#FF5B61" stroke-width="2"/>
-                  <path d="M40 12 L48 20 L40 20 Z" fill="#FF5B61"/>
-                  <line x1="22" y1="26" x2="42" y2="26" stroke="#FF5B61" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="22" y1="34" x2="38" y2="34" stroke="#FF5B61" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="22" y1="42" x2="36" y2="42" stroke="#FF5B61" stroke-width="2.5" stroke-linecap="round"/>
-                </svg>
+            </div>
+            <div class="whats-new-card" onclick="window.location.href='deals.html'">
+              <span class="card-badge" style="visibility: hidden;">• Hidden</span>
+              <h4 class="card-title">What's new for you</h4>
+              <div class="card-illustration">
+                <i data-lucide="gift"></i>
               </div>
-              <span class="action-label">Claims</span>
-            </button>
-            <button class="action-card" style="--action-color: var(--primary-color)"
-              onclick="window.location.href='medical-providers.html'">
-              <div class="action-icon" style="background-color: rgba(255, 91, 97, 0.15)">
-                <!-- Medical Providers - Building with roof and windows -->
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true">
-                  <rect x="14" y="24" width="36" height="32" rx="2" fill="#FFE5E5" stroke="#FF5B61" stroke-width="2"/>
-                  <path d="M14 24 L32 12 L50 24 Z" fill="#FF5B61"/>
-                  <rect x="20" y="32" width="8" height="8" rx="1" fill="#FF5B61"/>
-                  <rect x="36" y="32" width="8" height="8" rx="1" fill="#FF5B61"/>
-                  <rect x="20" y="44" width="8" height="8" rx="1" fill="#FF5B61"/>
-                  <rect x="36" y="44" width="8" height="8" rx="1" fill="#FF5B61"/>
-                </svg>
+            </div>
+            <div class="whats-new-card" onclick="window.location.href='policy.html'">
+              <span class="card-badge badge-new">• New</span>
+              <h4 class="card-title">E-Cards</h4>
+              <div class="card-illustration">
+                <i data-lucide="id-card"></i>
               </div>
-              <span class="action-label">Medical Providers</span>
-            </button>
-            <button class="action-card" style="--action-color: var(--primary-color)"
-              onclick="window.location.href='find-an-agent.html'">
-              <div class="action-icon" style="background-color: rgba(255, 91, 97, 0.15)">
-                <!-- Agent Assistance - Person with badge -->
-                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true">
-                  <circle cx="32" cy="18" r="7" fill="#FF5B61"/>
-                  <path d="M18 46 Q18 38 24 38 L40 38 Q46 38 46 46 L46 52 L18 52 Z" fill="#FF5B61"/>
-                  <rect x="22" y="42" width="20" height="10" rx="2" fill="#FFE5E5" stroke="#FF5B61" stroke-width="1.5"/>
-                  <line x1="26" y1="46" x2="38" y2="46" stroke="#FF5B61" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <span class="action-label">Agent Assistance</span>
-            </button>
+            </div>
           </div>
         </section>
 
-        <!-- Health Insurance Plans -->
+        <!-- Featured Services -->
+        <section class="featured-section">
+          <h3 class="section-title">Featured Services</h3>
+          <div class="services-grid">
+            <div class="service-item" onclick="window.location.href='medical-plan-filter.html'">
+              <div class="service-icon">
+                <i data-lucide="shopping-bag"></i>
+              </div>
+              <span class="service-label">Buy</span>
+            </div>
+            <div class="service-item" onclick="handleClaimClick()">
+              <div class="service-icon">
+                <i data-lucide="file-text"></i>
+              </div>
+              <span class="service-label">Claims</span>
+            </div>
+            <div class="service-item" onclick="window.location.href='medical-providers.html'">
+              <div class="service-icon">
+                <i data-lucide="building-2"></i>
+              </div>
+              <span class="service-label">Medical Providers</span>
+            </div>
+            <div class="service-item" onclick="window.location.href='find-an-agent.html'">
+              <div class="service-icon">
+                <i data-lucide="user-check"></i>
+              </div>
+              <span class="service-label">Agent Assistance</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">
+                <i data-lucide="more-horizontal"></i>
+              </div>
+              <span class="service-label">More</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Highlights Section -->
+        <section class="highlights-section">
+          <div class="highlights-header">
+            <div class="highlights-indicator"></div>
+            <h3 class="section-title" style="margin-bottom: 0;">Highlights</h3>
+          </div>
+          <div class="highlights-scroll">
+            <div class="highlight-card" onclick="window.location.href='deals.html'">
+              <div class="highlight-image" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%);">
+                <span class="promo-badge">Promotion</span>
+                <i data-lucide="percent"></i>
+              </div>
+              <div class="highlight-content">
+                <h4 class="highlight-title">Festive Offers</h4>
+                <p class="highlight-desc">Special discounts await!</p>
+              </div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-image" style="background: linear-gradient(135deg, #A8E6CF 0%, #88D8B0 100%);">
+                <i data-lucide="coins"></i>
+              </div>
+              <div class="highlight-content">
+                <h4 class="highlight-title">Rewards Campaign</h4>
+                <p class="highlight-desc">Earn bonus points now</p>
+              </div>
+            </div>
+            <div class="highlight-card">
+              <div class="highlight-image" style="background: linear-gradient(135deg, #DDA0DD 0%, #E6E6FA 100%);">
+                <i data-lucide="users"></i>
+              </div>
+              <div class="highlight-content">
+                <h4 class="highlight-title">Refer a Friend</h4>
+                <p class="highlight-desc">Get RM50 voucher</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Plans Section -->
         <section class="plans-section">
           <div class="section-header">
-            <h3 class="section-title" id="plans-title">Health Insurance Takaful
-              Plans</h3>
+            <h3 class="section-title" style="margin-bottom: 0;">Insurance Plans</h3>
+            <button class="see-all-btn" onclick="window.location.href='medical-plan-filter.html'">
+              See All
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+            </button>
           </div>
           <div class="plans-list" id="plans-list">
             <!-- Plans will be rendered here -->
           </div>
         </section>
-
       </main>
 
       <!-- Bottom Navigation -->
@@ -972,9 +1006,8 @@
 
     <script>
     // App State
-    let insuranceType = 'insurance';
     let isGuest = true;
-
+ 
     // Check login state from sessionStorage
     if (sessionStorage.getItem('isLoggedIn') === 'true') {
       isGuest = false;
@@ -987,7 +1020,7 @@
         icon: 'user', 
         description: 'Personal health coverage for individuals', 
         coverage: 'Up to RM 1 Million',
-        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Health Checkup'],
+        features: ['OPD Coverage', 'Cashless Treatment', 'Pre-existing Conditions', 'Annual Checkup'],
         comingSoon: false
       },
       { 
@@ -1000,41 +1033,32 @@
       },
       { 
         category: 'Group', 
-        icon: 'users', 
+        icon: 'building-2', 
         description: 'Corporate and group health insurance plans', 
         coverage: 'Up to RM 5 Million',
         features: ['Group Discounts', 'Cashless Treatment', 'OPD Coverage', 'Wellness Programs'],
         comingSoon: true
-      },
-      { 
-        category: 'Supplemental', 
-        icon: 'plus', 
-        description: 'Additional coverage to complement existing plans', 
-        coverage: 'Up to RM 1.5 Million',
-        features: ['Top-up Coverage', 'No Claim Bonus', 'Cashless Treatment', 'Flexible Premium'],
-        comingSoon: true
-      },
-    ];
-
-    const activePolicies = [
-      { type: 'Health Insurance', policyNo: 'POL-2024-002', expiry: '20 Apr 2025', coverage: 'RM 500,000' },
-      { type: 'Health Insurance', policyNo: 'POL-2023-015', expiry: '10 Jun 2025', coverage: 'RM 1,000,000' },
+      }
     ];
 
     // Initialize Lucide icons
     lucide.createIcons();
 
-    // Update Header
-    function updateHeader() {
-      const notificationBtn = document.getElementById('notification-btn');
-      const loginHeaderBtn = document.getElementById('login-header-btn');
+    // Update User Display
+    function updateUserDisplay() {
+      const userNameDisplay = document.getElementById('user-name-display');
+      const individualCount = document.getElementById('individual-plans-count');
+      const familyCount = document.getElementById('family-plans-count');
       
       if (!isGuest) {
-        notificationBtn.classList.remove('hidden');
-        loginHeaderBtn.classList.add('hidden');
+        const userName = sessionStorage.getItem('userName') || 'John Doe';
+        userNameDisplay.textContent = userName.toUpperCase();
+        individualCount.textContent = '2';
+        familyCount.textContent = '1';
       } else {
-        notificationBtn.classList.add('hidden');
-        loginHeaderBtn.classList.remove('hidden');
+        userNameDisplay.textContent = 'JOHN DOE';
+        individualCount.textContent = '0';
+        familyCount.textContent = '0';
       }
     }
 
@@ -1046,7 +1070,7 @@
         <div class="plan-card ${plan.comingSoon ? 'coming-soon' : ''}">
           <div class="plan-header">
             <div class="plan-icon">
-              <i data-lucide="${plan.icon}" style="width: 40px; height: 40px; color: var(--primary-color);"></i>
+              <i data-lucide="${plan.icon}"></i>
             </div>
             <div class="plan-info">
               <h4 class="plan-name">
@@ -1060,13 +1084,14 @@
           <ul class="plan-features">
             ${plan.features.map(feature => `
               <li>
-                <i data-lucide="check" style="width: 16px; height: 16px; display: inline; margin-right: 0.5rem; vertical-align: middle;"></i>
+                <i data-lucide="check"></i>
                 ${feature}
               </li>
             `).join('')}
           </ul>
-          <button class="plan-btn ${plan.comingSoon ? 'coming-soon-btn' : ''}" ${plan.comingSoon ? 'disabled' : ''}>
-            ${plan.comingSoon ? 'Coming Soon' : 'View Details'}
+          <button class="plan-btn ${plan.comingSoon ? 'coming-soon-btn' : ''}" 
+            ${plan.comingSoon ? 'disabled' : `onclick="window.location.href='medical-plan-filter.html'"`}>
+            ${plan.comingSoon ? 'Coming Soon' : 'View Plans'}
           </button>
         </div>
       `).join('');
@@ -1074,36 +1099,21 @@
       lucide.createIcons();
     }
 
-
     // Handle Claim Click
     function handleClaimClick() {
-      // Check guest state dynamically
       const isGuestUser = sessionStorage.getItem('isLoggedIn') !== 'true';
       if (isGuestUser) {
         window.location.href = 'login.html?return=index.html';
       } else {
         // TODO: Navigate to claims page when implemented
+        alert('Claims feature coming soon!');
       }
     }
 
-
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
-      // Insurance type toggle
-      document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          insuranceType = btn.dataset.type;
-          renderPlans();
-        });
-      });
-
-      // Initial render
       renderPlans();
-      updateHeader();
-      
-      // Initialize icons
+      updateUserDisplay();
       lucide.createIcons();
     });
   </script>

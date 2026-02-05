@@ -109,6 +109,42 @@
       color: var(--text-secondary);
     }
 
+    .help-card-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+
+    .help-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      border: none;
+    }
+
+    .help-action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .ai-btn {
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
+      color: white;
+    }
+
+    .chat-btn {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: white;
+    }
+
     .help-options {
       display: flex;
       flex-direction: column;
@@ -129,6 +165,19 @@
 
     .help-option-btn:hover {
       transform: translateX(4px);
+    }
+
+    a.help-option-btn {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a.help-option-btn h4 {
+      color: var(--text-primary);
+    }
+
+    a.help-option-btn p {
+      color: var(--text-secondary);
     }
 
     .help-option-content {
@@ -275,21 +324,27 @@
       <main class="home-main">
         <section class="help-section">
           <div class="help-card">
-            <i data-lucide="help-circle"
+            <i data-lucide="bot"
               style="width: 36px; height: 36px; margin-bottom: 0.5rem; color: var(--primary-color);"></i>
-            <h3>Need Help?</h3>
-            <p>We're here to assist you with any questions about your health
-              insurance.</p>
+            <h3>AI Insurance Consultant</h3>
+            <p>Get instant answers about medical plans, coverage details, and personalized recommendations.</p>
+            <div class="help-card-actions">
+              <a href="chat.html" class="help-action-btn ai-btn">
+                <i data-lucide="sparkles"
+                  style="width: 20px; height: 20px;"></i>
+                <span>Start Chat</span>
+              </a>
+            </div>
           </div>
           <div class="help-options">
-            <button class="help-option-btn">
-              <i data-lucide="bot"
+            <a href="https://wa.me/60122190198" class="help-option-btn" target="_blank">
+              <i data-lucide="message-circle"
                 style="width: 24px; height: 24px; color: var(--primary-color);"></i>
               <div class="help-option-content">
-                <h4>AI Insurance Agent</h4>
-                <p>AI chatbot for medical plans consultation</p>
+                <h4>Chat with us</h4>
+                <p>WhatsApp support</p>
               </div>
-            </button>
+            </a>
             <button class="help-option-btn">
               <i data-lucide="mail"
                 style="width: 24px; height: 24px; color: var(--primary-color);"></i>

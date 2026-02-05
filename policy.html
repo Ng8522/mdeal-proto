@@ -709,6 +709,215 @@
       color: #2E7D32;
       line-height: 1.5;
     }
+
+    /* Claim Modal Styles */
+    .claim-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .claim-modal.active {
+      display: flex;
+    }
+
+    .claim-modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .claim-modal-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .claim-modal-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .claim-modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .claim-modal-body {
+      padding: 1.25rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .claim-form-group {
+      margin-bottom: 1rem;
+    }
+
+    .claim-form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .claim-form-input,
+    .claim-form-select,
+    .claim-form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      background: white;
+    }
+
+    .claim-form-input:focus,
+    .claim-form-select:focus,
+    .claim-form-textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .claim-form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .claim-submit-btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .claim-submit-btn:hover {
+      background: #FF4A50;
+    }
+
+    /* Claim History Styles */
+    .claim-history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .claim-history-item {
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .claim-history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .claim-history-type {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .claim-history-status {
+      padding: 0.25rem 0.625rem;
+      border-radius: 12px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .claim-history-status.approved {
+      background: #10B981;
+      color: white;
+    }
+
+    .claim-history-status.pending {
+      background: #F59E0B;
+      color: white;
+    }
+
+    .claim-history-status.processing {
+      background: #3B82F6;
+      color: white;
+    }
+
+    .claim-history-status.rejected {
+      background: #EF4444;
+      color: white;
+    }
+
+    .claim-history-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .claim-history-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+    }
+
+    .claim-history-detail-label {
+      color: var(--text-secondary);
+    }
+
+    .claim-history-detail-value {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .claim-history-amount {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .claim-history-empty {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .claim-history-empty i {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
   </style>
   </head>
   <body>
@@ -787,6 +996,36 @@
       </div>
     </div>
 
+    <!-- Claim Request Modal -->
+    <div class="claim-modal" id="claim-request-modal">
+      <div class="claim-modal-content">
+        <div class="claim-modal-header">
+          <h3 class="claim-modal-title">Submit Claim Request</h3>
+          <button class="claim-modal-close" onclick="closeClaimRequestModal()">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+        </div>
+        <div class="claim-modal-body" id="claim-request-modal-body">
+          <!-- Claim form will be rendered here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Claim History Modal -->
+    <div class="claim-modal" id="claim-history-modal">
+      <div class="claim-modal-content">
+        <div class="claim-modal-header">
+          <h3 class="claim-modal-title">Claim History</h3>
+          <button class="claim-modal-close" onclick="closeClaimHistoryModal()">
+            <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+          </button>
+        </div>
+        <div class="claim-modal-body" id="claim-history-modal-body">
+          <!-- Claim history will be rendered here -->
+        </div>
+      </div>
+    </div>
+
     <script>
     lucide.createIcons();
 
@@ -854,6 +1093,11 @@
                   <button class="policy-action-item" onclick="claimRequest('${policy.policyNo}')">
                     <i data-lucide="clipboard-list"></i>
                     <span class="policy-action-label">Claim Request</span>
+                  </button>
+                  <div class="policy-actions-divider"></div>
+                  <button class="policy-action-item" onclick="claimHistory('${policy.policyNo}')">
+                    <i data-lucide="history"></i>
+                    <span class="policy-action-label">Claim History</span>
                   </button>
                 </div>
               </div>
@@ -960,8 +1204,185 @@
       document.body.style.overflow = '';
     }
 
+    // Example claim history data
+    const claimHistoryData = {
+      'POL-2024-002': [
+        {
+          id: 'CLM-2024-001',
+          type: 'Hospitalization',
+          date: '15 Jan 2025',
+          amount: '2,500.00',
+          hospital: 'Sunway Medical Centre',
+          status: 'approved',
+          approvedDate: '22 Jan 2025'
+        },
+        {
+          id: 'CLM-2024-002',
+          type: 'Outpatient Treatment',
+          date: '28 Dec 2024',
+          amount: '350.00',
+          hospital: 'Gleneagles Hospital',
+          status: 'approved',
+          approvedDate: '05 Jan 2025'
+        },
+        {
+          id: 'CLM-2024-003',
+          type: 'Medical Checkup',
+          date: '10 Feb 2025',
+          amount: '800.00',
+          hospital: 'Prince Court Medical Centre',
+          status: 'processing'
+        }
+      ]
+    };
+
     function claimRequest(policyNo) {
-      alert(`Claim request for ${policyNo}`);
+      const policy = activePolicies.find(p => p.policyNo === policyNo);
+      if (!policy) return;
+
+      const modal = document.getElementById('claim-request-modal');
+      const modalBody = document.getElementById('claim-request-modal-body');
+      
+      modalBody.innerHTML = `
+        <div style="margin-bottom: 1rem; padding: 0.75rem; background: #FFF3CD; border: 1px solid #FFE69C; border-radius: 8px;">
+          <div style="font-size: 0.8125rem; color: #856404; display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="info" style="width: 16px; height: 16px;"></i>
+            <span>Submitting claim for: <strong>${policy.name}</strong></span>
+          </div>
+        </div>
+        
+        <form id="claim-form" onsubmit="submitClaim(event, '${policyNo}')">
+          <div class="claim-form-group">
+            <label class="claim-form-label">Claim Type</label>
+            <select class="claim-form-select" required>
+              <option value="">Select claim type</option>
+              <option value="hospitalization" selected>Hospitalization</option>
+              <option value="outpatient">Outpatient Treatment</option>
+              <option value="surgery">Surgery</option>
+              <option value="checkup">Medical Checkup</option>
+              <option value="maternity">Maternity</option>
+            </select>
+          </div>
+          
+          <div class="claim-form-group">
+            <label class="claim-form-label">Hospital / Clinic Name</label>
+            <input type="text" class="claim-form-input" placeholder="e.g., Sunway Medical Centre" value="Gleneagles Hospital Kuala Lumpur" required>
+          </div>
+          
+          <div class="claim-form-group">
+            <label class="claim-form-label">Treatment Date</label>
+            <input type="date" class="claim-form-input" value="2025-02-03" required>
+          </div>
+          
+          <div class="claim-form-group">
+            <label class="claim-form-label">Claim Amount (RM)</label>
+            <input type="number" class="claim-form-input" placeholder="e.g., 1500.00" value="1,250.00" step="0.01" required>
+          </div>
+          
+          <div class="claim-form-group">
+            <label class="claim-form-label">Diagnosis / Treatment Description</label>
+            <textarea class="claim-form-textarea" placeholder="Brief description of treatment..." required>Acute appendicitis - Emergency surgery and 3-day hospitalization</textarea>
+          </div>
+          
+          <div class="claim-form-group">
+            <label class="claim-form-label">Upload Supporting Documents</label>
+            <input type="file" class="claim-form-input" accept=".pdf,.jpg,.png" multiple>
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.375rem;">
+              Upload receipts, medical reports, or other supporting documents (PDF, JPG, PNG)
+            </div>
+          </div>
+          
+          <button type="submit" class="claim-submit-btn">
+            <span>Submit Claim Request</span>
+          </button>
+        </form>
+      `;
+
+      lucide.createIcons();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeClaimRequestModal() {
+      const modal = document.getElementById('claim-request-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function submitClaim(event, policyNo) {
+      event.preventDefault();
+      alert('Claim submitted successfully! You will receive a confirmation email shortly.');
+      closeClaimRequestModal();
+    }
+
+    function claimHistory(policyNo) {
+      const policy = activePolicies.find(p => p.policyNo === policyNo);
+      if (!policy) return;
+
+      const claims = claimHistoryData[policyNo] || [];
+
+      const modal = document.getElementById('claim-history-modal');
+      const modalBody = document.getElementById('claim-history-modal-body');
+      
+      if (claims.length === 0) {
+        modalBody.innerHTML = `
+          <div class="claim-history-empty">
+            <i data-lucide="file-x"></i>
+            <div style="font-size: 0.9375rem; font-weight: 500;">No claim history</div>
+            <div style="font-size: 0.8125rem; margin-top: 0.25rem;">You haven't submitted any claims for this policy yet.</div>
+          </div>
+        `;
+      } else {
+        modalBody.innerHTML = `
+          <div style="margin-bottom: 1rem;">
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Policy: <strong>${policy.name}</strong></div>
+          </div>
+          <div class="claim-history-list">
+            ${claims.map(claim => `
+              <div class="claim-history-item">
+                <div class="claim-history-header">
+                  <div class="claim-history-type">${claim.type}</div>
+                  <div class="claim-history-status ${claim.status}">${claim.status.charAt(0).toUpperCase() + claim.status.slice(1)}</div>
+                </div>
+                <div class="claim-history-details">
+                  <div class="claim-history-detail">
+                    <span class="claim-history-detail-label">Claim ID</span>
+                    <span class="claim-history-detail-value">${claim.id}</span>
+                  </div>
+                  <div class="claim-history-detail">
+                    <span class="claim-history-detail-label">Treatment Date</span>
+                    <span class="claim-history-detail-value">${claim.date}</span>
+                  </div>
+                  <div class="claim-history-detail">
+                    <span class="claim-history-detail-label">Hospital</span>
+                    <span class="claim-history-detail-value">${claim.hospital}</span>
+                  </div>
+                  <div class="claim-history-detail">
+                    <span class="claim-history-detail-label">Amount</span>
+                    <span class="claim-history-detail-value claim-history-amount">RM ${claim.amount}</span>
+                  </div>
+                  ${claim.approvedDate ? `
+                  <div class="claim-history-detail">
+                    <span class="claim-history-detail-label">Approved Date</span>
+                    <span class="claim-history-detail-value">${claim.approvedDate}</span>
+                  </div>
+                  ` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      lucide.createIcons();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeClaimHistoryModal() {
+      const modal = document.getElementById('claim-history-modal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
     }
 
     function viewAgentConnect(policyNo) {
@@ -1041,12 +1462,20 @@
     document.addEventListener('click', (e) => {
       const benefitsModal = document.getElementById('benefits-modal');
       const agentModal = document.getElementById('agent-modal');
+      const claimRequestModal = document.getElementById('claim-request-modal');
+      const claimHistoryModal = document.getElementById('claim-history-modal');
       
       if (e.target === benefitsModal) {
         closeBenefitsModal();
       }
       if (e.target === agentModal) {
         closeAgentModal();
+      }
+      if (e.target === claimRequestModal) {
+        closeClaimRequestModal();
+      }
+      if (e.target === claimHistoryModal) {
+        closeClaimHistoryModal();
       }
     });
 

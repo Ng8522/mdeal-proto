@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Insurance Consultant - InsureMart</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #FF5B61;
+      --secondary-color: #F59E0B;
+      --accent-color: #FF4A50;
+      --text-primary: #1E293B;
+      --text-secondary: #86868B;
+      --bg-primary: #FFFFFF;
+      --bg-secondary: #F8FAFC;
+      --border-color: #E5E5EA;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFEBEB 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .app {
+      max-width: 428px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #FFF5F5 0%, #FFEBEB 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 30px rgba(255, 91, 97, 0.15);
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 50%, #FF3940 100%);
+      color: white;
+      padding: 0.75rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 8px 32px rgba(255, 91, 97, 0.2);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 10px;
+      padding: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .header-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar i {
+      color: var(--primary-color);
+    }
+
+    .header-text h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 0.75rem;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ADE80;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .chat-container {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 85%;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.bot {
+      align-self: flex-start;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .message.bot .message-avatar {
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
+      color: white;
+    }
+
+    .message.user .message-avatar {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+    }
+
+    .message-content {
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .message.bot .message-content {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.user .message-content {
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message-time {
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+      text-align: right;
+    }
+
+    .message.bot .message-time {
+      text-align: left;
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .quick-reply {
+      background: white;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 0.5rem 0.875rem;
+      border-radius: 20px;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-reply:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 0.5rem;
+      align-self: flex-start;
+      max-width: 85%;
+    }
+
+    .typing-dots {
+      background: white;
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .typing-dots span {
+      width: 8px;
+      height: 8px;
+      background: var(--text-secondary);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .chat-input-container {
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+
+    .chat-input-wrapper {
+      flex: 1;
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: 0.875rem;
+      outline: none;
+      resize: none;
+      max-height: 100px;
+      font-family: inherit;
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .send-btn {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(255, 91, 97, 0.4);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="chat-header">
+        <div class="header-content">
+          <a href="help.html" class="back-btn">
+            <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+          </a>
+          <div class="header-info">
+            <div class="avatar">
+              <i data-lucide="bot" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="header-text">
+              <h2>AI Insurance Consultant</h2>
+              <p><span class="online-dot"></span> Online</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Chat Messages -->
+      <div class="chat-container" id="chatContainer">
+        <div class="message bot">
+          <div class="message-avatar">
+            <i data-lucide="bot" style="width: 18px; height: 18px;"></i>
+          </div>
+          <div>
+            <div class="message-content">
+              Hi there! 👋 I'm your AI Insurance Consultant. I can help you with:
+              <br><br>
+              • Finding the right medical plan<br>
+              • Comparing coverage options<br>
+              • Understanding policy benefits<br>
+              • Answering insurance questions
+              <br><br>
+              How can I assist you today?
+            </div>
+            <div class="message-time">Just now</div>
+            <div class="quick-replies">
+              <button class="quick-reply" onclick="sendQuickReply('Compare medical plans')">Compare plans</button>
+              <button class="quick-reply" onclick="sendQuickReply('What coverage do I need?')">Coverage advice</button>
+              <button class="quick-reply" onclick="sendQuickReply('Explain deductibles')">Explain terms</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <textarea class="chat-input" id="chatInput" placeholder="Type your message..." rows="1" onkeydown="handleKeyDown(event)"></textarea>
+        </div>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          <i data-lucide="send" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      const chatContainer = document.getElementById('chatContainer');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendBtn');
+
+      // Auto-resize textarea
+      chatInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+      });
+
+      function handleKeyDown(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          sendMessage();
+        }
+      }
+
+      function sendQuickReply(text) {
+        chatInput.value = text;
+        sendMessage();
+      }
+
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        addMessage(message, 'user');
+        chatInput.value = '';
+        chatInput.style.height = 'auto';
+
+        // Remove quick replies
+        const quickReplies = document.querySelectorAll('.quick-replies');
+        quickReplies.forEach(el => el.remove());
+
+        // Show typing indicator
+        showTypingIndicator();
+
+        // Simulate bot response
+        setTimeout(() => {
+          hideTypingIndicator();
+          const response = getBotResponse(message);
+          addMessage(response, 'bot');
+        }, 1500);
+      }
+
+      function addMessage(text, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        
+        const avatarIcon = type === 'bot' ? 'bot' : 'user';
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.innerHTML = `
+          <div class="message-avatar">
+            <i data-lucide="${avatarIcon}" style="width: 18px; height: 18px;"></i>
+          </div>
+          <div>
+            <div class="message-content">${text}</div>
+            <div class="message-time">${time}</div>
+          </div>
+        `;
+        
+        chatContainer.appendChild(messageDiv);
+        lucide.createIcons();
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function showTypingIndicator() {
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        indicator.id = 'typingIndicator';
+        indicator.innerHTML = `
+          <div class="message-avatar" style="background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%); color: white;">
+            <i data-lucide="bot" style="width: 18px; height: 18px;"></i>
+          </div>
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        `;
+        chatContainer.appendChild(indicator);
+        lucide.createIcons();
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+
+      function hideTypingIndicator() {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) indicator.remove();
+      }
+
+      function getBotResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        if (lowerMessage.includes('compare') || lowerMessage.includes('plan')) {
+          return "Great question! 📊 I can help you compare medical plans. We have several options from top insurers like AIA, Prudential, and Great Eastern.<br><br>To give you the best recommendation, could you tell me:<br>• Your age range<br>• Preferred monthly budget<br>• Any specific coverage needs (hospitalization, outpatient, dental)?";
+        } else if (lowerMessage.includes('coverage') || lowerMessage.includes('need')) {
+          return "Understanding your coverage needs is important! 🎯<br><br>Here are the key coverage types to consider:<br><br><strong>Essential:</strong> Hospitalization, surgery, ICU<br><strong>Recommended:</strong> Outpatient visits, specialist consultations<br><strong>Optional:</strong> Dental, optical, maternity<br><br>What's most important to you?";
+        } else if (lowerMessage.includes('deductible') || lowerMessage.includes('term') || lowerMessage.includes('explain')) {
+          return "Happy to explain! 📚<br><br><strong>Deductible:</strong> The amount you pay before insurance kicks in.<br><br><strong>Premium:</strong> Your monthly/annual payment for coverage.<br><br><strong>Co-pay:</strong> A fixed amount you pay for each visit.<br><br><strong>Annual Limit:</strong> Maximum the insurer pays per year.<br><br>Would you like me to explain any other terms?";
+        } else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('budget')) {
+          return "Let's find a plan that fits your budget! 💰<br><br>Our medical plans start from:<br>• Basic: RM80-150/month<br>• Standard: RM150-300/month<br>• Premium: RM300-500/month<br><br>What's your preferred monthly budget range?";
+        } else {
+          return "Thanks for your message! 😊 I'd be happy to help with that.<br><br>Here's what I can assist you with:<br>• Medical plan comparisons<br>• Coverage recommendations<br>• Insurance term explanations<br>• Price estimates<br><br>Could you tell me more about what you're looking for?";
+        }
+      }
+    </script>
+  </body>
+</html>
