@@ -100,7 +100,7 @@
     /* Main Content */
     .home-main {
       flex: 1;
-      padding: 1rem 1rem;
+      padding: 0.75rem;
       padding-bottom: 100px;
       overflow-y: auto;
     }
@@ -124,30 +124,30 @@
     .deals-grid {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
 
     .deal-card {
       background: white;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
       transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
       display: flex;
       border: 1px solid var(--border-color);
-      min-height: 100px;
+      min-height: 80px;
     }
 
     .deal-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .deal-image {
-      width: 33.33%;
+      width: 30%;
       flex-shrink: 0;
-      height: 100px;
+      height: 80px;
       background: linear-gradient(135deg, #FF5B61 0%, #FF4A50 100%);
       display: flex;
       align-items: center;
@@ -158,15 +158,16 @@
 
     .deal-image.has-image {
       background: #f5f5f5;
-      padding: 0;
-      display: block;
-      align-items: stretch;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .deal-image.has-image img {
-      width: 100%;
-      height: 100px;
-      object-fit: cover;
+      max-width: 70%;
+      max-height: 60px;
+      object-fit: contain;
       display: block;
     }
 
@@ -176,8 +177,8 @@
     }
 
     .deal-image-content i {
-      width: 36px;
-      height: 36px;
+      width: 28px;
+      height: 28px;
       opacity: 0.9;
     }
 
@@ -185,51 +186,55 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0.625rem;
+      padding: 0.5rem 0.625rem;
+      justify-content: space-between;
     }
 
     .deal-title-section {
-      flex: 0 0 33.33%;
-      margin-bottom: 0.25rem;
+      flex: 0 0 auto;
     }
 
     .deal-title {
-      font-size: 0.75rem;
-      font-weight: 400;
+      font-size: 0.7rem;
+      font-weight: 500;
       color: var(--text-primary);
-      line-height: 1.3;
+      line-height: 1.25;
       margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .deal-category {
-      font-size: 0.625rem;
+      font-size: 0.6rem;
       color: var(--text-secondary);
       margin-top: 0.125rem;
     }
 
     .deal-bottom-section {
-      flex: 1;
+      flex: 0 0 auto;
       display: flex;
-      align-items: flex-end;
-      gap: 0.75rem;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: auto;
     }
 
     .deal-description {
       flex: 2;
-      font-size: 0.6875rem;
+      font-size: 0.625rem;
       color: var(--text-secondary);
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .deal-btn {
-      flex: 1;
       background: var(--primary-color);
       color: white;
       border: none;
-      border-radius: 6px;
-      padding: 0.375rem 0.625rem;
-      font-size: 0.6875rem;
-      font-weight: 400;
+      border-radius: 5px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.625rem;
+      font-weight: 500;
       cursor: pointer;
       transition: background 0.2s;
       text-align: center;
@@ -434,9 +439,9 @@
         id: 1,
         title: "Insuremart Start Operation Now, left your expirience today",
         category: "Notifications",
-        imageUrl: 'deals/google-play.jpg',
+        imageUrl: 'deals/alliance.jpg',
         button: "Start Now",
-        buttonLink: "https://www.bilibili.com/video/BV1wz421U7er?vd_source=6bba6f624161b942a586e3065b5bb385"
+        buttonLink: "https://play.google.com/store/apps/details?id=com.alliance.AOPMobileApp&hl=en"
       },
       {
         id: 2,
@@ -444,7 +449,7 @@
         category: "Notifications",
         imageUrl: "deals/youtube.jpg",
         button: "Watch Now",
-        buttonLink: "https://youtu.be/dQw4w9WgXcQ?si=ylCYWoS9BzK2eRAr"
+        buttonLink: "https://www.youtube.com/"
       }, 
       {
         id: 3,
@@ -516,7 +521,7 @@
         
         if (deal.imageUrl) {
           // Use actual image
-          imageContent = `<img src="${deal.imageUrl}" alt="${deal.title}" style="width: 100%; height: 100%; min-height: 80px; object-fit: cover; display: block;">`;
+          imageContent = `<img src="${deal.imageUrl}" alt="${deal.title}">`;
         } else {
           // Use icon with red background
           imageContent = `<div class="deal-image-content"><i data-lucide="${deal.imageIcon || 'tag'}"></i></div>`;
